@@ -49,42 +49,74 @@ Create Neo burner wallet that will facilitate the requirements mentioned in [Wor
 This sections describes the overall process at a high level. There are three main parts: an event organizer interface or UI/UX, an event attendee interface, and a smart contract component that works with these.
 
 1. **Event Organizer** requires a simple interface that allows the following:
+
   1.1. Generate a unique "burner account" address/private key with QR code representation for each event attendee.
+
   1.2. Link each burner account to an event that has a configurable amount of Neo/Gas associated for receipt within a configurable time-limit via a smart contract where the following must be met:
+
     1. If the funds for a given burner account are not retrieved within the time-limit they can be recovered by the event organizer.
+
     2. Reporting Interface: It would be nice to be able to anticipate the need to gather stats on these operations by event, amount, and with feedback as to which wallet was downloaded to retrieve the funds.
+
     3. Attempts by event attendee interface to recover funds beyond the prescribed time-limit should be declined and clearly explained to the attendee as to why.
+
   1.3. Print or otherwise digitally share QR codes by some form of messaging (email, text, etc) with event attendees.
+
   1.4. Start time-limit once all QR codes are distributed or whenever the event organizer desires.
+
   1.5. Check status of events to see how much time is left, who has claimed, and who hasn't.
+
   1.6. Close or cancel an event early?
+
   1.7. Extend or change the time limit?
+
   1.8. Easy event management setup.
+
 2. **Event Attendee** requires a simple interface to do the following:
+
   2.1. Capture a QR code by web or mobile that loads in an account address/private key that is already linked to a smart contract as described above.
+
   2.2. In order to claim the funds the event attendee will need to have downloaded a full wallet from the Neo Smart Economy.
+
   2.3. The attendee UI/UX will provide a wizard process where the following flow occurs:
+
     1. User is presented with an interface to scan a QR code.
+
     2. The QR code loads event detail information and messages from the organizer into the UI/UX that at minimum displays event detail and an amount of Neo or Gas that can be claimed if the requirements are met.
+
     3. The user accepts and clicks a link from a list of Neo Smart Economy wallet download links to download a wallet. This link **MUST** internally track which wallet was downloaded so that it can be communicated to the smart contract for tracking.
+
     4. User leaves burner wallet and installs the wallet software and generates an account. This process should be clear and documented with an information interface that can easily be returned to if the user loses his place in this wizard.
+
     5. Have a shortcut burner wallet event attendee UI/UX button where the wallet and address that was used/generated can be entered.
+
     6. User initiates transfer to the wallet account.
+
     7. User event attendee interface ontacts smart contract with the following information:
+
      1. Event ID
+
      2. Wallet that the user installed
+
      3. Address of the account created in the wallet
+
     8. Smart contract checks that the time limit for the event ID is valid and, if so, sends the funds to the wallet.
+
     9. User is presented a confirmation message and transaction ID link.
+
 3. **Smart Contract** must be written that does the following:
+
   3.1. Track and manage events for event organizer interface.
+
     1. Create and update events by ID.
       * Event ID
       * Event introduction message
       * Event fund transfer completion message
       * Time-limit for event wherein fund transfer requests are valid
       * Recover event statistics by ID
+
   3.2. Respond to event attendee client interface requests to transfer funds.
+  
     1. Track event ID
     2. Track wallet that user installed
     3. Track address of the account created in the wallet
