@@ -1,0 +1,55 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+* {box-sizing: border-box;}
+
+p {
+  margin: 0 0 1em 0;
+}
+.wrapper {
+  display: flex;
+  flex-direction: row;
+
+  flex-wrap: wrap;
+  border: 5px solid black;
+  border-radius: .5em;
+  padding: 0px;
+}
+
+.headerContent {
+  background-color: white;
+  border: 5px solid darkgreen;
+  border-radius: .5em;
+  width: 100%;
+  height: 50px;
+}
+
+
+.leftPaneContent {
+  background-color: white;
+  border: 5px solid darkgreen;
+  border-radius: .5em;
+  /* width: 20%; */
+  flex: 1;
+  min-height: 100vh;
+}
+
+.rightPaneContent {
+  background-color: lightgreen;
+  border: 5px solid darkgreen;
+  border-radius: .5em;
+  /* width: 80%; */
+  flex: 2;
+  min-height: 100vh;
+}
+
+.footerContent {
+  background-color: white;
+  border: 5px solid darkgreen;
+  border-radius: .5em;
+  min-width: 100%;
+
+}
