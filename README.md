@@ -126,9 +126,13 @@ This sections describes the overall process at a high level. There are three mai
 * Must Have
   * See Workflow above
 * Should Have  
-  * Additional point-of-sale (PoS) system to accompany mobile product
+  * Additional point-of-sale (PoS) system to accompany mobile product.
+  * Support for suggesting wallets.
+  * Support for URL links.
+  * Support for simple ability to change UI (i.e., for differing events or outreach).
 * Nice to Have
-  * Ability to airdrop non-fungible tokens (NFT) to previously active wallet addresses
+  * Ability to airdrop non-fungible tokens (NFT) to previously active wallet addresses.
+  * Ability to integrate a quiz or interactive feature.
 
 
 # Install Software
