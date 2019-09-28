@@ -126,9 +126,9 @@ This sections describes the overall process at a high level. There are three mai
 * Must Have
   * See Workflow above
 * Should Have  
-  * TBD
+  * Additional point-of-sale (PoS) system to accompany mobile product
 * Nice to Have
-  * TBD
+  * Ability to airdrop non-fungible tokens (NFT) to previously active wallet addresses
 
 
 # Install Software
