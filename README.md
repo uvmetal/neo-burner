@@ -126,7 +126,7 @@ This sections describes the overall process at a high level. There are three mai
 * Must Have
   * See Workflow above
 * Should Have  
-  * Additional point-of-sale (PoS) system to accompany mobile product.
+  * Additional point-of-sale (PoS) system to accompany mobile product. (Potential integration of Neow3j tools https://github.com/neow3j/neow3j)
   * Support for suggesting wallets.
   * Support for URL links.
   * Support for simple ability to change UI (i.e., for differing events or outreach).
