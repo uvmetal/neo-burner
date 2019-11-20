@@ -4,7 +4,7 @@ import './style.css'
 
 import cozLogo from '../../../images/coz-inverted.svg'
 import uvmetalLogo from '../../../images/uvmetal-fire-logo.png'
-
+import burnerLogo from '../../../images/neo-burner-burning-logo.png'
 class Footer extends Component {
   constructor(props) {
     super(props)
@@ -22,7 +22,7 @@ class Footer extends Component {
         <React.Fragment>
         <div>
           <div id="footerLeft">
-          neo-burner v0.0.2
+            <img src={burnerLogo} width="200" height="60" alt="neo-burner" className=""  /> v0.0.2
           </div>
           <div className=" coz-medium pt-1" id="footerRight">
             <a href="https://github.com/cityofzion/neo-burner" target="_blank">
