@@ -23,6 +23,10 @@ import SettingsServer from '../../App/Settings/Server'
 import InstallerHome  from '../../Installer/Home'
 
 import About from '../../App/About'
+import New from '../../App/New'
+import Import from '../../App/Import'
+import Export from '../../App/Export'
+import Report from '../../App/Report'
 import Events from '../../App/Events'
 import Home from '../../App/Home'
 import Footer from '../../Ui/Main/Footer.js'
@@ -90,6 +94,22 @@ class AppMain extends Component {
 
         case '/About':
         rightPaneContent = <About />
+        break
+
+        case '/New':
+        rightPaneContent = <New />
+        break
+
+        case '/Import':
+        rightPaneContent = <Import />
+        break
+
+        case '/Export':
+        rightPaneContent = <Export />
+        break
+
+        case '/Report':
+        rightPaneContent = <Report />
         break
 
         case '/Events':

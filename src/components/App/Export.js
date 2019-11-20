@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
-import { Jumbotron } from 'reactstrap'
+import { Jumbotron } from 'reactstrap';
 
 import './style.css'
 
-import cozLogo from '../../images/coz-inverted.svg'
-import neoOneLogo from '../../images/neo-one.png'
-
-class About extends Component {
+class Export extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
     }
@@ -22,8 +19,8 @@ class About extends Component {
       <React.Fragment>
         <Jumbotron className="vertical-center">
         <div className="container hero-container text-center">
-          <h1 className="display-4">About Neo-Burner </h1>
-          <p className="lead">Neo-Burner is a paper wallet event generator.</p>
+          <h1 className="display-4">Export </h1>
+          <p className="lead">Export your data so you can use it somewhere else!</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
           </p>
@@ -33,4 +30,4 @@ class About extends Component {
     )
   }
 }
-export default About
+export default Export

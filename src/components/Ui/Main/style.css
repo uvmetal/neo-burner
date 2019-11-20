@@ -43,3 +43,13 @@ p {
   border-radius: .5em;
   padding: 0px;
 }
+
+#footerLeft {
+  float: left;
+  margin-top: 15px;
+  margin-left: 5px;
+}
+#footerRight {
+  float: right;
+  margin-right: 5px;
+}

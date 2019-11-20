@@ -10,6 +10,8 @@ class HeaderControls extends Component {
     this.new = this.new.bind(this)
     this.import = this.import.bind(this)
     this.export = this.export.bind(this)
+    this.about = this.about.bind(this)
+    this.report = this.report.bind(this)
 
     this.state = {
       isOpen: false,
@@ -18,15 +20,23 @@ class HeaderControls extends Component {
   }
 
   new() {
-     this.props.history.push('/About')
+     this.props.history.push('/New')
   }
-  
+
   import() {
-     this.props.history.push('/About')
+     this.props.history.push('/Import')
   }
 
   export() {
+     this.props.history.push('/Export')
+  }
+
+  about() {
      this.props.history.push('/About')
+  }
+
+  report() {
+     this.props.history.push('/Report')
   }
 
   toggleNetworkStatus() {
@@ -61,6 +71,8 @@ class HeaderControls extends Component {
         <Button size="sm" color="warning" onClick={this.new} >New</Button>{' '}
         <Button size="sm" color="warning" onClick={this.import} >Import</Button>{' '}
         <Button size="sm" color="warning" onClick={this.export} >Export</Button>{' '}
+        <Button size="sm" color="warning" onClick={this.report} >Report</Button>{' '}
+        <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
       </div>
     )
   }

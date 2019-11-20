@@ -4,9 +4,10 @@ var rc = require('sails/accessible/rc')
 
 var util = require('util')
 
-const electron = require('electron')
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
+const { app, shell, electron, BrowserWindow } = require('electron')
+
+// const app = electron.app
+// const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
@@ -30,7 +31,7 @@ let sailsServerPath, sailsIsPackaged, sailsServerPort = 2328
 
 let server = {
   serverPID: undefined,
-  serverPath: './server/node_modules/.bin/neo-one'
+  serverPath: './server/node_modules/.bin/'
 }
 
 global.serverConfig = { useSails: false }
@@ -51,6 +52,12 @@ function createWindow() {
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
   mainWindow.on('closed', () => mainWindow = null)
 
+  // This is the actual solution
+  mainWindow.webContents.on("new-window", function(event, url) {
+    event.preventDefault()
+    shell.openExternal(url)
+  })
+
   // console.log(util.inspect(mainWindow, {depth: null}))
 
   let systemConfig = getSystemProfile()
@@ -65,14 +72,13 @@ function createWindow() {
   } else {
     sailsIsPackaged = false
     sailsServerPath = './server'
-    server.serverPath = './server/node_modules/.bin/neo-one'
+    server.serverPath = './server/node_modules/.bin/'
   }
 
   console.log('server.serverPath: '+server.serverPath)
 
-  // sailsServer.stopAll()
-  // sailsServer.removeIpcListeners()
   ipcBin.addIpcListeners(global, server)
+  // ipcBin.removeIpcListeners()
 }
 
 app.on('ready', createWindow);
@@ -86,25 +92,6 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
-  }
-})
-
-ipc.on('use-sails', function (event, arg) {
-  console.log('Toggled checkbox to use Sails.js to: '+arg)
-  // TODO add flag to configure from environment or cli
-
-  if (global.serverConfig.useSails) {
-    // TODO: Test, as this is known to work on Ubuntu 18, but it could cause problems on other platforms; see below.
-
-    // sailsServer.lift(sailsServerPath, sailsServerPort, sailsIsPackaged)
-    ipcBin.stopAll()
-    ipcBin.removeIpcListeners()
-    sailsServer.addIpcListeners()
-
-  } else { // Assume neo-one direct control for now
-    // sailsServer.stopAll()
-    // sailsServer.removeIpcListeners()
-    ipcBin.addIpcListeners(global, server)
   }
 })
 
