@@ -39,7 +39,7 @@ global.serverConfig = { useSails: false }
 function createWindow() {
   mainWindow = new BrowserWindow(
     {
-      height: 750,
+      height: 800,
       width: 1200,
       minHeight: 750,
       minWidth: 1200,

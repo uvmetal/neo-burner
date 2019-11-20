@@ -5,6 +5,7 @@ import './style.css'
 
 import cozLogo from '../../images/coz-inverted.svg'
 import neoOneLogo from '../../images/neo-one.png'
+import burnerLogo from '../../images/neo-burner-burning-logo.png'
 
 class About extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class About extends Component {
           <p className="lead">Neo-Burner is a paper wallet event generator.</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
+            <img src={burnerLogo} width="800" height="300" alt="neo-burner" className=""  />
           </p>
         </div>
         </Jumbotron>

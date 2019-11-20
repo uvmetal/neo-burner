@@ -5,6 +5,7 @@ import './style.css'
 import cozLogo from '../../../images/coz-inverted.svg'
 import uvmetalLogo from '../../../images/uvmetal-fire-logo.png'
 import burnerLogo from '../../../images/neo-burner-burning-logo.png'
+
 class Footer extends Component {
   constructor(props) {
     super(props)

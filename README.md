@@ -1,7 +1,7 @@
 
 # Neo-Burner
 
-![neo-burner](/src/images/neo-burner-burning-logo.png?raw=true "neo-burner")
+![neo-burner](/src/images/neo-burner-ss.png?raw=true "neo-burner")
 
 Create Neo burner wallet that will facilitate the requirements mentioned in [Workflow](#workflow) below. The goal is to translate event participation to measurable Neo Smart Economy wallet conversion with event management, tracking, and reporting.
 
