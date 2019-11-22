@@ -66,22 +66,6 @@ class HeaderControls extends Component {
 
   }
 
-  startAllClick() {
-      this.setState({
-          networks: {
-            running: ['BlueNet', 'RedNet']
-          }
-      })
-  }
-
-  stopAllClick() {
-      this.setState({
-          networks: {
-            running: []
-          }
-      })
-  }
-
   componentDidMount() {
   }
 

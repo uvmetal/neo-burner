@@ -22,7 +22,7 @@ const provider = new api.neoscan.instance("TestNet")
 
 export function generateAccounts (amount, name) {
 
-  if (!name) name = ''
+  if (!name) name = 'neo-burner default'
   let AMOUNT = amount
   if (!AMOUNT) AMOUNT=2
 

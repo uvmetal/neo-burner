@@ -36,7 +36,7 @@ import Quickstart from '../../App/Quickstart'
 
 import Footer from '../../Ui/Main/Footer.js'
 
-// import util from 'util'
+import util from 'util'
 
 import './style.css'
 
@@ -46,16 +46,25 @@ class AppMain extends Component {
 
     this.leftPaneToggleHidden = this.leftPaneToggleHidden.bind(this)
     this.toggleVerticalNavRollup = this.toggleVerticalNavRollup.bind(this)
+    this.setAccounts = this.setAccounts.bind(this)
 
     this.state = {
       leftPaneHidden: true,
       hideWorkspaceRollup: true,
       hideSettingsRollup: true,
+      accounts: []
     }
   }
 
   componentDidMount() {
 
+  }
+
+  setAccounts(accounts) {
+    console.log('got accounts in main: '+util.inspect(accounts, {depth: null}))
+    this.setState({
+      accounts: accounts
+    })
   }
 
   toggleVerticalNavRollup(rollup) {
@@ -101,7 +110,7 @@ class AppMain extends Component {
         break
 
         case '/Accounts':
-        rightPaneContent = <Accounts {...this.props} />
+        rightPaneContent = <Accounts {...this.props} setAccounts={this.setAccounts} accounts={this.state.accounts}/>
         break
 
         case '/Wallets':
