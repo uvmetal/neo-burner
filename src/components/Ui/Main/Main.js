@@ -222,7 +222,7 @@ class AppMain extends Component {
         break
 
         default:
-          rightPaneContent = <Home />
+          rightPaneContent = <Home {...this.props}/>
       }
     }
 

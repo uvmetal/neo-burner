@@ -55,7 +55,7 @@ class Accounts extends Component {
                    onChange={e => this.setState({ amount: e.target.value })}
                  />
                </FormGroup>
-               <Button onClick={e => this.onFormSubmit(e)} color="primary">Generate</Button>
+               <Button onClick={e => this.onFormSubmit(e)} color="warning">Generate</Button>
              </Form>
              <br/>
              <textarea
@@ -95,8 +95,8 @@ class Accounts extends Component {
                 name="accounts"
                 value={util.inspect(this.props.accounts, {depth:null})}/>
                 <br/>
-                <Button onClick={this.props.clearAccounts} color="primary">Clear</Button>{' '}
-                <Button onClick={this.createWallet} color="primary">Create Wallet</Button>
+                <Button onClick={this.props.clearAccounts} color="warning" >Clear</Button>{' '}
+                <Button onClick={this.createWallet} color="warning" >Create Wallet</Button>
              </Container>
             </p>
           </div>
