@@ -42,10 +42,10 @@ class Accounts extends Component {
           <hr className="my-4" />
           <p className="lead mx-auto">
           <Container className="p-5">
-             <Form >
+             <Form id="accountsFormLeft">
                <FormGroup>
-                 <Label>How many:</Label>
-                 <Input
+                 <Label>How many:</Label> <Input
+                   style={{width: "200px"}}
                    type="text"
                    name="text"
                    placeholder="1"
@@ -53,8 +53,7 @@ class Accounts extends Component {
                    onChange={e => this.setState({ amount: e.target.value })}
                  />
                </FormGroup>
-
-               <Button onClick={e => this.onFormSubmit(e)} color="primary">Submit</Button>
+               <Button onClick={e => this.onFormSubmit(e)} color="primary">Generate</Button>
              </Form>
            </Container>
           </p>
