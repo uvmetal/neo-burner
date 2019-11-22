@@ -5,7 +5,7 @@ import './style.css'
 
 class Import extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
     }

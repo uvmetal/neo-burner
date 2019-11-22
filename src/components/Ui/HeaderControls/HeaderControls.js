@@ -14,6 +14,8 @@ class HeaderControls extends Component {
     this.about = this.about.bind(this)
     this.report = this.report.bind(this)
     this.settings = this.settings.bind(this)
+    this.accounts = this.accounts.bind(this)
+    this.wallets = this.wallets.bind(this)
 
     this.state = {
       isOpen: false,
@@ -23,6 +25,14 @@ class HeaderControls extends Component {
 
   home() {
      this.props.history.push('/Home')
+  }
+
+  accounts() {
+    this.props.history.push('/Accounts')
+  }
+
+  wallets() {
+    this.props.history.push('/Wallets')
   }
 
   new() {
@@ -79,6 +89,8 @@ class HeaderControls extends Component {
     return(
       <div id="ma">
         <Button size="sm" color="warning" onClick={this.home} >Home</Button>{' '}
+        <Button size="sm" color="warning" onClick={this.accounts} >Accounts</Button>{' '}
+        <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
         <Button size="sm" color="warning" onClick={this.new} >New</Button>{' '}
         <Button size="sm" color="warning" onClick={this.import} >Import</Button>{' '}
         <Button size="sm" color="warning" onClick={this.export} >Export</Button>{' '}

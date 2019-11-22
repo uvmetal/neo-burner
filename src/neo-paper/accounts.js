@@ -20,45 +20,38 @@ const apiProvider = new api.neoscan.instance(
 
 const provider = new api.neoscan.instance("TestNet")
 
-// TODO:  Let's add some commander-style command line processing, but this will do for now.
-// Thanks AG!
+export function generateAccounts (amount, name) {
 
-// TODO: Save accounts.json by event name as command line option
-// TODO: Add ferrite-style modularity and command line options
+  if (!name) name = ''
+  let AMOUNT = amount
+  if (!AMOUNT) AMOUNT=2
 
-let AMOUNT = process.argv[2]
-if(!AMOUNT) AMOUNT=2
+  let accounts = []
 
-let accounts
+  for (let a=0; a<AMOUNT; a++) {
 
-for (let a=0; a<AMOUNT; a++) {
+    let result = ''
 
-  let result = ''
+    result = new wallet.Account(wallet.generatePrivateKey())
 
-  result = new wallet.Account(wallet.generatePrivateKey())
+    console.log('\nCreated wallet!: '+util.inspect(result, {depth: null}))
+    console.log('WIF: '+result.WIF)
 
-  console.log('\nCreated wallet!: '+util.inspect(result, {depth: null}))
-  console.log('WIF: '+result.WIF)
+    accounts.push({
+      name: name,
+      address: result._address, // maintain compatibility with the rest of AG's work
+      pk: result._privateKey,   // maintain compatibility with the rest of AG's work
+      _address:result._address,
+      _privateKey: result._privateKey,
+      _publicKey: result._publicKey,
+      _scriptHash: result._scriptHash,
+      _WIF: result.WIF
+    })
 
-  try {
-    accounts = JSON.parse(fs.readFileSync("./accounts.json").toString())
-  } catch(e){
-    accounts = []
+    iterate(accounts, '')
+    // fs.writeFileSync("./data/accounts.json", JSON.stringify(accounts).toString())
   }
-
-  accounts.push({
-    address: result._address, // maintain compatibility with the rest of AG's work
-    pk: result._privateKey,   // maintain compatibility with the rest of AG's work
-    _address:result._address,
-    _privateKey: result._privateKey,
-    _publicKey: result._publicKey,
-    _scriptHash: result._scriptHash,
-    _WIF: result.WIF
-  })
-
-  iterate(accounts, '')
-
-  fs.writeFileSync("./accounts.json",JSON.stringify(accounts).toString())
+  return accounts
 }
 
 function iterate(obj, stack) {

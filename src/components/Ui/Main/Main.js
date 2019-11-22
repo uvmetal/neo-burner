@@ -22,6 +22,8 @@ import SettingsServer from '../../App/Settings/Server'
 
 import InstallerHome  from '../../Installer/Home'
 
+import Accounts from '../../App/Accounts'
+import Wallets from '../../App/Wallets'
 import About from '../../App/About'
 import New from '../../App/New'
 import Import from '../../App/Import'
@@ -96,6 +98,14 @@ class AppMain extends Component {
 
         case '/About':
         rightPaneContent = <About />
+        break
+
+        case '/Accounts':
+        rightPaneContent = <Accounts {...this.props} />
+        break
+
+        case '/Wallets':
+        rightPaneContent = <Wallets />
         break
 
         case '/New':

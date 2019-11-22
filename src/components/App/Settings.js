@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Jumbotron, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Jumbotron, Form, FormGroup, Label, Input } from 'reactstrap'
 
 import './style.css'
 
