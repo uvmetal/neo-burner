@@ -17,7 +17,7 @@ class Report extends Component {
   render() {
     return(
       <React.Fragment>
-        <Jumbotron className="vertical-center">
+        <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center">
           <h1 className="display-4">Report </h1>
           <p className="lead">Generate reports on your events!</p>

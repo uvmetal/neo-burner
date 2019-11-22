@@ -29,8 +29,10 @@ import Export from '../../App/Export'
 import Report from '../../App/Report'
 import Events from '../../App/Events'
 import Home from '../../App/Home'
-import Footer from '../../Ui/Main/Footer.js'
+import Settings from '../../App/Settings.js'
 import Quickstart from '../../App/Quickstart'
+
+import Footer from '../../Ui/Main/Footer.js'
 
 // import util from 'util'
 
@@ -114,6 +116,10 @@ class AppMain extends Component {
 
         case '/Events':
         rightPaneContent = <Events />
+        break
+
+        case '/Settings':
+        rightPaneContent = <Settings />
         break
 
         case '/Quickstart':

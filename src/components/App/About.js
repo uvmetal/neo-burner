@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Jumbotron } from 'reactstrap'
+import { version } from '../../neo-paper/neo-paper.js'
 
 import './style.css'
 
@@ -20,14 +21,14 @@ class About extends Component {
 
   render() {
     return(
-      <React.Fragment>
-        <Jumbotron className="vertical-center">
-        <div className="container hero-container text-center">
-          <h1 className="display-4">About Neo-Burner </h1>
-          <p className="lead">Neo-Burner is a paper wallet event generator.</p>
+      <React.Fragment id="ma">
+        <Jumbotron className="vertical-center" id="ma">
+        <div className="container hero-container text-center" id="ma">
+          <h1 className="display-4">About</h1>
+          <p className="lead">Neo-Burner {version} is a paper wallet event manager.</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
-            <img src={burnerLogo} width="800" height="300" alt="neo-burner" className=""  />
+            <img src={burnerLogo} width="800" height="175" alt="neo-burner" className=""  />
           </p>
         </div>
         </Jumbotron>

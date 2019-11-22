@@ -1,53 +1,26 @@
-.App {
-  text-align: center;
-}
+/* todo: consolidate CSS into one file */
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #ffffff;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+body {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* min-height: 100vh; */
+  /* height: 100%; */
+  /* width: 100%; */
+  background-color: black;
 }
 
 
-.hrBlack {
-  display: block; height: 1px;
-  border: 0; border-top: 1px solid #fff;
-  margin: 1em 0; padding: 0;
+#ma {
+  background-color: black;
+    color: white;
 }
 
 
-.TopLeftCorner{
-  position:absolute;
-  top:0;
-  left:0;
+.h1{
+
 }
 
-.TopCorner{
-  position:absolute;
-  top:0;
-  right:0;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#formLeft {
+    text-align: left;
+    padding-left: 35%;
 }

@@ -17,7 +17,7 @@ class Import extends Component {
   render() {
     return(
       <React.Fragment>
-        <Jumbotron className="vertical-center">
+        <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center">
           <h1 className="display-4">Import </h1>
           <p className="lead">Import accounts, events, or all of the above.</p>

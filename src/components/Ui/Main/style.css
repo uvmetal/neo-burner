@@ -4,6 +4,7 @@ body {
   /* min-height: 100vh; */
   /* height: 100%; */
   /* width: 100%; */
+  background-color: black;
 }
 
 /* * {box-sizing: border-box;} */
@@ -32,8 +33,7 @@ p {
 
 #contentWrapper {
   flex: 2;
-  background-color: darkgrey;
-  background-color: darkgrey;
+  background-color: black;
   border: 5px solid red;
   border-radius: .5em;
 }

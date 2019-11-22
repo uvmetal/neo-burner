@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Jumbotron } from 'reactstrap'
+import { version } from '../../../neo-paper/neo-paper.js'
+
 import './style.css'
 
 import cozLogo from '../../../images/coz-inverted.svg'
@@ -23,7 +25,7 @@ class Footer extends Component {
         <React.Fragment>
         <div>
           <div id="footerLeft">
-            <img src={burnerLogo} width="200" height="60" alt="neo-burner" className=""  /> v0.0.2
+            <img src={burnerLogo} width="200" height="60" alt="neo-burner" className=""  /> {version}
           </div>
           <div className=" coz-medium pt-1" id="footerRight">
             <a href="https://github.com/cityofzion/neo-burner" target="_blank">
@@ -32,7 +34,7 @@ class Footer extends Component {
             &nbsp;
             &nbsp;
             <a href="https://github.com/uvmetal" target="_blank">
-              <img src={uvmetalLogo} width="76" height="20" className="img-fluid" alt="uvmetal" />
+              <img src={uvmetalLogo} width="100" height="20" className="img-fluid" alt="uvmetal" />
             </a>
           </div>
 
