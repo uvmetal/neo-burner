@@ -13,34 +13,35 @@ class Accounts extends Component {
     super(props)
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.renderGenerateAccounts = this.renderGenerateAccounts.bind(this)
+    this.createWallet = this.createWallet.bind(this)
     this.state = {
       amount: ''
     }
+  }
+
+  componentDidMount() {
   }
 
   onFormSubmit(e) {
     this.setState({ amount: e.target.value })
     console.log('Generating: '+this.state.amount)
     let accounts = generateAccounts(this.state.amount)
-    // alert('Generating '+this.state.amount+': '+this.state.accounts)
     // alert('Generated '+this.state.amount+' accounts: '+JSON.stringify(this.state, null, '  '))
-    // console.log('accounts: '+util.inspect(this.state.accounts, {depth:null}))
     this.props.setAccounts(accounts)
-    // this.props.history.push('/Wallets')
-    // this.props.history.push('/Accounts')
   }
 
-  componentDidMount() {
+  createWallet() {
+    this.props.history.push('Wallets')
   }
 
-  render() {
-    console.log('props: '+util.inspect(this.props, {depth: null}))
+  renderGenerateAccounts() {
     return(
       <React.Fragment>
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
           <h1 className="display-4">Accounts </h1>
-          <p className="lead">Generate Accounts</p>
+          <p className="lead">There are no accounts. Would you like to generate some?</p>
           <p className="lead mx-auto">
           <Container className="p-5">
              <Form id="accountsFormLeft">
@@ -61,7 +62,7 @@ class Accounts extends Component {
               id="accountsTextArea"
               readonly
               disabled
-              cols="100" 
+              cols="100"
               rows="60"
               name="accounts"
               value={util.inspect(this.props.accounts, {depth:null})}/>
@@ -72,6 +73,37 @@ class Accounts extends Component {
       </React.Fragment>
     )
   }
+
+  render() {
+    if (!this.props.accounts.length) {
+      return(this.renderGenerateAccounts())
+    } else {
+      return(
+        <React.Fragment>
+          <Jumbotron className="vertical-center" id="ma">
+          <div className="container hero-container text-center" id="ma">
+            <h1 className="display-4">Accounts </h1>
+            <p className="lead">There are {this.props.accounts.length} accounts.</p>
+            <p className="lead mx-auto">
+            <Container className="p-5">
+               <textarea
+                id="accountsTextArea"
+                readonly
+                disabled
+                cols="100"
+                rows="40"
+                name="accounts"
+                value={util.inspect(this.props.accounts, {depth:null})}/>
+                <br/>
+                <Button onClick={this.props.clearAccounts} color="primary">Clear</Button>{' '}
+                <Button onClick={this.createWallet} color="primary">Create Wallet</Button>
+             </Container>
+            </p>
+          </div>
+          </Jumbotron>
+        </React.Fragment>
+      )
+    }
+  }
 }
 export default Accounts
-// onChange={this.handleChange}

@@ -4,7 +4,7 @@ var rc = require('sails/accessible/rc')
 
 var util = require('util')
 
-const { app, shell, electron, BrowserWindow } = require('electron')
+const { app, shell, electron, BrowserWindow, Menu } = require('electron')
 
 // const app = electron.app
 // const BrowserWindow = electron.BrowserWindow
@@ -37,8 +37,12 @@ let server = {
 global.serverConfig = { useSails: false }
 
 function createWindow() {
+  // Menu.setApplicationMenu(null)
+
   mainWindow = new BrowserWindow(
     {
+      // frame: false, // disable title and menu
+      backgroundColor: '#000000', // <- borked
       height: 800,
       width: 1200,
       minHeight: 750,
@@ -52,11 +56,33 @@ function createWindow() {
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
   mainWindow.on('closed', () => mainWindow = null)
 
-  // This is the actual solution
+  // Open clicked URLs in the OS browser
   mainWindow.webContents.on("new-window", function(event, url) {
     event.preventDefault()
     shell.openExternal(url)
   })
+
+ //  var menu = Menu.buildFromTemplate([
+ //    {
+ //       label: 'Home',
+ //       submenu: [
+ //
+ //       ],
+ //    },
+ //    {
+ //       label: 'Menu',
+ //        submenu: [
+ //         { label:'Home' },
+ //         { label:'CoinMarketCap' },
+ //         { label:'Exit',
+ //             click() {
+ //                 app.quit()
+ //             }
+ //         }
+ //        ]
+ //     }
+ // ])
+ // Menu.setApplicationMenu(menu)
 
   // console.log(util.inspect(mainWindow, {depth: null}))
 

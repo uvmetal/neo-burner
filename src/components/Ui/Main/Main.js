@@ -47,6 +47,7 @@ class AppMain extends Component {
     this.leftPaneToggleHidden = this.leftPaneToggleHidden.bind(this)
     this.toggleVerticalNavRollup = this.toggleVerticalNavRollup.bind(this)
     this.setAccounts = this.setAccounts.bind(this)
+    this.clearAccounts = this.clearAccounts.bind(this)
 
     this.state = {
       leftPaneHidden: true,
@@ -64,6 +65,13 @@ class AppMain extends Component {
     console.log('got accounts in main: '+util.inspect(accounts, {depth: null}))
     this.setState({
       accounts: accounts
+    })
+  }
+
+  clearAccounts(accounts) {
+    console.log('clearing accounts: '+this.state.accounts)
+    this.setState({
+      accounts: []
     })
   }
 
@@ -110,7 +118,11 @@ class AppMain extends Component {
         break
 
         case '/Accounts':
-        rightPaneContent = <Accounts {...this.props} setAccounts={this.setAccounts} accounts={this.state.accounts}/>
+        rightPaneContent = <Accounts {...this.props}
+          setAccounts={this.setAccounts}
+          accounts={this.state.accounts}
+          clearAccounts={this.clearAccounts}
+          />
         break
 
         case '/Wallets':
