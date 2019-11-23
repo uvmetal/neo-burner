@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Jumbotron, Button } from 'reactstrap';
+import { Jumbotron } from 'reactstrap';
 
-import './style.css'
+// import './style.css'
 
 class Wallets extends Component {
   constructor(props) {

@@ -3,23 +3,6 @@ import React, { Component } from 'react'
 import HeaderControls from '../HeaderControls/HeaderControls'
 import VerticalNav from '../VerticalNav/VerticalNav'
 
-import WorkSpaceAccounts from '../../App/Workspace/Accounts'
-import WorkspaceBlocks from '../../App/Workspace/Blocks'
-import WorkspaceConsole from '../../App/Workspace/Console'
-import WorkspaceContracts from '../../App/Workspace/Contracts'
-import WorkspaceExport from '../../App/Workspace/Export'
-import WorkspaceStorage from '../../App/Workspace/Storage'
-import WorkspaceServer from '../../App/Workspace/Server'
-import WorkspaceTransactions from '../../App/Workspace/Transactions'
-
-import SettingsDatabase from '../../App/Settings/Database'
-import SettingsExport from '../../App/Settings/Export'
-import SettingsLogs from '../../App/Settings/Logs'
-import SettingsRest from '../../App/Settings/Rest'
-import SettingsRpc from '../../App/Settings/Rpc'
-import SettingsSession from '../../App/Settings/Session'
-import SettingsServer from '../../App/Settings/Server'
-
 import InstallerHome  from '../../Installer/Home'
 
 import Accounts from '../../App/Accounts'
@@ -38,7 +21,7 @@ import Footer from '../../Ui/Main/Footer.js'
 
 import util from 'util'
 
-import './style.css'
+// import './style.css'
 
 class AppMain extends Component {
   constructor(props) {
@@ -48,12 +31,15 @@ class AppMain extends Component {
     this.toggleVerticalNavRollup = this.toggleVerticalNavRollup.bind(this)
     this.setAccounts = this.setAccounts.bind(this)
     this.clearAccounts = this.clearAccounts.bind(this)
+    this.setDarkMode = this.setDarkMode.bind(this)
 
     this.state = {
       leftPaneHidden: true,
       hideWorkspaceRollup: true,
       hideSettingsRollup: true,
-      accounts: []
+      accounts: [],
+      tutorialMode: true,
+      darkMode: 'true',
     }
   }
 
@@ -73,6 +59,19 @@ class AppMain extends Component {
     this.setState({
       accounts: []
     })
+  }
+
+  setDarkMode(e) {
+    // TODO Fix this it only works one way - from dark to light, can't return
+    console.log('darkMode: '+e.target.checked)
+    this.setState({ darkMode: e.target.checked })
+
+    if (e.target.checked) {
+      require('./style.css')
+
+    } else {
+      require('./style-light.css')
+    }
   }
 
   toggleVerticalNavRollup(rollup) {
@@ -150,71 +149,11 @@ class AppMain extends Component {
         break
 
         case '/Settings':
-        rightPaneContent = <Settings />
+        rightPaneContent = <Settings darkMode={this.state.darkMode} setDarkMode={this.setDarkMode}/>
         break
 
         case '/Quickstart':
           rightPaneContent = <Quickstart config={this.props.config}/>
-        break
-
-        case '/WorkspaceAccounts':
-          rightPaneContent = <WorkSpaceAccounts />
-        break
-
-        case '/WorkspaceBlocks':
-        rightPaneContent = <WorkspaceBlocks />
-        break
-
-        case '/WorkspaceConsole':
-          rightPaneContent = <WorkspaceConsole config={this.props.config}/>
-        break
-
-        case '/WorkspaceContracts':
-          rightPaneContent = <WorkspaceContracts />
-        break
-
-        case '/WorkspaceExport':
-          rightPaneContent = <WorkspaceExport />
-        break
-
-        case '/WorkspaceStorage':
-        rightPaneContent = <WorkspaceStorage />
-        break;
-
-        case '/WorkspaceServer':
-        rightPaneContent = <WorkspaceServer />
-        break;
-
-        case '/WorkspaceTransactions':
-        rightPaneContent = <WorkspaceTransactions />
-        break
-
-        case '/SettingsDatabase':
-          rightPaneContent = <SettingsDatabase />
-        break
-
-        case '/SettingsExport':
-          rightPaneContent = <SettingsExport />
-        break
-
-        case '/SettingsLogs':
-          rightPaneContent = <SettingsLogs />
-        break
-
-        case '/SettingsRest':
-          rightPaneContent = <SettingsRest />
-        break
-
-        case '/SettingsRpc':
-          rightPaneContent = <SettingsRpc />
-        break
-
-        case '/SettingsSession':
-          rightPaneContent = <SettingsSession />
-        break
-
-        case '/SettingsServer':
-          rightPaneContent = <SettingsServer />
         break
 
         case '/InstallerHome':
@@ -222,7 +161,7 @@ class AppMain extends Component {
         break
 
         default:
-          rightPaneContent = <Home {...this.props}/>
+          rightPaneContent = <Home {...this.props} />
       }
     }
 

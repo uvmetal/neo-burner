@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { NavLink as RRNavLink } from 'react-router-dom'
 import { Collapse, Nav, NavItem, NavLink } from 'reactstrap'
-import './style.css'
+// import './style.css'
 
 class VerticalNav extends Component {
   constructor(props) {

@@ -104,3 +104,20 @@ flex: 2;
   align-items: self-end;
   flex-direction: row;
 }
+
+#formLeft {
+    text-align: left;
+    padding-left: 35%;
+}
+
+#accountsFormLeft {
+    text-align: left;
+    padding-left: 40%;
+}
+
+#accountsTextArea
+{
+    height: 200px;
+    max-height: 200px;
+    font-size: 10px;
+}

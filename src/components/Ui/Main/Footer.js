@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Jumbotron } from 'reactstrap'
 import { version } from '../../../neo-paper/neo-paper.js'
 
 import './style.css'

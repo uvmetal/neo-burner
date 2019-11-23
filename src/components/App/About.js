@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { Jumbotron } from 'reactstrap'
 import { version } from '../../neo-paper/neo-paper.js'
 
-import './style.css'
+// import './style.css'
 
-import cozLogo from '../../images/coz-inverted.svg'
-import neoOneLogo from '../../images/neo-one.png'
 import burnerLogo from '../../images/neo-burner-burning-logo-alt-3.png'
 
 class About extends Component {

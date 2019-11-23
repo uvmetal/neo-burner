@@ -4,7 +4,7 @@ body {
   /* min-height: 100vh; */
   /* height: 100%; */
   /* width: 100%; */
-  background-color: black;
+  background-color: white;
 }
 
 /* * {box-sizing: border-box;} */
@@ -14,7 +14,7 @@ p {
 }
 #wrapper {
   /* height: 100%; */
-  background-color: black;
+  background-color: white;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -33,7 +33,7 @@ p {
 
 #contentWrapper {
   flex: 2;
-  background-color: black;
+  background-color: white;
   border: 5px solid red;
   border-radius: .5em;
 }
@@ -55,6 +55,23 @@ p {
 }
 
 #ma {
-  background-color: black;
-    color: white;
+  background-color: white;
+  color: black;
+}
+
+#formLeft {
+    text-align: left;
+    padding-left: 35%;
+}
+
+#accountsFormLeft {
+    text-align: left;
+    padding-left: 40%;
+}
+
+#accountsTextArea
+{
+    height: 200px;
+    max-height: 200px;
+    font-size: 10px;
 }

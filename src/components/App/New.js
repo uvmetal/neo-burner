@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Jumbotron } from 'reactstrap';
 
-import './style.css'
+// import './style.css'
 
 class New extends Component {
   constructor(props) {

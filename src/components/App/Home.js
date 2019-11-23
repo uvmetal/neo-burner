@@ -4,8 +4,7 @@ import { Jumbotron, Button } from 'reactstrap'
 import burnerLogo from '../../images/neo-burner-burning-logo-alt-3.png'
 import uvmetalFace from '../../images/uvmetal-tongue.png'
 
-
-import './style.css'
+// import './style.css'
 
 class Home extends Component {
   constructor(props) {
@@ -18,6 +17,9 @@ class Home extends Component {
     }
   }
 
+  componentWillMount() {
+  }
+
   componentDidMount() {
   }
 
@@ -28,7 +30,7 @@ class Home extends Component {
   render() {
     return(
         <React.Fragment>
-          <Jumbotron className="vertical-center" id="ma">
+          <Jumbotron className="vertical-center" id="ma" style={this.props.style}>
           <div className="container hero-container text-center" id="ma">
             <img src={burnerLogo} width="800" height="175" alt="neo-burner" className=""  />
             <br/>

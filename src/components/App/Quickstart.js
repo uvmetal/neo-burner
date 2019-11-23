@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { Jumbotron, Button } from 'reactstrap'
 
-import './style.css'
-
-import cozLogo from '../../images/coz-inverted.svg'
-import neoOneLogo from '../../images/neo-one.png'
+// import './style.css'
 
 // TODO Add flag to exclude/include neotracker from startup sequence
 

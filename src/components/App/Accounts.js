@@ -1,7 +1,5 @@
-import React, { Component, useState, useRef } from 'react'
-import { NavLink as RRNavLink } from 'react-router-dom'
-import { Jumbotron, Container, Col, Button, Form, FormGroup, Label, Input, FormText, Nav, NavItem, NavLink  } from 'reactstrap'
-import { version } from '../../neo-paper/neo-paper.js'
+import React, { Component } from 'react'
+import { Jumbotron, Container, Button, Form, FormGroup, Input } from 'reactstrap'
 import { generateAccounts } from '../../neo-paper/accounts.js'
 
 import util from 'util'
@@ -58,14 +56,6 @@ class Accounts extends Component {
                <Button onClick={e => this.onFormSubmit(e)} color="warning">Generate</Button>
              </Form>
              <br/>
-             <textarea
-              id="accountsTextArea"
-              readonly
-              disabled
-              cols="100"
-              rows="60"
-              name="accounts"
-              value={util.inspect(this.props.accounts, {depth:null})}/>
            </Container>
           </p>
         </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { NavLink as RRNavLink } from 'react-router-dom'
-import { Card, CardBody, Button, Collapse, Nav, NavItem, NavLink } from 'reactstrap'
-import './style.css'
+import { Button } from 'reactstrap'
+// import './style.css'
 
 class HeaderControls extends Component {
   constructor(props) {
