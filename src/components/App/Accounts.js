@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Jumbotron, Container, Button, Form, FormGroup, Input } from 'reactstrap'
 import { generateAccounts } from '../../neo-paper/accounts.js'
 
+
 import util from 'util'
 
 import './style.css'

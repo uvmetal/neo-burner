@@ -2,7 +2,9 @@ var Sails = require('sails').constructor
 
 var rc = require('sails/accessible/rc')
 
-var util = require('util')
+const util = require('util')
+
+const fs = require('fs')
 
 const { app, shell, electron, BrowserWindow, Menu } = require('electron')
 
@@ -20,6 +22,8 @@ const firstRun = require('electron-first-run')
 const ipcBin = require('./ipc/BinaryIpcControls')
 
 const { spawn } = require('child_process')
+
+const { qrGen } = require('./qrpdf.js')
 
 const isFirstRun = firstRun()
 
@@ -124,6 +128,14 @@ app.on('activate', () => {
 // This manages events from the terminal widget under Workspace/Console
 ipc.on('setup-event-manager', function (event, arg) {
   ipcBin.setupEventManager(event)
+})
+
+ipc.on('create-qr', function (event, arg) {
+    // let pub = qr.image(publicAddress, { type: 'png' })
+    // pub.pipe(require('fs').createWriteStream('public.png'))
+    console.log('writing data to: '+systemConfig.userData+'/public.png')
+    qrGen().pipe(require('fs').createWriteStream(systemConfig.userData+'/./public.png'))
+    mainWindow.webContents.send('qr-created', systemConfig.userData+'/./public.png')
 })
 
 ipc.on('check-install', function (event, arg) {

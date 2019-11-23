@@ -44,7 +44,6 @@ class AppMain extends Component {
   }
 
   componentDidMount() {
-
   }
 
   setAccounts(accounts) {
@@ -85,7 +84,6 @@ class AppMain extends Component {
         hideSettingsRollup: !this.state.hideSettingsRollup,
       })
     }
-    this.props.history.push('/About');
   }
 
   leftPaneToggleHidden () {
@@ -125,7 +123,7 @@ class AppMain extends Component {
         break
 
         case '/Wallets':
-        rightPaneContent = <Wallets />
+        rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}/>
         break
 
         case '/New':
@@ -187,4 +185,5 @@ class AppMain extends Component {
     )
   }
 }
+
 export default AppMain

@@ -14,7 +14,8 @@ const fs = require('fs')
 const util = require('util')
 // const WIF = require('wif')
 
-exports.qrGen = function () {
+
+exports.qrGen = function() {
   var pub = qr.image('testing', { type: 'png' })
 
   return pub
