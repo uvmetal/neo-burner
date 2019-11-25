@@ -79,7 +79,7 @@ class Accounts extends Component {
             <Container className="p-5">
                <textarea
                 id="accountsTextArea"
-                readonly
+                
                 disabled
                 cols="100"
                 rows="40"

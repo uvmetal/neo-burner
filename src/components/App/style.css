@@ -36,3 +36,7 @@ body {
     max-height: 200px;
     font-size: 10px;
 }
+
+#padQr {
+  padding-bottom: 10px;
+}
