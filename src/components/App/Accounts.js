@@ -15,7 +15,9 @@ class Accounts extends Component {
     this.renderGenerateAccounts = this.renderGenerateAccounts.bind(this)
     this.createWallet = this.createWallet.bind(this)
     this.state = {
-      amount: ''
+      amount: '',
+      name: '',
+      url: ''
     }
   }
 
@@ -25,7 +27,9 @@ class Accounts extends Component {
   onFormSubmit(e) {
     this.setState({ amount: e.target.value })
     console.log('Generating: '+this.state.amount)
-    let accounts = generateAccounts(this.state.amount)
+    console.log('Name: '+this.state.name)
+    console.log('URL: '+this.state.url)
+    let accounts = generateAccounts(this.state.amount, this.state.name, this.state.url)
     // alert('Generated '+this.state.amount+' accounts: '+JSON.stringify(this.state, null, '  '))
     this.props.setAccounts(accounts)
   }
@@ -46,10 +50,26 @@ class Accounts extends Component {
              <Form id="accountsFormLeft">
                <FormGroup>
                  <Input
+                   style={{width: "400px"}}
+                   type="text"
+                   name="text"
+                   placeholder="Event Name"
+                   value={this.state.name}
+                   onChange={e => this.setState({ name: e.target.value })}
+                 />
+                 <Input
+                   style={{width: "400px"}}
+                   type="text"
+                   name="text"
+                   placeholder="Event URL"
+                   value={this.state.url}
+                   onChange={e => this.setState({ url: e.target.value })}
+                 />
+                 <Input
                    style={{width: "200px"}}
                    type="text"
                    name="text"
-                   placeholder="How many?"
+                   placeholder="How many accounts?"
                    value={this.state.amount}
                    onChange={e => this.setState({ amount: e.target.value })}
                  />
@@ -79,7 +99,6 @@ class Accounts extends Component {
             <Container className="p-5">
                <textarea
                 id="accountsTextArea"
-                
                 disabled
                 cols="100"
                 rows="40"

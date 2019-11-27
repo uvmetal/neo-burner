@@ -39,7 +39,7 @@ class Footer extends Component {
 
         </div>
         </React.Fragment>
-    );
+    )
   }
 }
 export default Footer

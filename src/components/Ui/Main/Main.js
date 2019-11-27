@@ -15,7 +15,6 @@ import Report from '../../App/Report'
 import Events from '../../App/Events'
 import Home from '../../App/Home'
 import Settings from '../../App/Settings.js'
-import Quickstart from '../../App/Quickstart'
 
 import Footer from '../../Ui/Main/Footer.js'
 
@@ -123,7 +122,7 @@ class AppMain extends Component {
         break
 
         case '/Wallets':
-        rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}/>
+        rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config} {...this.props}/>
         break
 
         case '/New':
@@ -148,10 +147,6 @@ class AppMain extends Component {
 
         case '/Settings':
         rightPaneContent = <Settings darkMode={this.state.darkMode} setDarkMode={this.setDarkMode}/>
-        break
-
-        case '/Quickstart':
-          rightPaneContent = <Quickstart config={this.props.config}/>
         break
 
         case '/InstallerHome':

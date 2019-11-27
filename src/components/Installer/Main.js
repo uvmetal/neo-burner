@@ -5,7 +5,6 @@ import InstallerHeaderControls from './HeaderControls'
 import InstallerNav  from './VerticalNav'
 
 import About from '../App/About'
-import Quickstart from '../App/Quickstart'
 
 import '../../style.css'
 
@@ -68,10 +67,6 @@ class InstallerMain extends Component {
 
         case '/About':
         rightPaneContent = <About />
-        break
-
-        case '/Quickstart':
-          rightPaneContent = <Quickstart />
         break
 
         default:
