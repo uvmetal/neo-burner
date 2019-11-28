@@ -15,6 +15,7 @@ import Report from '../../App/Report'
 import Events from '../../App/Events'
 import Home from '../../App/Home'
 import Settings from '../../App/Settings.js'
+import PDF from '../../App/PDF.js'
 
 import Footer from '../../Ui/Main/Footer.js'
 
@@ -123,6 +124,10 @@ class AppMain extends Component {
 
         case '/Wallets':
         rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config} {...this.props}/>
+        break
+
+        case '/PDF':
+        rightPaneContent = <PDF accounts={this.state.accounts} config={this.props.config} {...this.props}/>
         break
 
         case '/New':

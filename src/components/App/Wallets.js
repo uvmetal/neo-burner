@@ -35,7 +35,7 @@ class Wallets extends Component {
   }
 
   createPdf() {
-    return <PDF accounts={this.props.accounts} />
+    this.props.history.push('PDF')
   }
 
   render() {
@@ -51,8 +51,11 @@ class Wallets extends Component {
             <p className="lead mx-auto">
 
             </p>
-            <Button onClick={this.createPdf} color="warning" >Create PDF</Button>
-            {this.createPdf}
+            // <Button onClick={this.createPdf} color="warning" >Create PDF</Button>
+            <PDFDownloadLink document={<PDF accounts={this.props.accounts} />} fileName="wallets.pdf" >
+              { "Download Pdf" }
+              </PDFDownloadLink>
+
           </div>
           </Jumbotron>
         </React.Fragment>
@@ -81,19 +84,19 @@ class Wallets extends Component {
 }
 export default Wallets
 
-class Example extends React.Component {
-  render() {
-    return (
-      <div>
-        <ReactToPrint
-          trigger={() => <a href="#">Print this out!</a>}
-          content={() => this.componentRef}
-        />
-        <Wallets ref={el => (this.componentRef = el)} />
-      </div>
-    )
-  }
-}
+// class Example extends React.Component {
+//   render() {
+//     return (
+//       <div>
+//         <ReactToPrint
+//           trigger={() => <a href="#">Print this out!</a>}
+//           content={() => this.componentRef}
+//         />
+//         <Wallets ref={el => (this.componentRef = el)} />
+//       </div>
+//     )
+//   }
+// }
 // <img src={require(qrImagePath)} width="100" height="20" className="img-fluid" alt="uvmetal" />
 // <Button onClick={this.createQr} color="warning">Generate</Button>
 // <div id="padQr"><QRCode value={account._address} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} /><br/>{' '}</div>
