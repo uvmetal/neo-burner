@@ -112,7 +112,7 @@
     },
     "extraFiles": [
       "server",
-      "public/neo-one"
+      "public"
     ]
   },
   "eslintConfig": {

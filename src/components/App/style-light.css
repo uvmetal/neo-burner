@@ -36,3 +36,10 @@ body {
     max-height: 200px;
     font-size: 10px;
 }
+
+#upload_button {
+  display: inline-block;
+}
+#upload_button input[type=file] {
+  display:none;
+}

@@ -25,6 +25,8 @@ const { spawn } = require('child_process')
 
 const isFirstRun = firstRun()
 
+const qr = require('./qrpdf')
+
 let mainWindow, systemConfig
 
 let sailsServer
@@ -128,6 +130,19 @@ ipc.on('setup-event-manager', function (event, arg) {
   ipcBin.setupEventManager(event)
 })
 
+ipc.on('create-pdf', function (event, arg) {
+  qr.gen(arg.path, arg.data)
+  console.log('ipc create-pdf: '+arg.path)
+})
+
+ipc.on('write-file', function (event, arg) {
+
+  fs.writeFileSync(arg.path, arg.data)
+  console.log('ipc write-file: '+arg.path)
+  // systemConfig.accountsPath = arg.path
+  // event.sender.send('update-system-profile-reply', systemConfig)
+})
+
 ipc.on('check-install', function (event, arg) {
   console.log('Checking your software installation...')
 
@@ -204,7 +219,8 @@ function getSystemProfile() {
     gpuInfo: gpuInfo,
     isAccessibilitySupportEnabled: isAccessibilitySupportEnabled,
     isPackaged: isPackaged,
-    consoleBuffer: ['Welcome to Neo-Burner']
+    consoleBuffer: ['Welcome to Neo-Burner'],
+    accountsPath: '/tmp'
   }
 
   console.log('systemConfig is ' + util.inspect(systemConfig, {depth: null}))

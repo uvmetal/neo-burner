@@ -3,6 +3,9 @@ import { Jumbotron, Button } from 'reactstrap'
 
 import { PDFDownloadLink, Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer'
 
+import * as qr from 'qr-image'
+
+
 // import ReactToPrint from 'react-to-print'
 // import PrintTemplate from 'react-print'
 //
@@ -12,6 +15,9 @@ import { bip39 } from 'bip39'
 import util from 'util'
 
 // import './style.css'
+
+import cozLogo from '../../images/coz-inverted.svg'
+
 
 class PDF extends Component {
   constructor(props) {
@@ -51,24 +57,22 @@ class PDF extends Component {
 
   render() {
     if (this.props.accounts.length) {
-      let accounts = this.props.accounts
-      console.log('got '+this.props.accounts.length+' accounts')
+      let wallets = this.createQrCodesFromAccounts()
+      console.log('got '+this.props.accounts.length+' wallets')
+      console.log('wallet: '+wallets[0])
+      let pub = qr.image('test', { type: 'png'})
       return(
         <Document>
-          <Page style={styles.page}>
-          <View key='1' style={styles.movieContainer}>
-            <Image
-                style={styles.image}
-                source={accounts.shift()}
-            />
+        <Page wrap>
+      <View render={({ pageNumber }) => (
+        pageNumber % 2 === 0 && (
+          <View style={{ background: 'red' }}>
+            <Image src={cozLogo} />
+            <Text>I'm only visible in odd pages!</Text>
           </View>
-          <View key='2' style={styles.movieContainer}>
-            <Image
-                style={styles.image}
-                source={accounts.shift()}
-            />
-          </View>
-          </Page>
+        )
+      )} />
+    </Page>
         </Document>
       )
     }

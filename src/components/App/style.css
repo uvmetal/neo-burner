@@ -40,3 +40,10 @@ body {
 #padQr {
   padding-bottom: 10px;
 }
+
+#upload_button {
+  display: inline-block;
+}
+#upload_button input[type=file] {
+  display:none;
+}

@@ -40,16 +40,18 @@ class AppMain extends Component {
       accounts: [],
       tutorialMode: true,
       darkMode: 'true',
+      folder: '/tmp'
     }
   }
 
   componentDidMount() {
   }
 
-  setAccounts(accounts) {
+  setAccounts(accounts, folder) {
     console.log('got accounts in main: '+util.inspect(accounts, {depth: null}))
     this.setState({
-      accounts: accounts
+      accounts: accounts,
+      folder: folder
     })
   }
 
@@ -123,7 +125,8 @@ class AppMain extends Component {
         break
 
         case '/Wallets':
-        rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config} {...this.props}/>
+        rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}
+        folder={this.state.folder} {...this.props}/>
         break
 
         case '/PDF':

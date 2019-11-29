@@ -17,7 +17,9 @@ class Accounts extends Component {
     this.state = {
       amount: '',
       name: '',
-      url: ''
+      url: '',
+      folder: '/tmp',
+      filename: 'accounts.json'
     }
   }
 
@@ -25,13 +27,28 @@ class Accounts extends Component {
   }
 
   onFormSubmit(e) {
-    this.setState({ amount: e.target.value })
     console.log('Generating: '+this.state.amount)
     console.log('Name: '+this.state.name)
     console.log('URL: '+this.state.url)
+    console.log('fakepath: '+this.state.folder)
+
+    let realpath
+
+    if (document.getElementsByTagName('input')[0].files[0])
+      realpath = document.getElementsByTagName('input')[0].files[0].path
+    else realpath = '/tmp'
+
+    console.log('realpath: '+realpath)
+
+    this.state.folder = realpath
+
+    console.log('filename: '+this.state.filename)
+
     let accounts = generateAccounts(this.state.amount, this.state.name, this.state.url)
-    // alert('Generated '+this.state.amount+' accounts: '+JSON.stringify(this.state, null, '  '))
-    this.props.setAccounts(accounts)
+
+    this.props.setAccounts(accounts, realpath, this.state.filename)
+
+    window.ipcRenderer.send('write-file', { path: realpath+'/'+this.state.filename, data: JSON.stringify(accounts).toString() })
   }
 
   createWallet() {
@@ -44,11 +61,27 @@ class Accounts extends Component {
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
           <h1 className="display-4">Accounts </h1>
-          <p className="lead">There are no accounts. Would you like to generate some?</p>
-          <p className="lead mx-auto">
+          <p className="lead">Generate  accounts (WARNING: files are overwritten!)</p>
           <Container className="p-5">
              <Form id="accountsFormLeft">
                <FormGroup>
+                 <div id="upload_button">
+                   <label>
+                     <input directory="" webkitdirectory="" type="file" id="ma"
+                       onChange={e => this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })}
+                       />
+                     <span class="btn btn-primary">Choose Path</span>
+                     {' '+this.state.folder}
+                   </label>
+                 </div>
+                 <Input
+                   style={{width: "400px"}}
+                   type="text"
+                   name="text"
+                   placeholder="File Name"
+                   value={this.state.filename}
+                   onChange={e => this.setState({ filename: e.target.value })}
+                 />
                  <Input
                    style={{width: "400px"}}
                    type="text"
@@ -76,9 +109,7 @@ class Accounts extends Component {
                </FormGroup>
                <Button onClick={e => this.onFormSubmit(e)} color="warning">Generate</Button>
              </Form>
-             <br/>
            </Container>
-          </p>
         </div>
         </Jumbotron>
       </React.Fragment>

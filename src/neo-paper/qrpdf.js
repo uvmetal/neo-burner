@@ -14,9 +14,10 @@ const fs = require('fs')
 const util = require('util')
 // const WIF = require('wif')
 
-exports.qrGen = function () {
-  var pub = qr.image('testing', { type: 'png' })
-
+exports.gen = function (data, filename) {
+  if (!filename) filename = 'qrcode.png'
+  var pub = qr.image(data, { type: 'png' })
+  pub.pipe(require('fs').createWriteStream(filename))
   return pub
 }
 
