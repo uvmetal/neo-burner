@@ -22,46 +22,48 @@ let sources = []
 
 let URL = process.argv[2] ? process.argv[2] : 'https://O3.network'
 
-exports.gen = async function (path, filename, accounts) {
+exports.gen = async function (path, finalWalletPath, filename, accounts) {
   let account
 
-  for (let i in accounts) {
-    account = accounts[i]
-    // const { stdout, stderr } = await exec('node qrpdf.js '+account.address+' '+account.pk+' '+URL+' '+account._WIF )
-    //
-    // if (stderr) {
-    //   console.error(`error: ${stderr}`)
-    // }
+  let i = 0
 
-    // if (defly && stdout) console.log('\nstdout: \n'+stdout)
+  function g(account) {
+    makePdf(account.address, account.pk, account.url, account._WIF, path, () => {
+      let name = account.address
+      console.log('GENERATED: '+name+' ++++++++++++++++++++++++++++++++\n');
+      fs.rename(path+'generated.pdf', path+name+'.pdf', () => {
+        sources[i] = (''+path+name+'.pdf')
+        i++
+        if (i < accounts.length ) g(accounts[i])
 
-    makePdf( account.address, account.pk, account.url, account._WIF, path)
-
-    let name = account.address
-    console.log('Generated: '+name);
-    await exec('mv '+path+'generated.pdf '+path+name+'.pdf')
-    sources[i] = (''+path+name+'.pdf')
+        else {
+          merge(sources, path+filename, function(err) {
+            console.log('merging: '+path+filename)
+            if (err)
+            return console.log(err)
+            console.log('\nSuccess')
+            // var i = sources.length
+            sources.forEach(function(filepath) {
+              console.log('Cleaning up '+filepath)
+              try {
+                if (fs.existsSync(filepath))  {
+                  fs.unlinkSync(filepath)
+                }
+              } catch(e){
+                console.log(e)
+              }
+            })
+            fs.copyFileSync(path+filename, finalWalletPath+filename)
+          })
+        }
+      })
+    })
   }
 
-  merge(sources, path+filename, function(err) {
-    if (err)
-    return console.log(err)
-    console.log('\nSuccess')
-    var i = sources.length
-    sources.forEach(function(filepath) {
-      console.log('Cleaning up '+filepath)
-      try {
-        if (fs.existsSync(filepath))  {
-          fs.unlinkSync(filepath)
-        }
-      } catch(e){
-        console.log(e)
-      }
-    })
-  })
+  g(accounts[i])
 }
 
-function makePdf(address, privateKey, url, wif, path) {
+function makePdf(address, privateKey, url, wif, path, callback) {
   const COMPRESS = false
 
   const publicAddress = address
@@ -100,6 +102,8 @@ function makePdf(address, privateKey, url, wif, path) {
     pkLink = PK.replace('0x','')
   }
 
+  console.log('----------------------------------------------')
+
   console.log('pkLink: '+pkLink)
 
   let pub = qr.image(publicAddress, { type: 'png' })
@@ -117,6 +121,7 @@ function makePdf(address, privateKey, url, wif, path) {
   let bipqr = qr.image(bip39Mnemonic, { type: 'png' })
   bipqr.pipe(require('fs').createWriteStream(path+'bip39.png'))
   console.log('BIP-39: '+bip39Mnemonic)
+  console.log('----------------------------------------------')
 
   fs.readFile(path+'template.html', 'utf8', (err,data) => {
     if (err) {
@@ -125,18 +130,20 @@ function makePdf(address, privateKey, url, wif, path) {
     // var result = data.replace(/\*\*PUBLIC\*\*/g,publicAddress.substring(0,9)+'......'+publicAddress.substring(publicAddress.length-8))
     let result = data.replace(/\*\*PUBLIC\*\*/g,publicAddress)
     result = result.replace(/\*\*URL\*\*/g,URL)
-    result = result.replace(/'\.\//g, '\'file://'+__dirname+'/')
+    result = result.replace(/'\.\//g, '\'file://'+path+'/')
 
     fs.writeFile(path+'generated.html', result, 'utf8', function (err) {
-      if (err) return console.log(err)
+      if (err) {
+        return console.log(err)
+      }
 
-      fs.appendFile('addresses.txt',publicAddress+'\n', function (err) {
-        if (err) throw err
-      })
+      // fs.appendFile('addresses.txt',publicAddress+'\n', function (err) {
+      //   if (err) throw err
+      // })
 
-      let cwd = 'file://' + process.cwd() + '/'
+      // let cwd = 'file://' + process.cwd() + '/'
 
-      console.log(`cwd: ${cwd}`)
+      // console.log(`cwd: ${cwd}`)
       console.log(`path: ${path}`)
 
       let html = fs.readFileSync(path+'/generated.html', 'utf8')
@@ -144,12 +151,13 @@ function makePdf(address, privateKey, url, wif, path) {
         // Rendering options
         format: 'Letter',
         // 'base': cwd, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
-        'base': path, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
+        'base': 'file://'+path, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
       }
 
       pdf.create(html, options).toFile(path+'/generated.pdf', function(err, res) {
         if (err) return console.log(err)
         console.log('res: '+util.inspect(res, {depth: null}))
+        callback()
       })
     })
   })
