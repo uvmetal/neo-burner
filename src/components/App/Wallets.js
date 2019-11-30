@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Jumbotron, Button, Form, FormGroup, Input, Container } from 'reactstrap'
+import BurnerModal from '../Ui/Modal/Modal'
+import FlashButton from '../Ui/FlashButton/FlashButton'
 
 import { PDFDownloadLink } from '@react-pdf/renderer'
 
@@ -13,9 +15,7 @@ import { bip39 } from 'bip39'
 
 import util from 'util'
 
-// import './style.css'
-
-import cozLogo from '../../images/coz-inverted.svg'
+const electron = window.require('electron')
 
 class Wallets extends Component {
   constructor(props) {
@@ -26,13 +26,21 @@ class Wallets extends Component {
 
     this.state = {
       folder: '/tmp',
-      filename: 'wallets.pdf'
+      filename: 'wallets.pdf',
+      generatingPdf: false,
+      pdfExists: false
     }
   }
 
   componentDidMount() {
     // console.log('accountsPath: '+util.inspect(this.props.config, {depth: null}))
     this.setState({ folder: this.props.folder })
+
+    electron.ipcRenderer.on('pdf-created', (event, arg) => {
+      console.log('ipc pdf-created')
+      this.state.generatingPdf = false
+      this.props.history.push('Wallets')
+    })
   }
 
   goToAccounts() {
@@ -40,6 +48,8 @@ class Wallets extends Component {
   }
 
   createPdf() {
+    this.state.generatingPdf = true
+    this.props.history.push('Wallets')
     // this.props.history.push('PDF')
     window.ipcRenderer.send('create-pdf', { path: this.state.folder+'/', filename: this.state.filename, data: this.props.accounts })
     console.log('wallet folder: '+this.state.folder+'/'+this.state.filename)
@@ -77,10 +87,8 @@ class Wallets extends Component {
                       onChange={e => this.setState({ filename: e.target.value })}
                     />
                   </FormGroup>
+                  <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing your wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
                 </Form>
-                <Button onClick={this.createPdf} color="warning" >Create PDF</Button><br/>
-                <img src={'file://'+this.props.folder+'/public.png'}/>
-
               </Container>
             </p>
           </div>
@@ -98,37 +106,11 @@ class Wallets extends Component {
             <p className="lead mx-auto">
             </p>
             <Button onClick={this.goToAccounts} color="warning" >Go To Accounts</Button>
-
           </div>
           </Jumbotron>
-
         </React.Fragment>
       )
     }
-
   }
 }
 export default Wallets
-
-// class Example extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <ReactToPrint
-//           trigger={() => <a href="#">Print this out!</a>}
-//           content={() => this.componentRef}
-//         />
-//         <Wallets ref={el => (this.componentRef = el)} />
-//       </div>
-//     )
-//   }
-// }
-// <img src={require(qrImagePath)} width="100" height="20" className="img-fluid" alt="uvmetal" />
-// <Button onClick={this.createQr} color="warning">Generate</Button>
-// <div id="padQr"><QRCode value={account._address} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} /><br/>{' '}</div>
-// {this.createQrCodesFromAccounts()}
-// <img src={cozLogo}/>
-
-// <PDFDownloadLink document={<PDF accounts={this.props.accounts} />} fileName="wallets.pdf" >
-//   { "Download Pdf" }
-//   </PDFDownloadLink>

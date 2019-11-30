@@ -14,10 +14,10 @@ import Export from '../../App/Export'
 import Report from '../../App/Report'
 import Events from '../../App/Events'
 import Home from '../../App/Home'
-import Settings from '../../App/Settings.js'
-import PDF from '../../App/PDF.js'
+import Settings from '../../App/Settings'
+import PDF from '../../App/PDF'
 
-import Footer from '../../Ui/Main/Footer.js'
+import Footer from '../../Ui/Main/Footer'
 
 import util from 'util'
 

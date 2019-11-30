@@ -22,7 +22,7 @@ let sources = []
 
 let URL = process.argv[2] ? process.argv[2] : 'https://O3.network'
 
-exports.gen = async function (path, finalWalletPath, filename, accounts) {
+exports.gen = async function (path, finalWalletPath, filename, accounts, callback) {
   let account
 
   let i = 0
@@ -54,6 +54,7 @@ exports.gen = async function (path, finalWalletPath, filename, accounts) {
               }
             })
             fs.copyFileSync(path+filename, finalWalletPath+filename)
+            callback()
           })
         }
       })

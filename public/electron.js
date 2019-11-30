@@ -164,7 +164,10 @@ ipc.on('setup-event-manager', function (event, arg) {
 ipc.on('create-pdf', function (event, arg) {
   // qr.gen(arg.path, arg.filename, arg.data)
   console.log('ipc create-pdf: '+arg.path+arg.filename)
-  qr.gen(systemConfig.userData+'/', arg.path, arg.filename, arg.data)
+  qr.gen(systemConfig.userData+'/', arg.path, arg.filename, arg.data, () => {
+    event.sender.send('pdf-created')
+    console.log('done!')
+  })
 })
 
 ipc.on('write-file', function (event, arg) {
