@@ -41,7 +41,7 @@ class Wallets extends Component {
 
   createPdf() {
     // this.props.history.push('PDF')
-    window.ipcRenderer.send('create-pdf', { path: this.state.folder+'/'+this.state.filename, data: this.props.accounts })
+    window.ipcRenderer.send('create-pdf', { path: this.state.folder+'/', filename: this.state.filename, data: this.props.accounts })
     console.log('wallet folder: '+this.state.folder+'/'+this.state.filename)
   }
 
@@ -79,6 +79,7 @@ class Wallets extends Component {
                   </FormGroup>
                 </Form>
                 <Button onClick={this.createPdf} color="warning" >Create PDF</Button><br/>
+                <img src={'file://'+this.props.folder+'/public.png'}/>
 
               </Container>
             </p>

@@ -4,7 +4,8 @@ var rc = require('sails/accessible/rc')
 
 const util = require('util')
 
-const fs = require('fs')
+// const fs = require('fs')
+const fs = require('fs-extra')
 
 const { app, shell, electron, BrowserWindow, Menu } = require('electron')
 
@@ -54,7 +55,8 @@ function createWindow() {
       // useContentSize: true,
       webPreferences: {
         nodeIntegration: true,
-        preload: __dirname + '/preload.js'
+        preload: __dirname + '/preload.js',
+        webSecurity: false
       }
   })
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`)
@@ -109,6 +111,35 @@ function createWindow() {
 
   ipcBin.addIpcListeners(global, server)
   // ipcBin.removeIpcListeners()
+  console.log('data folder: '+__dirname+'/neo-paper/')
+
+  fs.mkdirp(systemConfig.userData+'/neo-paper/data/images/')
+  .then(() => console.log('success!'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/template.html', systemConfig.userData+'/neo-paper/data/template.html')
+  .then(() => console.log('success!'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/images/', systemConfig.userData+'/neo-paper/data/images/')
+  .then(() => console.log('success!'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/images/background.png', systemConfig.userData+'/neo-paper/data/images/background.png')
+  .then(() => console.log('success!'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', systemConfig.userData+'/neo-paper/data/images/coz-inverted.png')
+  .then(() => console.log('success!'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/images/neo-logo-xp.png', systemConfig.userData+'/neo-paper/data/images/neo-logo-xp.png')
+  .then(() => console.log('success!'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/images/neo-paper-ex.png', systemConfig.userData+'/neo-paper/data/images/neo-paper-ex.png')
+  .then(() => console.log('success!'))
+  .catch(err => console.error(err))
 }
 
 app.on('ready', createWindow);
@@ -131,7 +162,8 @@ ipc.on('setup-event-manager', function (event, arg) {
 })
 
 ipc.on('create-pdf', function (event, arg) {
-  qr.gen(arg.path, arg.data)
+  // qr.gen(arg.path, arg.filename, arg.data)
+  qr.gen(systemConfig.userData+'/', arg.filename, arg.data)
   console.log('ipc create-pdf: '+arg.path)
 })
 

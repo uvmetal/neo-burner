@@ -23,6 +23,7 @@
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
+    "easy-pdf-merge": "^0.2.2",
     "electron-first-run": "^2.0.0",
     "electron-is-dev": "^1.1.0",
     "electron-open-link-in-browser": "^1.0.2",
@@ -36,7 +37,7 @@
     "eslint-plugin-react-hooks": "^1.5.0",
     "eslint-utils": "^1.4.2",
     "file-loader": "3.0.1",
-    "fs-extra": "7.0.1",
+    "fs-extra": "^8.1.0",
     "fstream-ignore": "^1.0.5",
     "global": "^4.4.0",
     "grpc": "^1.23.3",
@@ -99,7 +100,8 @@
     "files": [
       "build/**/*",
       "node_modules/**/*",
-      "server/**/*"
+      "server/**/*",
+      "neo-paper/**/*"
     ],
     "directories": {
       "buildResources": "assets"
@@ -112,7 +114,8 @@
     },
     "extraFiles": [
       "server",
-      "public"
+      "public",
+      "neo-paper"
     ]
   },
   "eslintConfig": {

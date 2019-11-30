@@ -22,26 +22,28 @@ let sources = []
 
 let URL = process.argv[2] ? process.argv[2] : 'https://O3.network'
 
-exports.gen = function (data, filename) {
+exports.gen = async function (path, filename, accounts) {
   let account
 
-  for (let a in accounts) {
-    account = accounts[a]
-    const { stdout, stderr } = await exec('node qrpdf.js '+account.address+' '+account.pk+' '+URL+' '+account._WIF )
+  for (let i in accounts) {
+    account = accounts[i]
+    // const { stdout, stderr } = await exec('node qrpdf.js '+account.address+' '+account.pk+' '+URL+' '+account._WIF )
+    //
+    // if (stderr) {
+    //   console.error(`error: ${stderr}`)
+    // }
 
-    if (stderr) {
-      console.error(`error: ${stderr}`)
-    }
+    // if (defly && stdout) console.log('\nstdout: \n'+stdout)
 
-    if (defly && stdout) console.log('\nstdout: \n'+stdout)
+    makePdf( account.address, account.pk, account.url, account._WIF, path)
 
     let name = account.address
     console.log('Generated: '+name);
-    await exec('mv generated.pdf '+name+'.pdf')
-    sources[a] = (''+name+'.pdf')
+    await exec('mv '+path+'generated.pdf '+path+name+'.pdf')
+    sources[i] = (''+path+name+'.pdf')
   }
 
-  merge(sources,'wallets.pdf',function(err) {
+  merge(sources, path+filename, function(err) {
     if (err)
     return console.log(err)
     console.log('\nSuccess')
@@ -59,7 +61,7 @@ exports.gen = function (data, filename) {
   })
 }
 
-function makeQr(address, privateKey, url, wif) {
+function makePdf(address, privateKey, url, wif, path) {
   const COMPRESS = false
 
   const publicAddress = address
@@ -101,22 +103,22 @@ function makeQr(address, privateKey, url, wif) {
   console.log('pkLink: '+pkLink)
 
   let pub = qr.image(publicAddress, { type: 'png' })
-  pub.pipe(require('fs').createWriteStream('public.png'))
+  pub.pipe(require('fs').createWriteStream(path+'public.png'))
   console.log('Public Address: '+publicAddress)
 
-  let url = qr.image(URL, { type: 'png' })
-  url.pipe(require('fs').createWriteStream('url.png'))
+  url = qr.image(URL, { type: 'png' })
+  url.pipe(require('fs').createWriteStream(path+'url.png'))
   console.log('URL: '+URL)
 
   let priv = qr.image(WIF, { type: 'png' })
-  priv.pipe(require('fs').createWriteStream('private.png'))
+  priv.pipe(require('fs').createWriteStream(path+'private.png'))
   console.log('WIF: '+WIF)
 
   let bipqr = qr.image(bip39Mnemonic, { type: 'png' })
-  bipqr.pipe(require('fs').createWriteStream('bip39.png'))
+  bipqr.pipe(require('fs').createWriteStream(path+'bip39.png'))
   console.log('BIP-39: '+bip39Mnemonic)
 
-  fs.readFile('template.html', 'utf8', (err,data) => {
+  fs.readFile(path+'template.html', 'utf8', (err,data) => {
     if (err) {
       return console.log(err)
     }
@@ -125,7 +127,7 @@ function makeQr(address, privateKey, url, wif) {
     result = result.replace(/\*\*URL\*\*/g,URL)
     result = result.replace(/'\.\//g, '\'file://'+__dirname+'/')
 
-    fs.writeFile('generated.html', result, 'utf8', function (err) {
+    fs.writeFile(path+'generated.html', result, 'utf8', function (err) {
       if (err) return console.log(err)
 
       fs.appendFile('addresses.txt',publicAddress+'\n', function (err) {
@@ -135,15 +137,17 @@ function makeQr(address, privateKey, url, wif) {
       let cwd = 'file://' + process.cwd() + '/'
 
       console.log(`cwd: ${cwd}`)
+      console.log(`path: ${path}`)
 
-      let html = fs.readFileSync('./generated.html', 'utf8')
+      let html = fs.readFileSync(path+'/generated.html', 'utf8')
       let options = {
         // Rendering options
         format: 'Letter',
-        'base': cwd, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
+        // 'base': cwd, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
+        'base': path, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
       }
 
-      pdf.create(html, options).toFile('./generated.pdf', function(err, res) {
+      pdf.create(html, options).toFile(path+'/generated.pdf', function(err, res) {
         if (err) return console.log(err)
         console.log('res: '+util.inspect(res, {depth: null}))
       })
