@@ -50,6 +50,10 @@ class AppMain extends Component {
   componentDidMount() {
   }
 
+  liftState(state) {
+    this.setState(state)
+  }
+
   setAccounts(accounts, folder) {
     console.log('got accounts in main: '+util.inspect(accounts, {depth: null}))
     this.setState({
@@ -65,10 +69,11 @@ class AppMain extends Component {
     })
   }
 
-  setPdfPath(name) {
-    console.log('setPdfPath(): '+name)
+  setPdfPath(folder, file) {
+    console.log('setPdfPath(): '+folder+file)
     this.setState({
-      pdfPath: name,
+      folder: folder,
+      pdfPath: folder+file,
       pdfExists: true
     })
   }
@@ -137,7 +142,7 @@ class AppMain extends Component {
 
         case '/Wallets':
         rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}
-        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath} state={this.state}/>
+        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath} state={this.state} liftState={this.liftState}/>
         break
 
         case '/PDF':

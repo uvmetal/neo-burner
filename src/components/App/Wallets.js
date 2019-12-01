@@ -39,7 +39,7 @@ class Wallets extends Component {
 
     electron.ipcRenderer.on('pdf-created', (event, arg) => {
       console.log('ipc pdf-created')
-      this.props.setPdfPath(this.state.folder+'/'+this.state.filename)
+      this.props.setPdfPath(this.state.folder+'/', this.state.filename)
       this.state.generatingPdf = false
       this.state.pdfExists = true
       this.props.history.push('Wallets')
