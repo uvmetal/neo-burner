@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Jumbotron, Container, Button, Form, FormGroup, Input } from 'reactstrap'
+import { Jumbotron, Container, Button, Form, FormGroup, Input, ButtonGroup } from 'reactstrap'
 import { generateAccounts } from '../../neo-paper/accounts.js'
 
 
@@ -136,8 +136,10 @@ class Accounts extends Component {
                 name="accounts"
                 value={util.inspect(this.props.accounts, {depth:null})}/>
                 <br/>
+                <ButtonGroup>
                 <Button onClick={this.props.clearAccounts} color="warning" >Clear</Button>{' '}
                 <Button onClick={this.createWallet} color="warning" >Create Wallet</Button>
+                </ButtonGroup>
              </Container>
             </p>
           </div>

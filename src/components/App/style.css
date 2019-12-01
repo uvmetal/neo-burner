@@ -13,6 +13,7 @@ body {
 #ma {
   background-color: black;
   color: white;
+  flex-direction: row;
 }
 
 

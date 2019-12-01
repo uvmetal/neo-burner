@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'reactstrap'
+import { Button, ButtonGroup } from 'reactstrap'
 // import './style.css'
 
 class HeaderControls extends Component {
@@ -71,15 +71,17 @@ class HeaderControls extends Component {
   render() {
     return(
       <div id="ma">
-        <Button size="sm" color="warning" onClick={this.home} >Home</Button>{' '}
-        <Button size="sm" color="warning" onClick={this.accounts} >Accounts</Button>{' '}
-        <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
-        <Button size="sm" color="warning" onClick={this.new} >New</Button>{' '}
-        <Button size="sm" color="warning" onClick={this.import} >Import</Button>{' '}
-        <Button size="sm" color="warning" onClick={this.export} >Export</Button>{' '}
-        <Button size="sm" color="warning" onClick={this.report} >Report</Button>{' '}
-        <Button size="sm" color="warning" onClick={this.settings} >Settings</Button>{' '}
-        <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
+        <ButtonGroup>
+          <Button size="sm" color="warning" onClick={this.home} >Home</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.accounts} >Accounts</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.new} >New</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.import} >Import</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.export} >Export</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.report} >Report</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.settings} >Settings</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
+        </ButtonGroup>
       </div>
     )
   }

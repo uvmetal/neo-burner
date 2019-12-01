@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Jumbotron, Button, Form, FormGroup, Input, Container, ButtonGroup } from 'reactstrap'
+import { Jumbotron, Button, Form, FormGroup, Input, Container } from 'reactstrap'
 import BurnerModal from '../Ui/Modal/Modal'
 import FlashButton from '../Ui/FlashButton/FlashButton'
 
@@ -17,7 +17,7 @@ import util from 'util'
 
 const electron = window.require('electron')
 
-class Wallets extends Component {
+class CustomizePdf extends Component {
   constructor(props) {
     super(props)
 
@@ -99,13 +99,12 @@ class Wallets extends Component {
                       onChange={e => this.setState({ filename: e.target.value })}
                     />
                   </FormGroup>
-                  <ButtonGroup>
                   <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing '+this.props.accounts.length+' wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
+                  <br/>
                   <Button onClick={this.customizePdf} color="warning" >Customize PDF</Button>
                   {' '}
                   <br/>
                   {this.state.pdfExists ? <Button onClick={this.viewPdf} color="warning" >View PDF</Button> : ''}
-                  </ButtonGroup>
                 </Form>
               </Container>
             </p>
@@ -131,4 +130,4 @@ class Wallets extends Component {
     }
   }
 }
-export default Wallets
+export default CustomizePdf
