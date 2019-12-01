@@ -1,19 +1,6 @@
 import React, { Component } from 'react'
 import { Jumbotron, Button, Form, FormGroup, Input, Container, ButtonGroup } from 'reactstrap'
-import BurnerModal from '../Ui/Modal/Modal'
-
 import FlashButton from '../Ui/FlashButton/FlashButton'
-
-
-import { PDFDownloadLink } from '@react-pdf/renderer'
-
-import PDF from './PDF.js'
-
-import ReactToPrint from 'react-to-print'
-import PrintTemplate from 'react-print'
-
-import { QRCode } from 'react-qr-svg'
-import { bip39 } from 'bip39'
 
 import util from 'util'
 
@@ -53,8 +40,10 @@ class Wallets extends Component {
     electron.ipcRenderer.on('pdf-created', (event, arg) => {
       console.log('ipc pdf-created')
       this.props.setPdfPath(this.state.folder+'/', this.state.filename)
-      this.state.generatingPdf = false
-      this.state.pdfExists = true
+      this.setState({
+        generatingPdf: false,
+        pdfExists: true
+      })
       this.props.history.push('Wallets')
     })
   }
@@ -69,7 +58,7 @@ class Wallets extends Component {
   }
 
   createPdf() {
-    this.state.generatingPdf = true
+    this.setState({ generatingPdf: true })
     this.props.history.push('Wallets')
     // this.props.history.push('PDF')
     window.ipcRenderer.send('create-pdf', { path: this.state.folder+'/', filename: this.state.filename, data: this.props.accounts })

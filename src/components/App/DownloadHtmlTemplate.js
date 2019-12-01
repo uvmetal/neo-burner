@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react'
-import { Jumbotron, Form, FormGroup, Input, Container, Button, Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup } from 'reactstrap'
+import React, { Component } from 'react'
+import { Jumbotron, Form, FormGroup, Input, Container, Button, ButtonGroup } from 'reactstrap'
 // import './style.css'
 
 class DownloadHtmlTemplateModal extends Component {

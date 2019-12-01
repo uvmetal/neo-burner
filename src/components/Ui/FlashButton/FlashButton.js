@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import React, { Component } from 'react'
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
 import './style.css'
 
 class FlashButton extends Component {
