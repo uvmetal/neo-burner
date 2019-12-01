@@ -95,8 +95,7 @@ class Wallets extends Component {
           <Jumbotron className="vertical-center" id="ma">
           <div className="container hero-container text-center" id="ma">
             <h1 className="display-4">Wallets </h1>
-            <p className="lead">Found {this.props.accounts.length} accounts.</p>
-            <p className="lead mx-auto">
+            <p className="lead" id="fourteenFont">Found {this.props.accounts.length} accounts.</p>
               <Container className="p-5">
                 <Form id="accountsFormLeft">
                   <FormGroup>
@@ -105,8 +104,8 @@ class Wallets extends Component {
                         <input directory="" webkitdirectory="" type="file" id="ma"
                           onChange={e => this.setFolder(e)}
                           />
-                        <span class="btn btn-primary">PDF Output Path</span>
-                        {' '+this.state.folder}
+                        <span class="btn btn-primary" id="fourteenFont">PDF Output Path</span>
+                        <span id="fourteenFont">{' '+this.state.folder}</span>
                       </label>
                     </div>
                     <Input
@@ -126,10 +125,11 @@ class Wallets extends Component {
                   {this.state.pdfExists ? <Button onClick={this.viewPdf} color="warning" >View PDF</Button> : ''}
                   </ButtonGroup>
                   <br/>
+                  <div id="fourteenFont">
                   Template Path: {this.props.templateFolder ? this.props.templateFolder : this.props.config.userData+'/' }
+                  </div>
                 </Form>
               </Container>
-            </p>
           </div>
           </Jumbotron>
         </React.Fragment>
@@ -140,7 +140,7 @@ class Wallets extends Component {
           <Jumbotron className="vertical-center" id="ma">
           <div className="container hero-container text-center" id="ma">
             <h1 className="display-4">Wallets </h1>
-            <p className="lead">Found {this.props.accounts.length} accounts.</p>
+            <p className="lead" id="fourteenFont">Found {this.props.accounts.length} accounts.</p>
             <hr className="my-4" />
             <p className="lead mx-auto">
             </p>

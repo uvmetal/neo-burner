@@ -21,13 +21,15 @@ const apiProvider = new api.neoscan.instance(
 
 const provider = new api.neoscan.instance("TestNet")
 
-export function generateAccounts (amount, name, url) {
+export function generateAccounts (amount, name, url, payout) {
 
   if (!name) name = 'Neo-Burner Event'
   if (!url) url = 'Neo-Burner URL'
 
   let AMOUNT = amount
+  let PAYOUT = payout
   if (!AMOUNT) AMOUNT=1
+  if (!PAYOUT) PAYOUT=0
 
   let accounts = []
   let bip39Mnemonic
@@ -58,6 +60,7 @@ export function generateAccounts (amount, name, url) {
       url: url,
       address: result._address, // maintain compatibility with the rest of AG's work
       pk: result._privateKey,   // maintain compatibility with the rest of AG's work
+      payout: payout,
       _address:result._address,
       _privateKey: result._privateKey,
       _publicKey: result._publicKey,

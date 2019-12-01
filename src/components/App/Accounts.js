@@ -18,6 +18,7 @@ class Accounts extends Component {
       amount: '',
       name: '',
       url: '',
+      payout: '',
       folder: '/tmp',
       filename: 'accounts.json'
     }
@@ -60,8 +61,8 @@ class Accounts extends Component {
       <React.Fragment>
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
-          <h1 className="display-4">Accounts </h1>
-          <p className="lead">Generate  accounts (WARNING: files are overwritten!)</p>
+          <h2 className="display-4">Accounts </h2>
+          <p className="lead" id="fourteenFont">Generate  accounts (WARNING: files are overwritten!)</p>
           <Container className="p-5">
              <Form id="accountsFormLeft">
                <FormGroup>
@@ -70,8 +71,8 @@ class Accounts extends Component {
                      <input directory="" webkitdirectory="" type="file" id="ma"
                        onChange={e => this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })}
                        />
-                     <span class="btn btn-primary">Choose Path</span>
-                     {' '+this.state.folder}
+                     <span class="btn btn-primary" id="fourteenFont">Choose Path</span>
+                     <span id="fourteenFont">{' '+this.state.folder}</span>
                    </label>
                  </div>
                  <Input
@@ -81,6 +82,7 @@ class Accounts extends Component {
                    placeholder="File Name"
                    value={this.state.filename}
                    onChange={e => this.setState({ filename: e.target.value })}
+                   id="fourteenFont"
                  />
                  <Input
                    style={{width: "400px"}}
@@ -89,6 +91,7 @@ class Accounts extends Component {
                    placeholder="Event Name"
                    value={this.state.name}
                    onChange={e => this.setState({ name: e.target.value })}
+                   id="fourteenFont"
                  />
                  <Input
                    style={{width: "400px"}}
@@ -97,6 +100,16 @@ class Accounts extends Component {
                    placeholder="Event URL"
                    value={this.state.url}
                    onChange={e => this.setState({ url: e.target.value })}
+                   id="fourteenFont"
+                 />
+                 <Input
+                   style={{width: "400px"}}
+                   type="text"
+                   name="text"
+                   placeholder="Event Payout"
+                   value={this.state.payout}
+                   onChange={e => this.setState({ payout: e.target.value })}
+                   id="fourteenFont"
                  />
                  <Input
                    style={{width: "200px"}}
@@ -105,6 +118,7 @@ class Accounts extends Component {
                    placeholder="How many accounts?"
                    value={this.state.amount}
                    onChange={e => this.setState({ amount: e.target.value })}
+                   id="fourteenFont"
                  />
                </FormGroup>
                <Button onClick={e => this.onFormSubmit(e)} color="warning">Generate</Button>
@@ -125,7 +139,7 @@ class Accounts extends Component {
           <Jumbotron className="vertical-center" id="ma">
           <div className="container hero-container text-center" id="ma">
             <h1 className="display-4">Accounts </h1>
-            <p className="lead">There are {this.props.accounts.length} accounts.</p>
+            <p className="lead" id="fourteenFont">There are {this.props.accounts.length} accounts.</p>
             <p className="lead mx-auto">
             <Container className="p-5">
                <textarea

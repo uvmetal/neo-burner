@@ -55,3 +55,15 @@ body {
 #upload_button input[type=file] {
   display:none;
 }
+
+#sixteenFont {
+  font-size: 16px;
+}
+
+#fourteenFont {
+  font-size: 14px;
+}
+
+#twelveFont {
+  font-size: 12px;
+}

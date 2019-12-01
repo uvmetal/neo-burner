@@ -57,8 +57,8 @@ class DownloadHtmlTemplateModal extends Component {
       <React.Fragment>
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
-          <h1 className="display-4">Copy Template </h1>
-          <p className="lead">Copy and modify the default template to change the default wallet PDF appearance.</p>
+          <h2 className="display-4">Copy Template </h2>
+          <p className="lead" id="fourteenFont">Copy and modify the default template to change the default wallet PDF appearance.</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
 
@@ -70,8 +70,8 @@ class DownloadHtmlTemplateModal extends Component {
                         <input directory="" webkitdirectory="" type="file" id="ma"
                           onChange={e => this.setFolder(e)}
                         />
-                        <span class="btn btn-primary">Choose Where to Save</span>
-                        {' '+this.state.folder}
+                        <span class="btn btn-primary" id="fourteenFont">Choose Where to Save</span>
+                        <span id="fourteenFont">{' '+this.state.folder}</span>
                       </label>
                     </div>
                     </FormGroup>
