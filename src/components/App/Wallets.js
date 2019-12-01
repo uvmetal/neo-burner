@@ -15,6 +15,7 @@ class Wallets extends Component {
     this.createPdf = this.createPdf.bind(this)
     this.viewPdf = this.viewPdf.bind(this)
     this.customizePdf = this.customizePdf.bind(this)
+    this.resetTemplatePath = this.resetTemplatePath.bind(this)
     // this.currentModalBody = this.currentModalBody.bind(this)
 
     // TODO Refactor state/prop management
@@ -22,6 +23,7 @@ class Wallets extends Component {
     this.state = {
       folder: '',
       filename: 'wallets.pdf',
+      templateFolder: '',
       generatingPdf: false,
       pdfExists: false,
       currentModal: '',
@@ -35,6 +37,7 @@ class Wallets extends Component {
 
   componentDidMount() {
     // console.log('accountsPath: '+util.inspect(this.props.config, {depth: null}))
+    console.log('templateFolder: '+this.props.templateFolder)
     this.setState({ folder: this.props.folder, pdfExists: this.props.pdfExists })
 
     electron.ipcRenderer.on('pdf-created', (event, arg) => {
@@ -60,8 +63,11 @@ class Wallets extends Component {
   createPdf() {
     this.setState({ generatingPdf: true })
     this.props.history.push('Wallets')
+    let templateFolder
+    if (this.props.templateFolder) templateFolder = this.props.templateFolder
+    else templateFolder = this.props.config.userData+'/'
     // this.props.history.push('PDF')
-    window.ipcRenderer.send('create-pdf', { path: this.state.folder+'/', filename: this.state.filename, data: this.props.accounts })
+    window.ipcRenderer.send('create-pdf', { pdfPath: this.state.folder+'/', filename: this.state.filename, templateFolder: templateFolder, data: this.props.accounts })
     console.log('wallet folder: '+this.state.folder+'/'+this.state.filename)
   }
 
@@ -77,6 +83,9 @@ class Wallets extends Component {
     console.log('nextClick')
   }
 
+  resetTemplatePath(){
+    this.props.setTemplateFolder(this.props.config.userData+'/')
+  }
 
   render() {
     if (this.props.accounts.length) {
@@ -87,7 +96,6 @@ class Wallets extends Component {
           <div className="container hero-container text-center" id="ma">
             <h1 className="display-4">Wallets </h1>
             <p className="lead">Found {this.props.accounts.length} accounts.</p>
-            <hr className="my-4" />
             <p className="lead mx-auto">
               <Container className="p-5">
                 <Form id="accountsFormLeft">
@@ -97,7 +105,7 @@ class Wallets extends Component {
                         <input directory="" webkitdirectory="" type="file" id="ma"
                           onChange={e => this.setFolder(e)}
                           />
-                        <span class="btn btn-primary">Choose Path</span>
+                        <span class="btn btn-primary">PDF Output Path</span>
                         {' '+this.state.folder}
                       </label>
                     </div>
@@ -112,12 +120,13 @@ class Wallets extends Component {
                   </FormGroup>
                   <ButtonGroup>
                   <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing '+this.props.accounts.length+' wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
-
-                  <Button onClick={this.customizePdf} color="warning" >Customize PDF</Button>
+                  <Button onClick={this.customizePdf} color="warning" >Set Template Path</Button>
+                  <Button onClick={this.resetTemplatePath} color="warning" >Reset Template Path</Button>
                   {' '}
-                  <br/>
                   {this.state.pdfExists ? <Button onClick={this.viewPdf} color="warning" >View PDF</Button> : ''}
                   </ButtonGroup>
+                  <br/>
+                  Template Path: {this.props.templateFolder ? this.props.templateFolder : this.props.config.userData+'/' }
                 </Form>
               </Container>
             </p>

@@ -113,34 +113,22 @@ function createWindow() {
 
   ipcBin.addIpcListeners(global, server)
   // ipcBin.removeIpcListeners()
-  console.log('data folder: '+__dirname+'/neo-paper/')
+  console.log('data folder: '+__dirname)
 
-  fs.mkdirp(systemConfig.userData+'/neo-paper/data/images/')
-  .then(() => console.log('created: '+systemConfig.userData+'/neo-paper/data/images/'))
+  fs.copy(__dirname+'/neo-paper/data/template.html', systemConfig.userData+'/template.html')
+  .then(() => console.log('copied '+__dirname+'/neo-paper/data/template.html to '+ systemConfig.userData+'/template.html'))
   .catch(err => console.error(err))
 
-  fs.copy(__dirname+'/neo-paper/data/template.html', systemConfig.userData+'/neo-paper/data/template.html')
-  .then(() => console.log('copied '+__dirname+'/neo-paper/data/template.html to '+ systemConfig.userData+'/neo-paper/data/template.html'))
+  fs.copy(__dirname+'/neo-paper/data/images/background.png', systemConfig.userData+'/background.png')
+  .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/background.png to '+ systemConfig.userData+'/background.png'))
   .catch(err => console.error(err))
 
-  fs.copy(__dirname+'/neo-paper/data/images/', systemConfig.userData+'/neo-paper/data/images/')
-  .then(() => console.log('copied'+__dirname+'/neo-paper/data/images/ to '+ systemConfig.userData+'/neo-paper/data/images/'))
+  fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', systemConfig.userData+'/coz-inverted.png')
+  .then(() => console.log('copied: '+_dirname+'/neo-paper/data/images/coz-inverted.svg to ' + systemConfig.userData+'/coz-inverted.png'))
   .catch(err => console.error(err))
 
-  fs.copy(__dirname+'/neo-paper/data/images/background.png', systemConfig.userData+'/neo-paper/data/images/background.png')
-  .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/background.png to '+ systemConfig.userData+'/neo-paper/data/images/background.png'))
-  .catch(err => console.error(err))
-
-  fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', systemConfig.userData+'/neo-paper/data/images/coz-inverted.png')
-  .then(() => console.log('copied: '+_dirname+'/neo-paper/data/images/coz-inverted.svg to ' + systemConfig.userData+'/neo-paper/data/images/coz-inverted.png'))
-  .catch(err => console.error(err))
-
-  fs.copy(__dirname+'/neo-paper/data/images/neo-logo-xp.png', systemConfig.userData+'/neo-paper/data/images/neo-logo-xp.png')
-  .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/neo-logo-xp.png to'+ systemConfig.userData+'/neo-paper/data/images/neo-logo-xp.png'))
-  .catch(err => console.error(err))
-
-  fs.copy(__dirname+'/neo-paper/data/images/neo-paper-ex.png', systemConfig.userData+'/neo-paper/data/images/neo-paper-ex.png')
-  .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/neo-paper-ex.png to '+ systemConfig.userData+'/neo-paper/data/images/neo-paper-ex.png'))
+  fs.copy(__dirname+'/neo-paper/data/images/neo-logo-xp.png', systemConfig.userData+'/neo-logo-xp.png')
+  .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/neo-logo-xp.png to'+ systemConfig.userData+'/neo-logo-xp.png'))
   .catch(err => console.error(err))
 }
 
@@ -165,8 +153,8 @@ ipc.on('setup-event-manager', function (event, arg) {
 
 ipc.on('create-pdf', function (event, arg) {
   // qr.gen(arg.path, arg.filename, arg.data)
-  console.log('ipc create-pdf: '+arg.path+arg.filename)
-  qr.gen(systemConfig.userData+'/', arg.path, arg.filename, arg.data, () => {
+  console.log('ipc create-pdf at '+arg.pdfPath+arg.filename+' using template folder '+arg.templateFolder)
+  qr.gen(arg.templateFolder+'/', arg.pdfPath, arg.filename, arg.data, () => {
     event.sender.send('pdf-created')
     console.log('done!')
   })
@@ -180,6 +168,27 @@ ipc.on('write-file', function (event, arg) {
 ipc.on('copy-file', function (event, arg) {
   fs.copyFile(arg.src, arg.dest)
   console.log('ipc copy-file: '+arg.src + ' to '+arg.dest)
+})
+
+ipc.on('copy-template', function (event, arg) {
+  // fs.copyFile(systemConfig.userData, arg.dest)
+  console.log('ipc copy-template: '+__dirname+'/neo-paper/data/ to '+arg.dest)
+
+  fs.copy(__dirname+'/neo-paper/data/template.html', arg.dest+'/template.html')
+  .then(() => console.log('copied '+__dirname+'/neo-paper/data/template.html to '+ arg.dest+'/template.html'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/images/background.png', arg.dest+'/background.png')
+  .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/background.png to '+ arg.dest+'/background.png'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', arg.dest+'/coz-inverted.png')
+  .then(() => console.log('copied: '+__dirname+'/neo-paper/data/images/coz-inverted.svg to ' + arg.dest+'/coz-inverted.png'))
+  .catch(err => console.error(err))
+
+  fs.copy(__dirname+'/neo-paper/data/images/neo-logo-xp.png', arg.dest+'/neo-logo-xp.png')
+  .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/neo-logo-xp.png to '+ arg.dest+'/neo-logo-xp.png'))
+  .catch(err => console.error(err))
 })
 
 ipc.on('check-install', function (event, arg) {

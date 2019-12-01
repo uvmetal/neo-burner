@@ -37,7 +37,7 @@ class AppMain extends Component {
     this.setPdfPath = this.setPdfPath.bind(this)
     this.setDarkMode = this.setDarkMode.bind(this)
     this.setFolder = this.setFolder.bind(this)
-    this.setUploadFolder = this.setUploadFolder.bind(this)
+    this.setTemplateFolder = this.setTemplateFolder.bind(this)
 
     this.state = {
       leftPaneHidden: true,
@@ -47,17 +47,18 @@ class AppMain extends Component {
       tutorialMode: true,
       darkMode: 'true',
       folder: '/tmp',
-      uploadFolder: '/tmp',
+      templateFolder: '',
       pdfPath: 'wallets.pdf',
       pdfExists: false
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
+
   }
 
-  liftState(state) {
-    this.setState(state)
+  componentDidMount() {
+    console.log('userData :'+this.props.config.userData)
   }
 
   setFolder(folder) {
@@ -65,9 +66,9 @@ class AppMain extends Component {
     this.setState({folder: folder})
   }
 
-  setUploadFolder(folder) {
-    console.log('main setting upload folder: '+folder)
-    this.setState({uploadFolder: folder})
+  setTemplateFolder(folder) {
+    console.log('main setting template folder: '+folder)
+    this.setState({templateFolder: folder})
   }
 
   setAccounts(accounts, folder) {
@@ -138,8 +139,9 @@ class AppMain extends Component {
 
     if (this.props && this.props.location && this.props.location.pathname) {
 
-      // console.log(this.props.config.consoleBuffer)
+      // this.setState({templateFolder: this.props.config.userData+'/'})
 
+      // console.log(this.props.config.consoleBuffer)
       rightPaneContent = <Home />
 
       switch(this.props.location.pathname) {
@@ -158,8 +160,8 @@ class AppMain extends Component {
 
         case '/Wallets':
         rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}
-        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath}  liftState={this.liftState}
-        setFolder={this.setFolder} pdfExists={this.state.pdfExists}
+        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath}
+        setFolder={this.setFolder} pdfExists={this.state.pdfExists} templateFolder={this.state.templateFolder} setTemplateFolder={this.setTemplateFolder}
         />
         break
 
@@ -172,7 +174,7 @@ class AppMain extends Component {
         break
 
         case '/DownloadHtmlTemplate':
-        rightPaneContent = <DownloadHtmlTemplateModal config={this.props.config} folder={this.state.folder} setFolder={this.setFolder} {...this.props}/>
+        rightPaneContent = <DownloadHtmlTemplateModal config={this.props.config} folder={this.state.templateFolder} setTemplateFolder={this.setTemplateFolder} {...this.props}/>
         break
 
         case '/New':

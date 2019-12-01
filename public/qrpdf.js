@@ -39,6 +39,12 @@ exports.gen = async function (path, finalWalletPath, filename, accounts, callbac
         else {
           if (accounts.length === 1) {
             fs.copyFileSync(path+name+'.pdf', finalWalletPath+filename)
+            fs.unlinkSync(path+name+'.pdf')
+            fs.unlinkSync(path+'url.png')
+            fs.unlinkSync(path+'bip39.png')
+            fs.unlinkSync(path+'private.png')
+            fs.unlinkSync(path+'public.png')
+            fs.unlinkSync(path+'generated.html')
             callback()
           } else {
             merge(sources, path+filename, function(err) {
@@ -58,6 +64,11 @@ exports.gen = async function (path, finalWalletPath, filename, accounts, callbac
                 }
               })
               fs.copyFileSync(path+filename, finalWalletPath+filename)
+              fs.unlinkSync(path+'url.png')
+              fs.unlinkSync(path+'bip39.png')
+              fs.unlinkSync(path+'private.png')
+              fs.unlinkSync(path+'public.png')
+              fs.unlinkSync(path+'generated.html')
               callback()
             })
           }
@@ -111,6 +122,8 @@ function makePdf(address, privateKey, url, wif, path, callback) {
   console.log('----------------------------------------------')
 
   console.log('pkLink: '+pkLink)
+
+
 
   let pub = qr.image(publicAddress, { type: 'png' })
   pub.pipe(require('fs').createWriteStream(path+'public.png'))

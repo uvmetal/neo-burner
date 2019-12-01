@@ -7,14 +7,15 @@ class DownloadHtmlTemplateModal extends Component {
     super(props)
 
     this.toggle = this.toggle.bind(this)
-    this.continue = this.continue.bind(this)
+    this.save = this.save.bind(this)
     this.skip = this.skip.bind(this)
     this.goBack = this.goBack.bind(this)
     this.setFolder = this.setFolder.bind(this)
 
     this.state = {
       modal: false,
-      folder: this.props.folder
+      folder: this.props.folder,
+      filename: 'template.html',
     }
   }
 
@@ -26,18 +27,17 @@ class DownloadHtmlTemplateModal extends Component {
     this.setState({ modal: !this.state.modal })
   }
 
-  continue() {
+  save() {
     let options = {
-      dest: this.state.folder+'/'
+      src: this.props.config.userData+'/'+this.state.filename, dest: this.state.folder+'/'+this.state.filename
     }
-    window.ipcRenderer.send('copy-template', options)
-    console.log('send ipc copy-template to '+this.state.folder+'/')
-    this.props.setTemplateFolder(this.state.folder)
-    this.props.history.push('Wallets')
+    window.ipcRenderer.send('copy-file', options)
+    console.log('send ipc copy-file: '+options.src +' to '+options.dest)
+    this.props.history.push('UploadHtmlTemplate')
   }
 
   skip() {
-    this.props.history.push('Wallets')
+    this.props.history.push('UploadHtmlTemplate')
   }
 
   goBack() {
@@ -46,9 +46,9 @@ class DownloadHtmlTemplateModal extends Component {
 
   setFolder(e) {
     if(document.getElementsByTagName('input')[0]) {
-      console.log('template folder: '+document.getElementsByTagName('input')[0].files[0].path )
+      console.log('folder: '+document.getElementsByTagName('input')[0].files[0].path )
       this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })
-      this.props.setTemplateFolder(document.getElementsByTagName('input')[0].files[0].path)
+      this.props.setFolder(document.getElementsByTagName('input')[0].files[0].path)
     }
   }
 
@@ -57,8 +57,8 @@ class DownloadHtmlTemplateModal extends Component {
       <React.Fragment>
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
-          <h1 className="display-4">Copy Template </h1>
-          <p className="lead">Copy and modify the default template to change the default wallet PDF appearance.</p>
+          <h1 className="display-4">Download Template </h1>
+          <p className="lead">Download the default template, modify it, then point neo-burner at it to change the default wallet PDF appearance.</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
 
@@ -74,10 +74,19 @@ class DownloadHtmlTemplateModal extends Component {
                         {' '+this.state.folder}
                       </label>
                     </div>
+                    <Input
+                      style={{width: "200px"}}
+                      type="text"
+                      name="text"
+                      placeholder="File Name"
+                      value={this.state.filename}
+                      onChange={e => this.setState({ filename: e.target.value })}
+                    />
                     </FormGroup>
                     <ButtonGroup>
-                    <Button onClick={this.continue} color="warning" >Continue</Button>
-                    <Button onClick={this.goBack} color="warning" >Cancel</Button>
+                    <Button onClick={this.save} color="warning" >Continue</Button>
+                    <Button onClick={this.skip} color="warning" >Skip</Button>
+                    <Button onClick={this.goBack} color="warning" >Go Back</Button>
                     {' '}
                     </ButtonGroup>
                 </Form>
