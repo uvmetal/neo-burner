@@ -17,6 +17,9 @@ import Home from '../../App/Home'
 import Settings from '../../App/Settings'
 import PDF from '../../App/PDF'
 
+import DownloadHtmlTemplateModal from '../../App/DownloadHtmlTemplate'
+import UploadHtmlTemplateModal from '../../App/UploadHtmlTemplate'
+
 import Footer from '../../Ui/Main/Footer'
 
 import util from 'util'
@@ -33,6 +36,8 @@ class AppMain extends Component {
     this.clearAccounts = this.clearAccounts.bind(this)
     this.setPdfPath = this.setPdfPath.bind(this)
     this.setDarkMode = this.setDarkMode.bind(this)
+    this.setFolder = this.setFolder.bind(this)
+    this.setUploadFolder = this.setUploadFolder.bind(this)
 
     this.state = {
       leftPaneHidden: true,
@@ -42,6 +47,7 @@ class AppMain extends Component {
       tutorialMode: true,
       darkMode: 'true',
       folder: '/tmp',
+      uploadFolder: '/tmp',
       pdfPath: 'wallets.pdf',
       pdfExists: false
     }
@@ -52,6 +58,16 @@ class AppMain extends Component {
 
   liftState(state) {
     this.setState(state)
+  }
+
+  setFolder(folder) {
+    console.log('main setting folder: '+folder)
+    this.setState({folder: folder})
+  }
+
+  setUploadFolder(folder) {
+    console.log('main setting upload folder: '+folder)
+    this.setState({uploadFolder: folder})
   }
 
   setAccounts(accounts, folder) {
@@ -142,11 +158,21 @@ class AppMain extends Component {
 
         case '/Wallets':
         rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}
-        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath} state={this.state} liftState={this.liftState}/>
+        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath}  liftState={this.liftState}
+        setFolder={this.setFolder} pdfExists={this.state.pdfExists}
+        />
         break
 
         case '/PDF':
         rightPaneContent = <PDF accounts={this.state.accounts} config={this.props.config} pdf={this.state.pdfPath}  {...this.props}/>
+        break
+
+        case '/UploadHtmlTemplate':
+        rightPaneContent = <UploadHtmlTemplateModal config={this.props.config} folder={this.state.uploadFolder} setUploadFolder={this.setUploadFolder} {...this.props}/>
+        break
+
+        case '/DownloadHtmlTemplate':
+        rightPaneContent = <DownloadHtmlTemplateModal config={this.props.config} folder={this.state.folder} setFolder={this.setFolder} {...this.props}/>
         break
 
         case '/New':

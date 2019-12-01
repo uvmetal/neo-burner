@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup } from 'reactstrap'
 // import './style.css'
 
 class BurnerModal extends Component {
@@ -7,6 +7,10 @@ class BurnerModal extends Component {
     super(props)
 
     this.toggle = this.toggle.bind(this)
+    // this.nextButtonClick = this.nextButtonClick.bind(this)
+    // this.onNextClick = this.onNextClick.bind(this)
+    // this.cancelButtonClick = this.cancelButtonClick.bind(this)
+    // this.onCancelClick = this.onCancelClick.bind(this)
 
     this.state = {
       modal: false
@@ -14,25 +18,38 @@ class BurnerModal extends Component {
   }
 
   componentDidMount() {
+
   }
 
   toggle() {
 
     this.setState({ modal: !this.state.modal })
+    // if (this.props.onNextClick) this.props.onNextClick()
+    // if (this.props.onCancelClick) this.props.onCancelClick()
   }
+
+  // onNextClick(){
+  //
+  // }
+  //
+  // onCancelClick() {
+  //
+  // }
 
   render() {
     return(
       <div>
         <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggle}>{this.props.title}</ModalHeader>
           <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {this.props.body}
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            <ButtonGroup>
+              <Button color="warning" onClick={this.props.onNextClick}>{this.props.nextButtonText}</Button>{' '}
+              <Button color="warning" onClick={this.props.onCancelClick ? this.props.onCancelClick : this.toggle}>{this.props.cancelButtonText}</Button>
+            </ButtonGroup>
           </ModalFooter>
         </Modal>
       </div>

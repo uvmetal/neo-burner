@@ -31,6 +31,13 @@ body {
     padding-left: 40%;
 }
 
+#modalFormLeft {
+    text-align: left;
+    padding-left: 20%;
+    background-color: white;
+    color: black;
+}
+
 #accountsTextArea
 {
     height: 150px;

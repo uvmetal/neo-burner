@@ -44,6 +44,8 @@ global.serverConfig = { useSails: false }
 function createWindow() {
   // Menu.setApplicationMenu(null)
 
+
+
   mainWindow = new BrowserWindow(
     {
       // frame: false, // disable title and menu
@@ -171,11 +173,13 @@ ipc.on('create-pdf', function (event, arg) {
 })
 
 ipc.on('write-file', function (event, arg) {
-
   fs.writeFileSync(arg.path, arg.data)
   console.log('ipc write-file: '+arg.path)
-  // systemConfig.accountsPath = arg.path
-  // event.sender.send('update-system-profile-reply', systemConfig)
+})
+
+ipc.on('copy-file', function (event, arg) {
+  fs.copyFile(arg.src, arg.dest)
+  console.log('ipc copy-file: '+arg.src + ' to '+arg.dest)
 })
 
 ipc.on('check-install', function (event, arg) {

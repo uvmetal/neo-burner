@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Jumbotron, Button, Form, FormGroup, Input, Container, ButtonGroup } from 'reactstrap'
 import BurnerModal from '../Ui/Modal/Modal'
+
 import FlashButton from '../Ui/FlashButton/FlashButton'
+
 
 import { PDFDownloadLink } from '@react-pdf/renderer'
 
@@ -22,21 +24,31 @@ class Wallets extends Component {
     super(props)
 
     this.goToAccounts = this.goToAccounts.bind(this)
+    this.setFolder = this.setFolder.bind(this)
     this.createPdf = this.createPdf.bind(this)
     this.viewPdf = this.viewPdf.bind(this)
     this.customizePdf = this.customizePdf.bind(this)
+    // this.currentModalBody = this.currentModalBody.bind(this)
+
+    // TODO Refactor state/prop management
 
     this.state = {
-      folder: '/tmp',
+      folder: '',
       filename: 'wallets.pdf',
       generatingPdf: false,
-      pdfExists: false
+      pdfExists: false,
+      currentModal: '',
+      nextButtonText: 'Next',
+      nextModalClick: '',
+      cancelButtonText: 'Cancel',
+      cancelModalClick: '',
+      modalBody: ''
     }
   }
 
   componentDidMount() {
     // console.log('accountsPath: '+util.inspect(this.props.config, {depth: null}))
-    this.setState({ folder: this.props.folder, pdfExists: this.props.state.pdfExists })
+    this.setState({ folder: this.props.folder, pdfExists: this.props.pdfExists })
 
     electron.ipcRenderer.on('pdf-created', (event, arg) => {
       console.log('ipc pdf-created')
@@ -49,6 +61,11 @@ class Wallets extends Component {
 
   goToAccounts() {
     this.props.history.push('Accounts')
+  }
+
+  setFolder(e) {
+    this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })
+    this.props.setFolder(document.getElementsByTagName('input')[0].files[0].path)
   }
 
   createPdf() {
@@ -64,8 +81,13 @@ class Wallets extends Component {
   }
 
   customizePdf() {
-
+    this.props.history.push('DownloadHtmlTemplate')
   }
+
+  nextModal() {
+    console.log('nextClick')
+  }
+
 
   render() {
     if (this.props.accounts.length) {
@@ -84,7 +106,7 @@ class Wallets extends Component {
                     <div id="upload_button">
                       <label>
                         <input directory="" webkitdirectory="" type="file" id="ma"
-                          onChange={e => this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })}
+                          onChange={e => this.setFolder(e)}
                           />
                         <span class="btn btn-primary">Choose Path</span>
                         {' '+this.state.folder}
@@ -101,6 +123,7 @@ class Wallets extends Component {
                   </FormGroup>
                   <ButtonGroup>
                   <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing '+this.props.accounts.length+' wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
+
                   <Button onClick={this.customizePdf} color="warning" >Customize PDF</Button>
                   {' '}
                   <br/>
@@ -132,3 +155,5 @@ class Wallets extends Component {
   }
 }
 export default Wallets
+// <UploadHtmlTemplateModal config={this.props.config} folder={this.props.folder} />
+// <DownloadHtmlTemplateModal config={this.props.config} folder={this.props.folder} />
