@@ -123,8 +123,8 @@ function createWindow() {
   .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/background.png to '+ systemConfig.userData+'/background.png'))
   .catch(err => console.error(err))
 
-  fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', systemConfig.userData+'/coz-inverted.png')
-  .then(() => console.log('copied: '+_dirname+'/neo-paper/data/images/coz-inverted.svg to ' + systemConfig.userData+'/coz-inverted.png'))
+  fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', systemConfig.userData+'/coz-inverted.svg')
+  .then(() => console.log('copied: '+_dirname+'/neo-paper/data/images/coz-inverted.svg to ' + systemConfig.userData+'/coz-inverted.svg'))
   .catch(err => console.error(err))
 
   fs.copy(__dirname+'/neo-paper/data/images/neo-logo-xp.png', systemConfig.userData+'/neo-logo-xp.png')
@@ -182,8 +182,8 @@ ipc.on('copy-template', function (event, arg) {
   .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/background.png to '+ arg.dest+'/background.png'))
   .catch(err => console.error(err))
 
-  fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', arg.dest+'/coz-inverted.png')
-  .then(() => console.log('copied: '+__dirname+'/neo-paper/data/images/coz-inverted.svg to ' + arg.dest+'/coz-inverted.png'))
+  fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', arg.dest+'/coz-inverted.svg')
+  .then(() => console.log('copied: '+__dirname+'/neo-paper/data/images/coz-inverted.svg to ' + arg.dest+'/coz-inverted.svg'))
   .catch(err => console.error(err))
 
   fs.copy(__dirname+'/neo-paper/data/images/neo-logo-xp.png', arg.dest+'/neo-logo-xp.png')
