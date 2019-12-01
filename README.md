@@ -37,17 +37,13 @@ This project leverages earlier work for the paper wallet [neo-paper](https://git
 
 Create Neo burner wallet that will facilitate the requirements mentioned in [Workflow](#workflow) below. The goal is to translate event participation to measurable Neo Smart Economy wallet conversion with event management, tracking, and reporting.
 
-**Please note** the current UI/UX is a skeleton to be redesigned with a familiar and reusable pattern once the project requirements are assured.
-
 ## Neo-Burner
 
 ## Technology
 * Node.js
 * Electron
 * React
-* Redux
 * Neon-js
-* Sails.js
 
 ## Workflow
 

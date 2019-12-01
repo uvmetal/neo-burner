@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
-// import './style.css'
+import './style.css'
 
 class FlashButton extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class FlashButton extends Component {
         <Button color="warning" onClick={this.toggle}>{this.props.buttonLabel}</Button>
         <Modal isOpen={this.props.open} >
           <ModalHeader>{this.props.title}</ModalHeader>
-          <ModalBody>
+          <ModalBody className="">
             {this.props.message}
           </ModalBody>
 

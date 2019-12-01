@@ -9,3 +9,9 @@
   marginBottom: '1rem';
   padding: 5px;
 }
+
+
+#ModalBody {
+  background-color: black;
+  color: white;
+}

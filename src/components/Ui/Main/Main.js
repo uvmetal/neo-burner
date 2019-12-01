@@ -31,6 +31,7 @@ class AppMain extends Component {
     this.toggleVerticalNavRollup = this.toggleVerticalNavRollup.bind(this)
     this.setAccounts = this.setAccounts.bind(this)
     this.clearAccounts = this.clearAccounts.bind(this)
+    this.setPdfPath = this.setPdfPath.bind(this)
     this.setDarkMode = this.setDarkMode.bind(this)
 
     this.state = {
@@ -40,7 +41,8 @@ class AppMain extends Component {
       accounts: [],
       tutorialMode: true,
       darkMode: 'true',
-      folder: '/tmp'
+      folder: '/tmp',
+      pdfPath: 'wallets.pdf'
     }
   }
 
@@ -59,6 +61,13 @@ class AppMain extends Component {
     console.log('clearing accounts: '+this.state.accounts)
     this.setState({
       accounts: []
+    })
+  }
+
+  setPdfPath(name) {
+    console.log('setPdfPath(): '+name)
+    this.setState({
+      pdfPath: name
     })
   }
 
@@ -126,11 +135,11 @@ class AppMain extends Component {
 
         case '/Wallets':
         rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}
-        folder={this.state.folder} {...this.props}/>
+        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath}/>
         break
 
         case '/PDF':
-        rightPaneContent = <PDF accounts={this.state.accounts} config={this.props.config} {...this.props}/>
+        rightPaneContent = <PDF accounts={this.state.accounts} config={this.props.config} pdf={this.state.pdfPath}  {...this.props}/>
         break
 
         case '/New':

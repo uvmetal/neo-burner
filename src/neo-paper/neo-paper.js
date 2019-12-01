@@ -2,4 +2,4 @@
 
 export { generateAccounts } from './accounts.js'
 
-export const version = 'v0.0.3'
+export const version = 'v0.0.4'

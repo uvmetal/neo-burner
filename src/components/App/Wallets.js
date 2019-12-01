@@ -23,6 +23,7 @@ class Wallets extends Component {
 
     this.goToAccounts = this.goToAccounts.bind(this)
     this.createPdf = this.createPdf.bind(this)
+    this.viewPdf = this.viewPdf.bind(this)
 
     this.state = {
       folder: '/tmp',
@@ -38,7 +39,9 @@ class Wallets extends Component {
 
     electron.ipcRenderer.on('pdf-created', (event, arg) => {
       console.log('ipc pdf-created')
+      this.props.setPdfPath(this.state.folder+'/'+this.state.filename)
       this.state.generatingPdf = false
+      this.state.pdfExists = true
       this.props.history.push('Wallets')
     })
   }
@@ -53,6 +56,10 @@ class Wallets extends Component {
     // this.props.history.push('PDF')
     window.ipcRenderer.send('create-pdf', { path: this.state.folder+'/', filename: this.state.filename, data: this.props.accounts })
     console.log('wallet folder: '+this.state.folder+'/'+this.state.filename)
+  }
+
+  viewPdf() {
+    this.props.history.push('PDF')
   }
 
   render() {
@@ -87,7 +94,10 @@ class Wallets extends Component {
                       onChange={e => this.setState({ filename: e.target.value })}
                     />
                   </FormGroup>
-                  <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing your wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
+                  <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing '+this.props.accounts.length+' wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
+                  {' '}
+                  <br/>
+                  {this.state.pdfExists ? <Button onClick={this.viewPdf} color="warning" >View PDF</Button> : ''}
                 </Form>
               </Container>
             </p>

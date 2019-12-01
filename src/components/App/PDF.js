@@ -3,6 +3,9 @@ import { Jumbotron, Button } from 'reactstrap'
 
 import { PDFDownloadLink, Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer'
 
+
+import PDFViewer from 'pdf-viewer-reactjs'
+
 import * as qr from 'qr-image'
 
 
@@ -48,7 +51,7 @@ class PDF extends Component {
 
         <QRCode value={account._WIF} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />,
 
-         <QRCode value={account._bip39} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />
+        <QRCode value={account._bip39} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />
       )
     })
     // console.log('wallets: '+util.inspect(wallets, {depth: null}))
@@ -56,26 +59,19 @@ class PDF extends Component {
   }
 
   render() {
-    if (this.props.accounts.length) {
-      let wallets = this.createQrCodesFromAccounts()
-      console.log('got '+this.props.accounts.length+' wallets')
-      console.log('wallet: '+wallets[0])
-      let pub = qr.image('test', { type: 'png'})
-      return(
-        <Document>
-        <Page wrap>
-      <View render={({ pageNumber }) => (
-        pageNumber % 2 === 0 && (
-          <View style={{ background: 'red' }}>
-            <Image src={cozLogo} />
-            <Text>I'm only visible in odd pages!</Text>
-          </View>
-        )
-      )} />
-    </Page>
-        </Document>
-      )
-    }
+    console.log('pdfPath: '+this.props.pdf)
+      // let wallets = this.createQrCodesFromAccounts()
+      // console.log('got '+this.props.accounts.length+' wallets')
+      // console.log('wallet: '+wallets[0])
+      // let pub = qr.image('test', { type: 'png'})
+    return (
+      <div style={{ width: '100%', height: '100%' }}>
+        <PDFViewer document={{ url: 'file://'+this.props.pdf, }}
+          scale={.75}
+          canvasCss={{width: '100%', height: '50%'}}
+        />
+      </div>
+    )
   }
 }
 

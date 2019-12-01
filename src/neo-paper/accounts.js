@@ -27,7 +27,7 @@ export function generateAccounts (amount, name, url) {
   if (!url) url = 'Neo-Burner URL'
 
   let AMOUNT = amount
-  if (!AMOUNT) AMOUNT=2
+  if (!AMOUNT) AMOUNT=1
 
   let accounts = []
   let bip39Mnemonic

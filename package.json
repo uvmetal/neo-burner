@@ -1,6 +1,6 @@
 {
   "name": "neo-burner",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
@@ -52,6 +52,7 @@
     "jest-watch-typeahead": "0.3.0",
     "mini-css-extract-plugin": "0.5.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
+    "pdf-viewer-reactjs": "^2.0.0",
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",

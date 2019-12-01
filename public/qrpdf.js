@@ -37,25 +37,30 @@ exports.gen = async function (path, finalWalletPath, filename, accounts, callbac
         if (i < accounts.length ) g(accounts[i])
 
         else {
-          merge(sources, path+filename, function(err) {
-            console.log('merging: '+path+filename)
-            if (err)
-            return console.log(err)
-            console.log('\nSuccess')
-            // var i = sources.length
-            sources.forEach(function(filepath) {
-              console.log('Cleaning up '+filepath)
-              try {
-                if (fs.existsSync(filepath))  {
-                  fs.unlinkSync(filepath)
-                }
-              } catch(e){
-                console.log(e)
-              }
-            })
-            fs.copyFileSync(path+filename, finalWalletPath+filename)
+          if (accounts.length === 1) {
+            fs.copyFileSync(path+name+'.pdf', finalWalletPath+filename)
             callback()
-          })
+          } else {
+            merge(sources, path+filename, function(err) {
+              console.log('merging: '+path+filename)
+              if (err)
+              return console.log(err)
+              console.log('\nSuccess')
+              // var i = sources.length
+              sources.forEach(function(filepath) {
+                console.log('Cleaning up '+filepath)
+                try {
+                  if (fs.existsSync(filepath))  {
+                    fs.unlinkSync(filepath)
+                  }
+                } catch(e){
+                  console.log(e)
+                }
+              })
+              fs.copyFileSync(path+filename, finalWalletPath+filename)
+              callback()
+            })
+          }
         }
       })
     })
