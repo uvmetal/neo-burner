@@ -42,7 +42,8 @@ class AppMain extends Component {
       tutorialMode: true,
       darkMode: 'true',
       folder: '/tmp',
-      pdfPath: 'wallets.pdf'
+      pdfPath: 'wallets.pdf',
+      pdfExists: false
     }
   }
 
@@ -67,7 +68,8 @@ class AppMain extends Component {
   setPdfPath(name) {
     console.log('setPdfPath(): '+name)
     this.setState({
-      pdfPath: name
+      pdfPath: name,
+      pdfExists: true
     })
   }
 
@@ -135,7 +137,7 @@ class AppMain extends Component {
 
         case '/Wallets':
         rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}
-        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath}/>
+        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath} state={this.state}/>
         break
 
         case '/PDF':

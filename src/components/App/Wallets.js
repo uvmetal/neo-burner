@@ -35,7 +35,7 @@ class Wallets extends Component {
 
   componentDidMount() {
     // console.log('accountsPath: '+util.inspect(this.props.config, {depth: null}))
-    this.setState({ folder: this.props.folder })
+    this.setState({ folder: this.props.folder, pdfExists: this.props.state.pdfExists })
 
     electron.ipcRenderer.on('pdf-created', (event, arg) => {
       console.log('ipc pdf-created')

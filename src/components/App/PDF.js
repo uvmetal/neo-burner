@@ -26,7 +26,7 @@ class PDF extends Component {
   constructor(props) {
     super(props)
 
-    this.createQrCodesFromAccounts = this.createQrCodesFromAccounts.bind(this)
+    // this.createQrCodesFromAccounts = this.createQrCodesFromAccounts.bind(this)
 
     this.state = {
     }
@@ -36,27 +36,27 @@ class PDF extends Component {
 
   }
 
-  createQrCodesFromAccounts() {
-    let qrEntry = []
-    let wallets = []
-
-    let i = 40, j = 430, k = 770
-    this.props.accounts.forEach((account) => {
-      console.log('pdf account: '+account)
-
-      wallets.push(
-        <QRCode value={account._address} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />,
-
-        <QRCode value={account.url} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />,
-
-        <QRCode value={account._WIF} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />,
-
-        <QRCode value={account._bip39} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />
-      )
-    })
-    // console.log('wallets: '+util.inspect(wallets, {depth: null}))
-    return wallets
-  }
+  // createQrCodesFromAccounts() {
+  //   let qrEntry = []
+  //   let wallets = []
+  //
+  //   let i = 40, j = 430, k = 770
+  //   this.props.accounts.forEach((account) => {
+  //     console.log('pdf account: '+account)
+  //
+  //     wallets.push(
+  //       <QRCode value={account._address} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />,
+  //
+  //       <QRCode value={account.url} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />,
+  //
+  //       <QRCode value={account._WIF} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />,
+  //
+  //       <QRCode value={account._bip39} bgColor="#000000" fgColor="#ffFFff" level="Q" style={{ width: 100, height: 100 }} />
+  //     )
+  //   })
+  //   // console.log('wallets: '+util.inspect(wallets, {depth: null}))
+  //   return wallets
+  // }
 
   render() {
     console.log('pdfPath: '+this.props.pdf)
