@@ -94,13 +94,13 @@ class Wallets extends Component {
         <React.Fragment>
           <Jumbotron className="vertical-center" id="ma">
           <div className="container hero-container text-center" id="ma">
-            <h1 className="display-4">Wallets </h1>
+            <h2 className="display-4">Wallets </h2>
             <p className="lead" id="fourteenFont">Found {this.props.accounts.length} accounts.</p>
               <Container className="p-5">
                 <Form id="accountsFormLeft">
-                  <FormGroup>
+                  <FormGroup id="fourteenFont">
                     <div id="upload_button">
-                      <label>
+                      <label id="fourteenFont">
                         <input directory="" webkitdirectory="" type="file" id="ma"
                           onChange={e => this.setFolder(e)}
                           />
@@ -115,16 +115,18 @@ class Wallets extends Component {
                       placeholder="File Name"
                       value={this.state.filename}
                       onChange={e => this.setState({ filename: e.target.value })}
+                      id="fourteenFont"
                     />
+                    <br/>
+                    <ButtonGroup>
+                    <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing '+this.props.accounts.length+' wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
+                    {this.state.pdfExists ? <Button onClick={this.viewPdf} color="warning" id="fourteenFont">View PDF</Button> : ''}
+                    </ButtonGroup>
                   </FormGroup>
                   <ButtonGroup>
-                  <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing '+this.props.accounts.length+' wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
-                  <Button onClick={this.customizePdf} color="warning" >Set Template Path</Button>
-                  <Button onClick={this.resetTemplatePath} color="warning" >Reset Template Path</Button>
-                  {' '}
-                  {this.state.pdfExists ? <Button onClick={this.viewPdf} color="warning" >View PDF</Button> : ''}
+                    <Button onClick={this.customizePdf} color="warning"  id="fourteenFont">Set Template Path</Button>
+                    <Button onClick={this.resetTemplatePath} color="warning" id="fourteenFont">Reset Template Path</Button>
                   </ButtonGroup>
-                  <br/>
                   <div id="fourteenFont">
                   Template Path: {this.props.templateFolder ? this.props.templateFolder : this.props.config.userData+'/' }
                   </div>

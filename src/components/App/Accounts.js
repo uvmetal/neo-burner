@@ -137,11 +137,11 @@ class Accounts extends Component {
                    id="fourteenFont"
                  />
                  <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                    <DropdownToggle caret>
+                    <DropdownToggle caret id="fourteenFont">
                       {'Asset Type'}
                       </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem onClick={this.select}>{'Neo'}</DropdownItem>
+                    <DropdownMenu id="fourteenFont">
+                      <DropdownItem onClick={this.select} id="fourteenFont">{'Neo'}</DropdownItem>
                       <DropdownItem onClick={this.select}>{'Gas'}</DropdownItem>
                     </DropdownMenu>
                  </Dropdown>
@@ -156,7 +156,7 @@ class Accounts extends Component {
                    id="fourteenFont"
                  />
                </FormGroup>
-               <Button onClick={e => this.onFormSubmit(e)} color="warning">Generate</Button>
+               <Button onClick={e => this.onFormSubmit(e)} color="warning" id="fourteenFont">Generate</Button>
              </Form>
            </Container>
         </div>
@@ -186,8 +186,8 @@ class Accounts extends Component {
                 value={util.inspect(this.props.accounts, {depth:null})}/>
                 <br/>
                 <ButtonGroup>
-                <Button onClick={this.props.clearAccounts} color="warning" >Clear</Button>{' '}
-                <Button onClick={this.createWallet} color="warning" >Create Wallet</Button>
+                <Button onClick={this.props.clearAccounts} color="warning" id="fourteenFont">Clear</Button>{' '}
+                <Button onClick={this.createWallet} color="warning" id="fourteenFont">Create Wallet</Button>
                 </ButtonGroup>
              </Container>
             </p>

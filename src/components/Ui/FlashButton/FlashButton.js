@@ -24,10 +24,10 @@ class FlashButton extends Component {
   render() {
     return(
       <div id="ma">
-        <Button color="warning" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+        <Button color="warning" id="fourteenFont" onClick={this.toggle}>{this.props.buttonLabel}</Button>
         <Modal isOpen={this.props.open} >
           <ModalHeader>{this.props.title}</ModalHeader>
-          <ModalBody className="">
+          <ModalBody id="fourteenFont">
             {this.props.message}
           </ModalBody>
         </Modal>
