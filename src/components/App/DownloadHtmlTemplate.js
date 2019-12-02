@@ -61,30 +61,30 @@ class DownloadHtmlTemplateModal extends Component {
           <p className="lead" id="fourteenFont">Copy and modify the default template to change the default wallet PDF appearance.</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
-              <Container className="p-5" >
-                <Form id="accountsFormLeft">
-                  <FormGroup>
-                    <div id="upload_button">
-                      <label>
-                        <input directory="" webkitdirectory="" type="file" id="ma"
-                          onChange={e => this.setFolder(e)}
-                        />
-                        <span class="btn btn-primary" id="fourteenFont">Choose Where to Save</span>
-                        <span id="fourteenFont">{' '+this.state.folder}</span>
-                      </label>
-                    </div>
-                    </FormGroup>
-                    <ButtonGroup>
-                    <Button onClick={this.continue} color="warning" >Continue</Button>
-                    <Button onClick={this.goBack} color="warning" >Cancel</Button>
-                    {' '}
-                    </ButtonGroup>
-                </Form>
-              </Container>
-              </p>
-            </div>
-            </Jumbotron>
-          </React.Fragment>
+            <Container className="p-5" >
+              <Form id="accountsFormLeft">
+                <FormGroup>
+                  <div id="upload_button">
+                    <label>
+                      <input directory="" webkitdirectory="" type="file" id="ma"
+                        onChange={e => this.setFolder(e)}
+                      />
+                      <span class="btn btn-primary" id="fourteenFont">Choose Where to Save</span>
+                      <span id="fourteenFont">{' '+this.state.folder}</span>
+                    </label>
+                  </div>
+                  </FormGroup>
+                  <ButtonGroup>
+                  <Button onClick={this.continue} color="warning" >Continue</Button>
+                  <Button onClick={this.goBack} color="warning" >Cancel</Button>
+                  {' '}
+                  </ButtonGroup>
+              </Form>
+            </Container>
+            </p>
+          </div>
+        </Jumbotron>
+      </React.Fragment>
     )
   }
 }

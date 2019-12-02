@@ -138,10 +138,9 @@ class Accounts extends Component {
                  />
                  <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle caret>
-                      {'Dropdown'}
+                      {'Asset Type'}
                       </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem header>{'Asset Type'}</DropdownItem>
                       <DropdownItem onClick={this.select}>{'Neo'}</DropdownItem>
                       <DropdownItem onClick={this.select}>{'Gas'}</DropdownItem>
                     </DropdownMenu>
@@ -199,4 +198,5 @@ class Accounts extends Component {
     }
   }
 }
+
 export default Accounts
