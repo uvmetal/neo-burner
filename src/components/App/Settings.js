@@ -103,15 +103,15 @@ class Settings extends Component {
       <React.Fragment>
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center">
-          <h1 className="display-4">Settings </h1>
+          <h2 className="display-4">Settings </h2>
           <br/>
           <p className="lead">
           <Form id="formLeft">
             <FormGroup check inline>
               <Label check>
-                <Input type="checkbox" onChange={this.props.setDarkMode} checked={this.changeMode()}/> Dark Mode
+                <Input type="checkbox" onChange={this.props.setDarkMode} checked={this.changeMode()} id="fourteenFont"/> Dark Mode
                 <br/>
-                <Input type="checkbox" onChange={this.handleCheckBoxChange}/> Test
+                <Input type="checkbox" onChange={this.handleCheckBoxChange} id="fourteenFont"/> Test
               </Label>
             </FormGroup>
           </Form>
@@ -125,4 +125,5 @@ class Settings extends Component {
     )
   }
 }
+
 export default Settings

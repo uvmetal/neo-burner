@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Jumbotron } from 'reactstrap';
-// 
+//
 // import './style.css'
 
 class Report extends Component {
@@ -19,8 +19,8 @@ class Report extends Component {
       <React.Fragment>
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center">
-          <h1 className="display-4">Report </h1>
-          <p className="lead">Generate reports on your events!</p>
+          <h2 className="display-4">Report </h2>
+          <p className="lead" id="fourteenFont">Generate reports on your events!</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
 
@@ -31,4 +31,5 @@ class Report extends Component {
     )
   }
 }
+
 export default Report

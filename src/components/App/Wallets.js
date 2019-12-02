@@ -141,12 +141,12 @@ class Wallets extends Component {
         <React.Fragment>
           <Jumbotron className="vertical-center" id="ma">
           <div className="container hero-container text-center" id="ma">
-            <h1 className="display-4">Wallets </h1>
+            <h2 className="display-4">Wallets </h2>
             <p className="lead" id="fourteenFont">Found {this.props.accounts.length} accounts.</p>
             <hr className="my-4" />
             <p className="lead mx-auto">
             </p>
-            <Button onClick={this.goToAccounts} color="warning" >Go To Accounts</Button>
+            <Button onClick={this.goToAccounts} color="warning" id="fourteenFont">Go To Accounts</Button>
           </div>
           </Jumbotron>
         </React.Fragment>
