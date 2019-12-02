@@ -17,7 +17,6 @@ class FlashButton extends Component {
   }
 
   toggle() {
-
     this.setState({ modal: !this.state.modal })
     if (this.props.onClick) this.props.onClick()
   }
@@ -31,7 +30,6 @@ class FlashButton extends Component {
           <ModalBody className="">
             {this.props.message}
           </ModalBody>
-
         </Modal>
       </div>
     )

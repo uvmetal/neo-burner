@@ -5,7 +5,6 @@
 
 // accounts.json format
 
-
 const fs = require('fs')
 const util = require('util')
 const { default: Neon, wallet, api, rpc } = require("@cityofzion/neon-js")

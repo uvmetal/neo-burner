@@ -6,10 +6,6 @@ import PDFViewer from 'pdf-viewer-reactjs'
 // import PrintTemplate from 'react-print'
 // import './style.css'
 
-
-import cozLogo from '../../images/coz-inverted.svg'
-
-
 class PDF extends Component {
   constructor(props) {
     super(props)

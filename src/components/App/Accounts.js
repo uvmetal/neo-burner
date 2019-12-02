@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ButtonDropdown, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Jumbotron, Container, Button, Form, FormGroup, Input, ButtonGroup } from 'reactstrap'
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Jumbotron, Container, Button, Form, FormGroup, Input, ButtonGroup } from 'reactstrap'
 import { generateAccounts } from '../../neo-paper/accounts.js'
 
 import util from 'util'
@@ -52,7 +52,7 @@ class Accounts extends Component {
 
     console.log('realpath: '+realpath)
 
-    this.state.folder = realpath
+    this.setState({folder: realpath})
 
     console.log('filename: '+this.state.filename)
 
