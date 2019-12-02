@@ -108,10 +108,9 @@ class Settings extends Component {
           <p className="lead">
           <Form id="formLeft">
             <FormGroup check inline>
-              <Label check>
+              <Label check id="fourteenFont">
                 <Input type="checkbox" onChange={this.props.setDarkMode} checked={this.changeMode()} id="fourteenFont"/> Dark Mode
                 <br/>
-                <Input type="checkbox" onChange={this.handleCheckBoxChange} id="fourteenFont"/> Test
               </Label>
             </FormGroup>
           </Form>

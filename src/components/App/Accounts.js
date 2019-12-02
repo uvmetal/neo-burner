@@ -95,7 +95,7 @@ class Accounts extends Component {
                      <input directory="" webkitdirectory="" type="file" id="ma"
                        onChange={e => this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })}
                      />
-                     <span class="btn btn-primary" id="fourteenFont">Choose Path</span>
+                     <span className="btn btn-primary" id="fourteenFont">Choose Path</span>
                      <span id="fourteenFont">{' '+this.state.folder}</span>
                    </label>
                  </div>
@@ -175,7 +175,7 @@ class Accounts extends Component {
           <div className="container hero-container text-center" id="ma">
             <h1 className="display-4">Accounts </h1>
             <p className="lead" id="fourteenFont">There are {this.props.accounts.length} accounts.</p>
-            <p className="lead mx-auto">
+            <p className="lead mx-auto"></p>
             <Container className="p-5">
                <textarea
                 id="accountsTextArea"
@@ -190,7 +190,7 @@ class Accounts extends Component {
                 <Button onClick={this.createWallet} color="warning" id="fourteenFont">Create Wallet</Button>
                 </ButtonGroup>
              </Container>
-            </p>
+
           </div>
           </Jumbotron>
         </React.Fragment>

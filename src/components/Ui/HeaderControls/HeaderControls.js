@@ -75,10 +75,6 @@ class HeaderControls extends Component {
           <Button size="sm" color="warning" onClick={this.home} >Home</Button>{' '}
           <Button size="sm" color="warning" onClick={this.accounts} >Accounts</Button>{' '}
           <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
-          <Button size="sm" color="warning" onClick={this.new} >New</Button>{' '}
-          <Button size="sm" color="warning" onClick={this.import} >Import</Button>{' '}
-          <Button size="sm" color="warning" onClick={this.export} >Export</Button>{' '}
-          <Button size="sm" color="warning" onClick={this.report} >Report</Button>{' '}
           <Button size="sm" color="warning" onClick={this.settings} >Settings</Button>{' '}
           <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
         </ButtonGroup>
@@ -87,3 +83,7 @@ class HeaderControls extends Component {
   }
 }
 export default HeaderControls
+// <Button size="sm" color="warning" onClick={this.new} >New</Button>{' '}
+// <Button size="sm" color="warning" onClick={this.import} >Import</Button>{' '}
+// <Button size="sm" color="warning" onClick={this.export} >Export</Button>{' '}
+// <Button size="sm" color="warning" onClick={this.report} >Report</Button>{' '}

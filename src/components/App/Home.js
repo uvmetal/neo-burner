@@ -38,7 +38,6 @@ class Home extends Component {
             <p className="lead">Paper Wallet Event Manager</p>
             <p className="lead mx-auto">
             <Button onClick={this.letsBurn} color="warning" >Let's Burn!</Button>
-              <p/>
             </p>
           </div>
         </Jumbotron>

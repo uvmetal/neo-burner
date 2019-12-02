@@ -36,7 +36,7 @@ class Wallets extends Component {
   }
 
   componentDidMount() {
-    // console.log('accountsPath: '+util.inspect(this.props.config, {depth: null}))
+    // console.log('config: '+util.inspect(this.props.config, {depth: null}))
     console.log('templateFolder: '+this.props.templateFolder)
     this.setState({ folder: this.props.folder, pdfExists: this.props.pdfExists })
 
@@ -104,7 +104,7 @@ class Wallets extends Component {
                         <input directory="" webkitdirectory="" type="file" id="ma"
                           onChange={e => this.setFolder(e)}
                           />
-                        <span class="btn btn-primary" id="fourteenFont">PDF Output Path</span>
+                        <span className="btn btn-primary" id="fourteenFont">PDF Output Path</span>
                         <span id="fourteenFont">{' '+this.state.folder}</span>
                       </label>
                     </div>

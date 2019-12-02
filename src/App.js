@@ -22,8 +22,28 @@ class App extends Component {
           users: [],
           isSorting: false,
           systemConfig: {
+
           }
       }
+  }
+
+  componentWillMount() {
+    let self = this
+
+    electron.ipcRenderer.on('check-install-reply', function (event, arg) {
+      self.setState({ systemConfig: arg })
+      console.log('userData :'+arg.userData)
+    })
+
+    electron.ipcRenderer.send('check-install')
+
+    electron.ipcRenderer.on('update-console-buffer', function (event, arg) {
+      console.log('updating console buffer')
+      // self.state.systemConfig.consoleBuffer.push(arg)
+      // self.setState({ systemConfig: { consoleBuffer: self.state.systemConfig.consoleBuffer } })
+    })
+
+    electron.ipcRenderer.send('setup-event-manager')
   }
 
   componentDidMount() {
@@ -36,23 +56,23 @@ class App extends Component {
         })
     })
 
-    let self = this
-
-    electron.ipcRenderer.on('check-install-reply', function (event, arg) {
-      // console.log('Got installer message. systemConfig is ' + arg)
-
-      self.setState({ systemConfig: arg })
-    })
-
-    electron.ipcRenderer.send('check-install')
-
-    electron.ipcRenderer.on('update-console-buffer', function (event, arg) {
-      console.log('updating console buffer')
-      self.state.systemConfig.consoleBuffer.push(arg)
-      self.setState({ systemConfig: { consoleBuffer: self.state.systemConfig.consoleBuffer } })
-    })
-
-    electron.ipcRenderer.send('setup-event-manager')
+    // let self = this
+    //
+    // electron.ipcRenderer.on('check-install-reply', function (event, arg) {
+    //   // console.log('Got installer message. systemConfig is ' + arg)
+    //
+    //   self.setState({ systemConfig: arg })
+    // })
+    //
+    // electron.ipcRenderer.send('check-install')
+    //
+    // electron.ipcRenderer.on('update-console-buffer', function (event, arg) {
+    //   console.log('updating console buffer')
+    //   self.state.systemConfig.consoleBuffer.push(arg)
+    //   self.setState({ systemConfig: { consoleBuffer: self.state.systemConfig.consoleBuffer } })
+    // })
+    //
+    // electron.ipcRenderer.send('setup-event-manager')
   }
 
   handleSort() {

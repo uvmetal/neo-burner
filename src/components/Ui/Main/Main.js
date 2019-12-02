@@ -26,6 +26,8 @@ import util from 'util'
 
 // import './style.css'
 
+const electron = window.require('electron')
+
 class AppMain extends Component {
   constructor(props) {
     super(props)
@@ -38,6 +40,7 @@ class AppMain extends Component {
     this.setDarkMode = this.setDarkMode.bind(this)
     this.setFolder = this.setFolder.bind(this)
     this.setTemplateFolder = this.setTemplateFolder.bind(this)
+    this.writeUserSettings = this.writeUserSettings.bind(this)
 
     this.state = {
       leftPaneHidden: true,
@@ -47,6 +50,7 @@ class AppMain extends Component {
       tutorialMode: true,
       darkMode: 'true',
       folder: '/tmp',
+      accountsFile: '',
       templateFolder: '',
       pdfPath: 'wallets.pdf',
       pdfExists: false
@@ -57,26 +61,46 @@ class AppMain extends Component {
 
   }
 
+  componentWillReceiveProps() {
+    console.log('userData :'+util.inspect(this.props.config, {depth: null}))
+  }
+
   componentDidMount() {
-    console.log('userData :'+this.props.config.userData)
+  }
+
+  writeUserSettings() {
+    let settings = {
+      darkMode: this.state.darkMode,
+      accountsPath: this.state.folder,
+      accountsFile: this.state.accountsFile,
+      pdfPath: this.state.pdfPath,
+      pdfFile: this.state.pdfFile,
+      templatePath: this.state.templateFolder
+    }
+    electron.ipcRenderer.send('write-user-settings', settings)
   }
 
   setFolder(folder) {
     console.log('main setting folder: '+folder)
     this.setState({folder: folder})
+    this.writeUserSettings()
   }
 
   setTemplateFolder(folder) {
     console.log('main setting template folder: '+folder)
     this.setState({templateFolder: folder})
+    this.writeUserSettings()
   }
 
-  setAccounts(accounts, folder) {
+  setAccounts(accounts, folder, filename) {
     console.log('got accounts in main: '+util.inspect(accounts, {depth: null}))
     this.setState({
       accounts: accounts,
-      folder: folder
+      folder: folder,
+      accountsFile: filename
     })
+
+    this.writeUserSettings()
   }
 
   clearAccounts(accounts) {
@@ -91,14 +115,19 @@ class AppMain extends Component {
     this.setState({
       folder: folder,
       pdfPath: folder+file,
+      pdfFile: file,
       pdfExists: true
     })
+
+    this.writeUserSettings()
   }
 
   setDarkMode(e) {
     // TODO Fix this it only works one way - from dark to light, can't return
     console.log('darkMode: '+e.target.checked)
     this.setState({ darkMode: e.target.checked })
+
+    this.writeUserSettings()
 
     if (e.target.checked) {
       require('./style.css')
@@ -126,6 +155,8 @@ class AppMain extends Component {
       leftPaneHidden: !this.state.leftPaneHidden
     })
   }
+
+
 
   render() {
     let headerContent = this.props.headerContent ? this.props.headerContent :
@@ -217,16 +248,16 @@ class AppMain extends Component {
          </div>
          <div id="contentWrapper">
            { !this.state.leftPaneHidden &&
-             <div class='leftPaneContent'>
+             <div className='leftPaneContent'>
             { leftPaneContent }
              </div>
            }
-           <div class='rightPaneContent'>
+           <div className='rightPaneContent'>
            {rightPaneContent}
            </div>
         </div>
          <div id="footer">
-            <div class='footerContent'>{footerContent}</div>
+            <div className='footerContent'>{footerContent}</div>
          </div>
        </div>
     )

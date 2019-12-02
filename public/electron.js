@@ -28,7 +28,7 @@ const isFirstRun = firstRun()
 
 const qr = require('./qrpdf')
 
-let mainWindow, systemConfig
+let mainWindow, systemConfig, userSettings, userSettingsFile = 'user-settings.json'
 
 let sailsServer
 
@@ -191,6 +191,19 @@ ipc.on('copy-template', function (event, arg) {
   .catch(err => console.error(err))
 })
 
+ipc.on('write-user-settings', function (event, arg) {
+  let filename = systemConfig.userData+'/'+userSettingsFile
+  console.log('Writing user settings to '+filename)
+  fs.writeFileSync(filename, JSON.stringify(arg).toString())
+})
+
+ipc.on('read-user-settings', function (event, arg) {
+  let filename = systemConfig.userData+'/'+userSettingsFile
+  console.log('Reading user settings from '+filename)
+  let settings = JSON.parse(readFileSync(filename))
+  event.sender.send('read-user-settings-reply', settings)
+})
+
 ipc.on('check-install', function (event, arg) {
   console.log('Checking your software installation...')
 
@@ -268,7 +281,14 @@ function getSystemProfile() {
     isAccessibilitySupportEnabled: isAccessibilitySupportEnabled,
     isPackaged: isPackaged,
     consoleBuffer: ['Welcome to Neo-Burner'],
-    accountsPath: '/tmp'
+    userSettings: {
+      darkMode: true,
+      accountsPath: '/tmp',
+      accountsFile: 'accounts.json',
+      pdfPath: '/tmp',
+      pdfFile: 'wallets.pdf',
+      templatePath: userData
+    }
   }
 
   console.log('systemConfig is ' + util.inspect(systemConfig, {depth: null}))

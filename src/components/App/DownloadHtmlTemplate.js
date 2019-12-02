@@ -60,7 +60,7 @@ class DownloadHtmlTemplateModal extends Component {
           <h2 className="display-4">Copy Template </h2>
           <p className="lead" id="fourteenFont">Copy and modify the default template to change the default wallet PDF appearance.</p>
           <hr className="my-4" />
-          <p className="lead mx-auto">
+          <p className="lead mx-auto"></p>
             <Container className="p-5" >
               <Form id="accountsFormLeft">
                 <FormGroup>
@@ -69,7 +69,7 @@ class DownloadHtmlTemplateModal extends Component {
                       <input directory="" webkitdirectory="" type="file" id="ma"
                         onChange={e => this.setFolder(e)}
                       />
-                      <span class="btn btn-primary" id="fourteenFont">Choose Where to Save</span>
+                      <span className="btn btn-primary" id="fourteenFont">Choose Where to Save</span>
                       <span id="fourteenFont">{' '+this.state.folder}</span>
                     </label>
                   </div>
@@ -81,7 +81,6 @@ class DownloadHtmlTemplateModal extends Component {
                   </ButtonGroup>
               </Form>
             </Container>
-            </p>
           </div>
         </Jumbotron>
       </React.Fragment>
