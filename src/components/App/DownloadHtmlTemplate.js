@@ -61,7 +61,6 @@ class DownloadHtmlTemplateModal extends Component {
           <p className="lead" id="fourteenFont">Copy and modify the default template to change the default wallet PDF appearance.</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
-
               <Container className="p-5" >
                 <Form id="accountsFormLeft">
                   <FormGroup>

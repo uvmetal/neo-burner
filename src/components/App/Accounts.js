@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { Jumbotron, Container, Button, Form, FormGroup, Input, ButtonGroup } from 'reactstrap'
+import { ButtonDropdown, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Jumbotron, Container, Button, Form, FormGroup, Input, ButtonGroup } from 'reactstrap'
 import { generateAccounts } from '../../neo-paper/accounts.js'
-
 
 import util from 'util'
 
 import './style.css'
+
+const divStyle = {
+  display: 'flex',
+  alignItems: 'center'
+}
 
 class Accounts extends Component {
   constructor(props) {
@@ -14,13 +18,18 @@ class Accounts extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.renderGenerateAccounts = this.renderGenerateAccounts.bind(this)
     this.createWallet = this.createWallet.bind(this)
+    this.toggle = this.toggle.bind(this)
+    this.select = this.select.bind(this)
+
     this.state = {
       amount: '',
       name: '',
       url: '',
       payout: '',
       folder: '/tmp',
-      filename: 'accounts.json'
+      filename: 'accounts.json',
+      dropdownOpen: false,
+      assetType: 'Neo'
     }
   }
 
@@ -31,6 +40,8 @@ class Accounts extends Component {
     console.log('Generating: '+this.state.amount)
     console.log('Name: '+this.state.name)
     console.log('URL: '+this.state.url)
+    console.log('Payout: '+this.state.payout)
+    console.log('Asset Type: '+this.state.assetType)
     console.log('fakepath: '+this.state.folder)
 
     let realpath
@@ -45,7 +56,7 @@ class Accounts extends Component {
 
     console.log('filename: '+this.state.filename)
 
-    let accounts = generateAccounts(this.state.amount, this.state.name, this.state.url)
+    let accounts = generateAccounts(this.state.amount, this.state.name, this.state.url, this.state.payout, this.state.assetType)
 
     this.props.setAccounts(accounts, realpath, this.state.filename)
 
@@ -54,6 +65,19 @@ class Accounts extends Component {
 
   createWallet() {
     this.props.history.push('Wallets')
+  }
+
+  select(event) {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+      assetType: event.target.innerText
+    })
+
+    console.log('selected: '+event.target.innerText)
+  }
+
+  toggle() {
+    this.setState({dropdownOpen: !this.state.dropdownOpen})
   }
 
   renderGenerateAccounts() {
@@ -70,7 +94,7 @@ class Accounts extends Component {
                    <label>
                      <input directory="" webkitdirectory="" type="file" id="ma"
                        onChange={e => this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })}
-                       />
+                     />
                      <span class="btn btn-primary" id="fourteenFont">Choose Path</span>
                      <span id="fourteenFont">{' '+this.state.folder}</span>
                    </label>
@@ -102,8 +126,9 @@ class Accounts extends Component {
                    onChange={e => this.setState({ url: e.target.value })}
                    id="fourteenFont"
                  />
+                 <div style={divStyle}>
                  <Input
-                   style={{width: "400px"}}
+                   style={{width: "200px"}}
                    type="text"
                    name="text"
                    placeholder="Event Payout"
@@ -111,6 +136,17 @@ class Accounts extends Component {
                    onChange={e => this.setState({ payout: e.target.value })}
                    id="fourteenFont"
                  />
+                 <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle caret>
+                      {'Dropdown'}
+                      </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>{'Asset Type'}</DropdownItem>
+                      <DropdownItem onClick={this.select}>{'Neo'}</DropdownItem>
+                      <DropdownItem onClick={this.select}>{'Gas'}</DropdownItem>
+                    </DropdownMenu>
+                 </Dropdown>
+                 </div>
                  <Input
                    style={{width: "200px"}}
                    type="text"
