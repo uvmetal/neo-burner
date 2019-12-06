@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Jumbotron, Form, FormGroup, Container, Button, ButtonGroup } from 'reactstrap'
 // import './style.css'
 
-class DownloadHtmlTemplateModal extends Component {
+class CopyHtmlTemplateModal extends Component {
   constructor(props) {
     super(props)
 
@@ -32,7 +32,7 @@ class DownloadHtmlTemplateModal extends Component {
     }
     window.ipcRenderer.send('copy-template', options)
     console.log('send ipc copy-template to '+this.state.folder+'/')
-    this.props.setTemplateFolder(this.state.folder)
+    this.props.setTemplatePath(this.state.folder)
     this.props.history.push('Wallets')
   }
 
@@ -46,9 +46,9 @@ class DownloadHtmlTemplateModal extends Component {
 
   setFolder(e) {
     if(document.getElementsByTagName('input')[0]) {
-      console.log('template folder: '+document.getElementsByTagName('input')[0].files[0].path )
+      console.log('template path: '+document.getElementsByTagName('input')[0].files[0].path )
       this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })
-      this.props.setTemplateFolder(document.getElementsByTagName('input')[0].files[0].path)
+      this.props.setTemplatePath(document.getElementsByTagName('input')[0].files[0].path)
     }
   }
 
@@ -87,4 +87,4 @@ class DownloadHtmlTemplateModal extends Component {
     )
   }
 }
-export default DownloadHtmlTemplateModal
+export default CopyHtmlTemplateModal

@@ -153,8 +153,8 @@ ipc.on('setup-event-manager', function (event, arg) {
 
 ipc.on('create-pdf', function (event, arg) {
   // qr.gen(arg.path, arg.filename, arg.data)
-  console.log('ipc create-pdf at '+arg.pdfPath+arg.filename+' using template folder '+arg.templateFolder)
-  qr.gen(arg.templateFolder+'/', arg.pdfPath, arg.filename, arg.data, () => {
+  console.log('ipc create-pdf at '+arg.pdfPath+arg.filename+' using template folder '+arg.templatePath)
+  qr.gen(arg.templatePath+'/', arg.pdfPath, arg.filename, arg.data, () => {
     event.sender.send('pdf-created')
     console.log('done!')
   })
@@ -194,13 +194,14 @@ ipc.on('copy-template', function (event, arg) {
 ipc.on('write-user-settings', function (event, arg) {
   let filename = systemConfig.userData+'/'+userSettingsFile
   console.log('Writing user settings to '+filename)
+  console.log('data: '+util.inspect(arg, {depth: null}))
   fs.writeFileSync(filename, JSON.stringify(arg).toString())
 })
 
 ipc.on('read-user-settings', function (event, arg) {
   let filename = systemConfig.userData+'/'+userSettingsFile
   console.log('Reading user settings from '+filename)
-  let settings = JSON.parse(readFileSync(filename))
+  let settings = JSON.parse(fs.readFileSync(filename))
   event.sender.send('read-user-settings-reply', settings)
 })
 

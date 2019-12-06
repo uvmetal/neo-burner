@@ -21,9 +21,9 @@ class Wallets extends Component {
     // TODO Refactor state/prop management
 
     this.state = {
-      folder: '',
-      filename: 'wallets.pdf',
-      templateFolder: '',
+      folder: this.props.folder,
+      filename: this.props.filename,
+      templatePath: this.props.templatePath,
       generatingPdf: false,
       pdfExists: false,
       currentModal: '',
@@ -37,7 +37,7 @@ class Wallets extends Component {
 
   componentDidMount() {
     // console.log('config: '+util.inspect(this.props.config, {depth: null}))
-    console.log('templateFolder: '+this.props.templateFolder)
+    console.log('templatePath: '+this.props.templatePath)
     this.setState({ folder: this.props.folder, pdfExists: this.props.pdfExists })
 
     electron.ipcRenderer.on('pdf-created', (event, arg) => {
@@ -62,12 +62,13 @@ class Wallets extends Component {
 
   createPdf() {
     this.setState({ generatingPdf: true })
+    this.props.setPdfPath(this.state.folder+'/', this.state.filename)
     this.props.history.push('Wallets')
-    let templateFolder
-    if (this.props.templateFolder) templateFolder = this.props.templateFolder
-    else templateFolder = this.props.config.userData+'/'
+    let templatePath
+    if (this.props.templatePath) templatePath = this.props.templatePath
+    else templatePath = this.props.config.userData+'/'
     // this.props.history.push('PDF')
-    window.ipcRenderer.send('create-pdf', { pdfPath: this.state.folder+'/', filename: this.state.filename, templateFolder: templateFolder, data: this.props.accounts })
+    window.ipcRenderer.send('create-pdf', { pdfPath: this.state.folder+'/', filename: this.state.filename, templatePath: templatePath, data: this.props.accounts })
     console.log('wallet folder: '+this.state.folder+'/'+this.state.filename)
   }
 
@@ -76,7 +77,7 @@ class Wallets extends Component {
   }
 
   customizePdf() {
-    this.props.history.push('DownloadHtmlTemplate')
+    this.props.history.push('CopyHtmlTemplate')
   }
 
   nextModal() {
@@ -84,7 +85,7 @@ class Wallets extends Component {
   }
 
   resetTemplatePath(){
-    this.props.setTemplateFolder(this.props.config.userData+'/')
+    this.props.setTemplatePath(this.props.config.userData+'/')
   }
 
   render() {
@@ -128,7 +129,7 @@ class Wallets extends Component {
                     <Button onClick={this.resetTemplatePath} color="warning" id="fourteenFont">Reset Template Path</Button>
                   </ButtonGroup>
                   <div id="fourteenFont">
-                  Template Path: {this.props.templateFolder ? this.props.templateFolder : this.props.config.userData+'/' }
+                  Template Path: {this.props.templatePath ? this.props.templatePath : this.props.config.userData+'/' }
                   </div>
                 </Form>
               </Container>

@@ -26,8 +26,8 @@ class Accounts extends Component {
       name: '',
       url: '',
       payout: '',
-      folder: '/tmp',
-      filename: 'accounts.json',
+      folder: this.props.accountsPath,
+      filename: this.props.accountsFile,
       dropdownOpen: false,
       assetType: 'Neo'
     }
@@ -48,7 +48,7 @@ class Accounts extends Component {
 
     if (document.getElementsByTagName('input')[0].files[0])
       realpath = document.getElementsByTagName('input')[0].files[0].path
-    else realpath = '/tmp'
+    else realpath = this.state.folder
 
     console.log('realpath: '+realpath)
 

@@ -17,7 +17,7 @@ import Home from '../../App/Home'
 import Settings from '../../App/Settings'
 import PDF from '../../App/PDF'
 
-import DownloadHtmlTemplateModal from '../../App/DownloadHtmlTemplate'
+import CopyHtmlTemplateModal from '../../App/CopyHtmlTemplate'
 import UploadHtmlTemplateModal from '../../App/UploadHtmlTemplate'
 
 import Footer from '../../Ui/Main/Footer'
@@ -39,7 +39,7 @@ class AppMain extends Component {
     this.setPdfPath = this.setPdfPath.bind(this)
     this.setDarkMode = this.setDarkMode.bind(this)
     this.setFolder = this.setFolder.bind(this)
-    this.setTemplateFolder = this.setTemplateFolder.bind(this)
+    this.setTemplatePath = this.setTemplatePath.bind(this)
     this.writeUserSettings = this.writeUserSettings.bind(this)
 
     this.state = {
@@ -49,15 +49,31 @@ class AppMain extends Component {
       accounts: [],
       tutorialMode: true,
       darkMode: 'true',
-      folder: '/tmp',
-      accountsFile: '',
-      templateFolder: '',
-      pdfPath: 'wallets.pdf',
+      accountsPath: '/tmp',
+      accountsFile: 'accounts.json',
+      templatePath: this.props.config.userData +'/',
+      pdfPath: '/tmp/',
+      pdfFile: 'wallets.pdf',
       pdfExists: false
     }
   }
 
   componentWillMount() {
+    let self = this
+
+    electron.ipcRenderer.on('read-user-settings-reply', function (event, arg) {
+      self.setState({
+        darkMode: arg.darkMode,
+        accountsFile: arg.accountsFile,
+        accountsPath: arg.accountsPath,
+        templatePath: arg.templatePath,
+        pdfPath: arg.pdfPath,
+        pdfFile: arg.pdfFile
+      })
+      console.log('updating user settings from file : ' + util.inspect(arg, {depth: null}))
+    })
+
+    electron.ipcRenderer.send('read-user-settings')
 
   }
 
@@ -71,32 +87,33 @@ class AppMain extends Component {
   writeUserSettings() {
     let settings = {
       darkMode: this.state.darkMode,
-      accountsPath: this.state.folder,
+      accountsPath: this.state.accountsPath,
       accountsFile: this.state.accountsFile,
       pdfPath: this.state.pdfPath,
       pdfFile: this.state.pdfFile,
-      templatePath: this.state.templateFolder
+      templatePath: this.state.templatePath
     }
+    console.log('updating settings with: '+util.inspect(settings, {depth: null}))
     electron.ipcRenderer.send('write-user-settings', settings)
   }
 
-  setFolder(folder) {
+  async setFolder(folder) {
     console.log('main setting folder: '+folder)
-    this.setState({folder: folder})
+    await this.setState({folder: folder})
     this.writeUserSettings()
   }
 
-  setTemplateFolder(folder) {
+  async setTemplatePath(folder) {
     console.log('main setting template folder: '+folder)
-    this.setState({templateFolder: folder})
+    await this.setState({templatePath: folder})
     this.writeUserSettings()
   }
 
-  setAccounts(accounts, folder, filename) {
+  async setAccounts(accounts, folder, filename) {
     console.log('got accounts in main: '+util.inspect(accounts, {depth: null}))
-    this.setState({
+    await this.setState({
       accounts: accounts,
-      folder: folder,
+      accountsPath: folder,
       accountsFile: filename
     })
 
@@ -110,11 +127,10 @@ class AppMain extends Component {
     })
   }
 
-  setPdfPath(folder, file) {
+  async setPdfPath(folder, file) {
     console.log('setPdfPath(): '+folder+file)
-    this.setState({
-      folder: folder,
-      pdfPath: folder+file,
+    await this.setState({
+      pdfPath: folder,
       pdfFile: file,
       pdfExists: true
     })
@@ -122,10 +138,10 @@ class AppMain extends Component {
     this.writeUserSettings()
   }
 
-  setDarkMode(e) {
+  async setDarkMode(e) {
     // TODO Fix this it only works one way - from dark to light, can't return
     console.log('darkMode: '+e.target.checked)
-    this.setState({ darkMode: e.target.checked })
+    await this.setState({ darkMode: e.target.checked })
 
     this.writeUserSettings()
 
@@ -156,8 +172,6 @@ class AppMain extends Component {
     })
   }
 
-
-
   render() {
     let headerContent = this.props.headerContent ? this.props.headerContent :
       <HeaderControls {...this.props} leftPaneToggleHidden={this.leftPaneToggleHidden} />
@@ -186,26 +200,32 @@ class AppMain extends Component {
           setAccounts={this.setAccounts}
           accounts={this.state.accounts}
           clearAccounts={this.clearAccounts}
+          accountsFile={this.state.accountsFile}
+          accountsPath={this.state.accountsPath}
           />
         break
 
         case '/Wallets':
         rightPaneContent = <Wallets accounts={this.state.accounts} config={this.props.config}
-        folder={this.state.folder} {...this.props} setPdfPath={this.setPdfPath}
-        setFolder={this.setFolder} pdfExists={this.state.pdfExists} templateFolder={this.state.templateFolder} setTemplateFolder={this.setTemplateFolder}
+         {...this.props} setPdfPath={this.setPdfPath}
+        setFolder={this.setPdfPath} pdfExists={this.state.pdfExists}
+        templatePath={this.state.templatePath}
+        folder={this.state.pdfPath}
+        filename={this.state.pdfFile}
+        setTemplatePath={this.setTemplatePath}
         />
         break
 
         case '/PDF':
-        rightPaneContent = <PDF accounts={this.state.accounts} config={this.props.config} pdf={this.state.pdfPath}  {...this.props}/>
+        rightPaneContent = <PDF accounts={this.state.accounts} config={this.props.config} pdf={this.state.pdfPath+'/'+this.state.pdfFile}  {...this.props}/>
         break
 
         case '/UploadHtmlTemplate':
         rightPaneContent = <UploadHtmlTemplateModal config={this.props.config} folder={this.state.uploadFolder} setUploadFolder={this.setUploadFolder} {...this.props}/>
         break
 
-        case '/DownloadHtmlTemplate':
-        rightPaneContent = <DownloadHtmlTemplateModal config={this.props.config} folder={this.state.templateFolder} setTemplateFolder={this.setTemplateFolder} {...this.props}/>
+        case '/CopyHtmlTemplate':
+        rightPaneContent = <CopyHtmlTemplateModal config={this.props.config} folder={this.state.templatePath} setTemplatePath={this.setTemplatePath} {...this.props}/>
         break
 
         case '/New':
