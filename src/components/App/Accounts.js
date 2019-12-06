@@ -6,6 +6,8 @@ import util from 'util'
 
 import './style.css'
 
+const electron = window.require('electron')
+
 const divStyle = {
   display: 'flex',
   alignItems: 'center'
@@ -15,7 +17,8 @@ class Accounts extends Component {
   constructor(props) {
     super(props)
 
-    this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.generate = this.generate.bind(this)
+    this.import = this.import.bind(this)
     this.renderGenerateAccounts = this.renderGenerateAccounts.bind(this)
     this.createWallet = this.createWallet.bind(this)
     this.toggle = this.toggle.bind(this)
@@ -36,7 +39,7 @@ class Accounts extends Component {
   componentDidMount() {
   }
 
-  onFormSubmit(e) {
+  generate(e) {
     console.log('Generating: '+this.state.amount)
     console.log('Name: '+this.state.name)
     console.log('URL: '+this.state.url)
@@ -62,6 +65,25 @@ class Accounts extends Component {
 
     window.ipcRenderer.send('write-file', { path: realpath+'/'+this.state.filename, data: JSON.stringify(accounts).toString() })
   }
+
+  import(e) {
+    // TODO add flash dialog for operations status
+
+    let realpath
+
+    if (document.getElementsByTagName('input')[0].files[0])
+      realpath = document.getElementsByTagName('input')[0].files[0].path
+    else realpath = this.state.folder
+
+    let self = this
+
+    electron.ipcRenderer.on('read-file-reply', function (event, arg) {
+      self.props.setAccounts(JSON.parse(arg), realpath, self.state.filename)
+    })
+
+    electron.ipcRenderer.send('read-file', realpath+'/'+this.state.filename)
+  }
+
 
   createWallet() {
     this.props.history.push('Wallets')
@@ -156,7 +178,8 @@ class Accounts extends Component {
                    id="fourteenFont"
                  />
                </FormGroup>
-               <Button onClick={e => this.onFormSubmit(e)} color="warning" id="fourteenFont">Generate</Button>
+               <Button onClick={e => this.generate(e)} color="warning" id="fourteenFont">Generate</Button>
+               <Button onClick={e => this.import(e)} color="warning" id="fourteenFont">Import</Button>
              </Form>
            </Container>
         </div>

@@ -170,6 +170,13 @@ ipc.on('copy-file', function (event, arg) {
   console.log('ipc copy-file: '+arg.src + ' to '+arg.dest)
 })
 
+ipc.on('read-file', function (event, arg) {
+  let filename = arg
+  console.log('Importing saved account data from '+filename)
+  let data = fs.readFileSync(filename)
+  event.sender.send('read-file-reply', data)
+})
+
 ipc.on('copy-template', function (event, arg) {
   // fs.copyFile(systemConfig.userData, arg.dest)
   console.log('ipc copy-template: '+__dirname+'/neo-paper/data/ to '+arg.dest)
