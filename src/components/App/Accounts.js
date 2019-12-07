@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Jumbotron, Container, Button, Form, FormGroup, Input, ButtonGroup } from 'reactstrap'
+import HelpModal from '../Ui/Modal/HelpModal'
 import { generateAccounts } from '../../neo-paper/accounts.js'
 
 import util from 'util'
@@ -19,6 +20,7 @@ class Accounts extends Component {
 
     this.generate = this.generate.bind(this)
     this.import = this.import.bind(this)
+    this.help = this.help.bind(this)
     this.renderGenerateAccounts = this.renderGenerateAccounts.bind(this)
     this.createWallet = this.createWallet.bind(this)
     this.toggle = this.toggle.bind(this)
@@ -32,7 +34,8 @@ class Accounts extends Component {
       folder: this.props.accountsPath,
       filename: this.props.accountsFile,
       dropdownOpen: false,
-      assetType: 'Neo'
+      assetType: 'Neo',
+      timeLimit: ''
     }
   }
 
@@ -44,6 +47,7 @@ class Accounts extends Component {
     console.log('Name: '+this.state.name)
     console.log('URL: '+this.state.url)
     console.log('Payout: '+this.state.payout)
+    console.log('Time Limit: '+this.state.timeLimit)
     console.log('Asset Type: '+this.state.assetType)
     console.log('fakepath: '+this.state.folder)
 
@@ -59,7 +63,7 @@ class Accounts extends Component {
 
     console.log('filename: '+this.state.filename)
 
-    let accounts = generateAccounts(this.state.amount, this.state.name, this.state.url, this.state.payout, this.state.assetType)
+    let accounts = generateAccounts(this.state.amount, this.state.name, this.state.url, this.state.payout, this.state.timeLimit, this.state.assetType)
 
     this.props.setAccounts(accounts, realpath, this.state.filename)
 
@@ -84,6 +88,9 @@ class Accounts extends Component {
     electron.ipcRenderer.send('read-file', realpath+'/'+this.state.filename)
   }
 
+  help(e) {
+
+  }
 
   createWallet() {
     this.props.history.push('Wallets')
@@ -150,7 +157,7 @@ class Accounts extends Component {
                  />
                  <div style={divStyle}>
                  <Input
-                   style={{width: "200px"}}
+                   style={{width: "150px"}}
                    type="text"
                    name="text"
                    placeholder="Event Payout"
@@ -167,6 +174,15 @@ class Accounts extends Component {
                       <DropdownItem onClick={this.select}>{'Gas'}</DropdownItem>
                     </DropdownMenu>
                  </Dropdown>
+                 <Input
+                 style={{width: "143px"}}
+                 type="text"
+                 name="text"
+                 placeholder="Event Time Limit"
+                 value={this.state.timeLimit}
+                 onChange={e => this.setState({ timeLimit: e.target.value })}
+                 id="fourteenFont"
+                 />
                  </div>
                  <Input
                    style={{width: "200px"}}
@@ -178,8 +194,11 @@ class Accounts extends Component {
                    id="fourteenFont"
                  />
                </FormGroup>
-               <Button onClick={e => this.generate(e)} color="warning" id="fourteenFont">Generate</Button>
-               <Button onClick={e => this.import(e)} color="warning" id="fourteenFont">Import</Button>
+                 <ButtonGroup>
+                 <Button onClick={e => this.generate(e)} color="warning" id="fourteenFont">Generate</Button>
+                 <Button onClick={e => this.import(e)} color="warning" id="fourteenFont">Import</Button>
+                 <HelpModal buttonLabel='Help' title={'Burner Help'} body={'Here you can choose a path and filename to save or import accounts. If you are only importing, you do not need to specify how many accounts. "Event Name" and "Event URL" are extra metadata stored along with the accounts and will be shown on the generated PDF. These are used to provide information to users about the paper wallets. "Event Payout", "Asset Type", and "Event Time Limit" are the metadata points for special limited-time event payout where final setup will be done through neo-burner-server. These points are set here for tracking and linkage to accounts. These last three points will not be stored in the wallets.'} okayButtonText='Got it!' id='fourteenFont'/>
+               </ButtonGroup>
              </Form>
            </Container>
         </div>

@@ -120,7 +120,7 @@ class Wallets extends Component {
                     />
                     <br/>
                     <ButtonGroup>
-                    <FlashButton buttonLabel='Create PDF' title={'Burn Notice'} message={'Please wait while a PDF containing '+this.props.accounts.length+' wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
+                    <FlashButton buttonLabel='Create PDF' title={'Burner Notice'} message={'Please wait while a PDF containing '+this.props.accounts.length+' wallets is being generated at '+this.state.folder+'/'+this.state.filename} open={this.state.generatingPdf} onClick={this.createPdf}/>
                     {this.state.pdfExists ? <Button onClick={this.viewPdf} color="warning" id="fourteenFont">View PDF</Button> : ''}
                     </ButtonGroup>
                   </FormGroup>
