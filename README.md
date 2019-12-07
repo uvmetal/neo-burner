@@ -4,10 +4,11 @@
 ![neo-burner](/src/images/neo-burner-burning-logo-alt-3.png?raw=true "neo-burner")
 ![neo-burner](/src/images/neo-burner-ss.png?raw=true "neo-burner")
 
-Create Neo burner wallet that will facilitate the requirements mentioned in [Workflow](#workflow) below. The goal is to translate event participation to measurable Neo Smart Economy wallet conversion with event management, tracking, and reporting.
+Create Neo "burner" wallet that will facilitate the requirements mentioned in [Workflow](#workflow) below. The goal is to translate event participation to measurable Neo Smart Economy wallet conversion with event management, tracking, and reporting.
 
 This project leverages earlier work for the paper wallet [neo-paper](https://github.com/cityofzion/neo-paper).
 
+ This version currently does not support wallet conversion, i.e., it can generate accounts linked to events and their respective PDFs for print out, but the web piece is in dev so any conversion would have to be done through the provided neo-burner paper wallet URL configuration, if needed. skip to [Feature List](#feature-list) for full detail.
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
@@ -34,8 +35,6 @@ This project leverages earlier work for the paper wallet [neo-paper](https://git
 <!-- /TOC -->
 
 # Overview
-
-Create Neo burner wallet that will facilitate the requirements mentioned in [Workflow](#workflow) below. The goal is to translate event participation to measurable Neo Smart Economy wallet conversion with event management, tracking, and reporting.
 
 ## Neo-Burner
 
@@ -134,6 +133,14 @@ This sections describes the overall process at a high level. There are three mai
 * Nice to Have
   * Ability to airdrop non-fungible tokens (NFT) to previously active wallet addresses.
   * Ability to integrate a quiz or interactive feature.
+* Does Have
+	* Account generation
+	* Save/Export generated accounts
+	* Import accounts previously generated
+	* Customize HTML template (images, layout, etc) by specifying a location to export the default template. You then customize that.
+	* Generate a PDF from the default or customized HTML template
+	* There is currently no in-app HTML editor: DIY4NOW
+	* Saves user settings (paths, filenames, templates, etc) in electron user data settings so they can be recalled between desktop sessions.
 
 
 # Install Software
@@ -142,7 +149,7 @@ This sections describes the overall process at a high level. There are three mai
 
 # Development
 
-Run an interactive dev version packaged with Electron.
+Run an interactive dev version packaged with Electron. This is currently the only method that will generate a working neo-burner desktop app. This version currently does not support wallet conversion, i.e., it can generate accounts linked to events and their respective PDFs for print out, but the web piece is in dev so any conversion would have to be done through the provided neo-burner paper wallet URL configuration.
 
 `yarn dev`
 
@@ -152,7 +159,7 @@ Run an interactive dev react version.
 
 ## Build
 
-Only build the software. Do not package it.
+Only build the software. Do not package it. Note: this is still being tested. Stick to `yarn dev` if you need to generate some paper wallets for an event.
 
 `yarn prepack` or `yarn build`
 
@@ -203,30 +210,10 @@ https://stackoverflow.com/questions/22475849/node-js-what-is-enospc-error-and-ho
 
 # Todo
 
--	Design installer to deploy sails as an alternative to manual package installation
-- Create project board for the following:
+-	Complete "neo-burner-server". This is a web piece that allows paper wallets created by neo-burner to be converted to other wallets, if completed within a given time period, to receive limited-time special-offer event-specific payout to the new address created in the new wallet.
+- Refine UI
+- Lots more testing
+- Maybe implement an in-app HTML editor to modify the default template used for PDF generation.
 
-## Client
-
-The client or front end is the user interface that tightly couples with the server and focuses on presenting those server controls to the user.
-
-### State
-(front-end)
-* Add state management with redux before the prop passing and state lifting gets out of hand
-
-
-### UI Components
-* Componentize network status button overlay flyout
-* Abstract nav away from vertical/horizontal
-* Event-driven flyout states
-  - I.e., clicking hamburger doesn't close session status automatically
-  - Ideally, this could be configurable flag
-* Main UI panes do not scroll independently, consider best approach i.e., add scroll or not
-
-
-### UI Design
-* Theme - the current UI design and layout was for testing and example
-* Dark Mode
-* Flex nav flyout
 
 # Learn More

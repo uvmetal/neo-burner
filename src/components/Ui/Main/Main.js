@@ -74,7 +74,6 @@ class AppMain extends Component {
     })
 
     electron.ipcRenderer.send('read-user-settings')
-
   }
 
   componentWillReceiveProps() {
@@ -183,9 +182,7 @@ class AppMain extends Component {
     // footerContent = 'footer footer footer'
 
     if (this.props && this.props.location && this.props.location.pathname) {
-
       // this.setState({templateFolder: this.props.config.userData+'/'})
-
       // console.log(this.props.config.consoleBuffer)
       rightPaneContent = <Home />
 
