@@ -94,8 +94,10 @@
     "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "package": "build -c.extraMetadata.main=build/electron.js",
     "prepack": "yarn build",
-    "dist": "yarn build && yarn package",
-    "clean": "rm -r dist/*",
+    "prep-dist": "cp -r ./node_modules/phantomjs-prebuilt ./public/node_modules/ && cp -r ./node_modules/es6-promise ./public/node_modules/ && cp -r ./node_modules/extract-zip ./public/node_modules && cp -r ./node_modules/mkdirp ./public/node_modules && cp -r ./node_modules/which ./public/node_modules && cp -r ./node_modules/html-pdf ./public/node_modules",
+    "clean-public": "rm -rf public/node_modules/*",
+    "dist": "yarn prep-dist && yarn build && yarn package && yarn clean-public",
+    "clean": "rm -r dist/*; rm -r public/node_modules/*",
     "rebuild-electron-bins": "cd server && npm rebuild sqlite3 --target=5.0.0 --runtime=electron --dist-url=https://atom.io/download/electron && npm rebuild grpc --target=5.0.0 --runtime=electron --dist-url=https://atom.io/download/electron"
   },
   "build": {
