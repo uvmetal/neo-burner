@@ -1,10 +1,11 @@
 {
   "name": "neo-burner",
-  "version": "0.0.4",
+  "description": "A paper wallet event manager for Neo Smart Economy",
+  "version": "0.9.0",
   "private": true,
   "main": "public/electron.js",
   "homepage": "./",
-  "author": "uvmetal",
+  "author": "test <test@test.com>",
   "dependencies": {
     "@babel/core": "7.4.3",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
@@ -40,8 +41,6 @@
     "fs-extra": "^8.1.0",
     "fstream-ignore": "^1.0.5",
     "global": "^4.4.0",
-    "grpc": "^1.23.3",
-    "hiredis": "^0.5.0",
     "html-pdf": "^2.2.0",
     "html-webpack-plugin": "4.0.0-beta.5",
     "identity-obj-proxy": "3.0.0",
@@ -54,6 +53,7 @@
     "mini-css-extract-plugin": "0.5.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pdf-viewer-reactjs": "^2.0.0",
+    "phantomjs-prebuilt": "^2.1.16",
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
@@ -94,6 +94,7 @@
     "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "package": "build -c.extraMetadata.main=build/electron.js",
     "prepack": "yarn build",
+    "dist": "yarn build && yarn package",
     "clean": "rm -r dist/*",
     "rebuild-electron-bins": "cd server && npm rebuild sqlite3 --target=5.0.0 --runtime=electron --dist-url=https://atom.io/download/electron && npm rebuild grpc --target=5.0.0 --runtime=electron --dist-url=https://atom.io/download/electron"
   },

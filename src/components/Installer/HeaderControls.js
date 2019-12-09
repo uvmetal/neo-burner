@@ -27,7 +27,6 @@ class InstallerHeaderControls extends Component {
     return(
       <div>
         <div>
-          <Button size="sm" onClick={this.props.leftPaneToggleHidden} >...</Button>
           Installation
         </div>
         </div>

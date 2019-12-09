@@ -9,9 +9,6 @@ const fs = require('fs-extra')
 
 const { app, shell, electron, BrowserWindow, Menu } = require('electron')
 
-// const app = electron.app
-// const BrowserWindow = electron.BrowserWindow
-
 const path = require('path')
 const url = require('url')
 const isDev = require('electron-is-dev')
@@ -28,6 +25,11 @@ const isFirstRun = firstRun()
 
 const qr = require('./qrpdf')
 
+let ncp = require('ncp').ncp;
+
+ncp.limit = 16
+ncp.clobber = true
+
 let mainWindow, systemConfig, userSettings, userSettingsFile = 'user-settings.json'
 
 let sailsServer
@@ -38,6 +40,8 @@ let server = {
   serverPID: undefined,
   serverPath: './server/node_modules/.bin/'
 }
+
+let rootpath
 
 global.serverConfig = { useSails: false }
 
@@ -103,17 +107,68 @@ function createWindow() {
     sailsServerPath = systemConfig.exe + '/../server'
     const re = /\/neo-burner$/
     server.serverPath = systemConfig.exe.replace(re, '/server/node_modules/.bin/')
+    // rootpath = __dirname+'/node_modules/phantomjs-prebuilt/bin/phantomjs'
+    // rootpath = __dirname+'/node_modules/phantomjs-prebuilt/bin/phantomjs'
+    // rootpath = __dirname+'/'
   } else {
     sailsIsPackaged = false
     sailsServerPath = './server'
     server.serverPath = './server/node_modules/.bin/'
+    // rootpath = __dirname
+    // rootpath = './node_modules/phantomjs-prebuilt/bin/phantomjs'
   }
+  // rootpath = './node_modules/phantomjs-prebuilt/bin/phantomjs'
+  rootpath = systemConfig.userData
+  // rootpath = systemConfig.userData+'/node_modules/phantomjs-prebuilt/bin/phantomjs'
+  // rootpath = __dirname+'/phantomjs'
+  console.log('phantomjs-prebuilt rootpath: '+rootpath)
 
-  console.log('server.serverPath: '+server.serverPath)
-
-  ipcBin.addIpcListeners(global, server)
+  // console.log('server.serverPath: '+server.serverPath)
+  // ipcBin.addIpcListeners(global, server)
   // ipcBin.removeIpcListeners()
-  console.log('data folder: '+__dirname)
+
+  // TODO move all the file copy to installation component and module
+
+  fs.mkdir(systemConfig.userData+'/node_modules/')
+
+  ncp(__dirname+'/node_modules/phantomjs-prebuilt/', systemConfig.userData+'/node_modules/phantomjs-prebuilt/', function (err) {
+   if (err) {
+     return console.error(err);
+   }
+   console.log('done!');
+  })
+  ncp(__dirname+'/node_modules/es6-promise/', systemConfig.userData+'/node_modules/es6-promise/', function (err) {
+   if (err) {
+     return console.error(err);
+   }
+   console.log('done!');
+  })
+  ncp(__dirname+'/node_modules/extract-zip/', systemConfig.userData+'/node_modules/extract-zip/', function (err) {
+   if (err) {
+     return console.error(err);
+   }
+   console.log('done!');
+  })
+  ncp(__dirname+'/node_modules/mkdirp/', systemConfig.userData+'/node_modules/mkdirp/', function (err) {
+   if (err) {
+     return console.error(err);
+   }
+   console.log('done!');
+  })
+  ncp(__dirname+'/node_modules/which/', systemConfig.userData+'/node_modules/which/', function (err) {
+   if (err) {
+     return console.error(err);
+   }
+   console.log('done!');
+  })
+  ncp(__dirname+'/node_modules/html-pdf/', systemConfig.userData+'/node_modules/html-pdf/', function (err) {
+   if (err) {
+     return console.error(err);
+   }
+   console.log('done!');
+  })
+
+  console.log('Installing from data folder: '+__dirname)
 
   fs.copy(__dirname+'/neo-paper/data/template.html', systemConfig.userData+'/template.html')
   .then(() => console.log('copied '+__dirname+'/neo-paper/data/template.html to '+ systemConfig.userData+'/template.html'))
@@ -124,12 +179,31 @@ function createWindow() {
   .catch(err => console.error(err))
 
   fs.copy(__dirname+'/neo-paper/data/images/coz-inverted.svg', systemConfig.userData+'/coz-inverted.svg')
-  .then(() => console.log('copied: '+_dirname+'/neo-paper/data/images/coz-inverted.svg to ' + systemConfig.userData+'/coz-inverted.svg'))
+  .then(() => console.log('copied: '+__dirname+'/neo-paper/data/images/coz-inverted.svg to ' + systemConfig.userData+'/coz-inverted.svg'))
   .catch(err => console.error(err))
 
   fs.copy(__dirname+'/neo-paper/data/images/neo-logo-xp.png', systemConfig.userData+'/neo-logo-xp.png')
   .then(() => console.log('copied '+__dirname+'/neo-paper/data/images/neo-logo-xp.png to'+ systemConfig.userData+'/neo-logo-xp.png'))
   .catch(err => console.error(err))
+
+  let settings = {
+    darkMode: true,
+    accountsPath: '/tmp/',
+    accountsFile: 'accounts.json',
+    pdfPath: '/tmp/',
+    pdfFile: 'wallets.pdf',
+    templatePath: systemConfig.userData+'/'
+  }
+
+  let filename = systemConfig.userData+'/'+userSettingsFile
+  console.log('Writing default user settings to '+filename)
+  console.log('data: '+util.inspect(settings, {depth: null}))
+  fs.writeFileSync(filename, JSON.stringify(settings).toString())
+
+  // rootpath = global && global.rootPath?(global.rootPath + "/node_modules/phantomjs-prebuilt/lib"):__dirname
+  // rootpath = global && global.rootPath?(global.rootPath + "/node_modules/phantomjs-prebuilt/bin/phantomjs"): './node_modules/phantomjs-prebuilt/bin/phantomjs'
+
+
 }
 
 app.on('ready', createWindow);
@@ -151,14 +225,54 @@ ipc.on('setup-event-manager', function (event, arg) {
   ipcBin.setupEventManager(event)
 })
 
+// ipc.on('create-pdf', function (event, arg) {
+//   // qr.gen(arg.path, arg.filename, arg.data)
+//   console.log('ipc create-pdf at '+arg.pdfPath+arg.filename+' using template folder '+arg.templatePath)
+//
+//   let window_to_PDF = new BrowserWindow({show : false});//to just open the browser in background
+//   window_to_PDF.loadURL(arg.templatePath+'/template.html'); //give the file link you want to display
+//   function pdfSettings() {
+//       var paperSizeArray = ["A4", "A5"];
+//       var option = {
+//           landscape: false,
+//           marginsType: 0,
+//           printBackground: false,
+//           printSelectionOnly: false,
+//           // pageSize: paperSizeArray[settingCache.getPrintPaperSize()-1],
+//           pageSize: paperSizeArray[0]
+//       };
+//     return option;
+//   }
+//   window_to_PDF.webContents.printToPDF(pdfSettings(), function(err, data) {
+//       if (err) {
+//           //do whatever you want
+//           return;
+//       }
+//       try{
+//           fs.writeFileSync(arg.pdfPath+'/'+arg.filename, data);
+//           console.log('done!')
+//       }catch(err){
+//           //unable to save pdf..
+//           console.log('cant write pdf: '+err)
+//       }
+//
+//   })
+//   //
+//   // qr.gen(rootpath, arg.templatePath+'/', arg.pdfPath, arg.filename, arg.data, () => {
+//   //   event.sender.send('pdf-created')
+//   //   console.log('done!')
+//   // })
+// })
+
 ipc.on('create-pdf', function (event, arg) {
   // qr.gen(arg.path, arg.filename, arg.data)
   console.log('ipc create-pdf at '+arg.pdfPath+arg.filename+' using template folder '+arg.templatePath)
-  qr.gen(arg.templatePath+'/', arg.pdfPath, arg.filename, arg.data, () => {
+  qr.gen(rootpath, arg.templatePath+'/', arg.pdfPath, arg.filename, arg.data, () => {
     event.sender.send('pdf-created')
     console.log('done!')
   })
 })
+
 
 ipc.on('write-file', function (event, arg) {
   fs.writeFileSync(arg.path, arg.data)

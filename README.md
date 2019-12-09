@@ -159,34 +159,34 @@ Run an interactive dev react version.
 
 ## Build
 
-Only build the software. Do not package it. Note: this is still being tested. Stick to `yarn dev` if you need to generate some paper wallets for an event.
+Only build the software. Do not package it.
 
 `yarn prepack` or `yarn build`
 
 ## Create the Package
 
-This isn't necessary for this project, but is left to be reviewed for later.
+To build a Linux .deb package for amd64 run the command below. Note: this is still being tested. It should work at this point on Ubuntu 18.04, but stick to `yarn dev` if you need to generate some paper wallets for an event and `yarn dist` isn't working. NOTE: dark mode doesn't work in the dist .deb package.
 
 To build and package a distribution file with Electron and send it to the `./dist/` folder do:
 
-`yarn package`
+`yarn dist`
 
 ## Run or Install the Package
 
-This isn't necessary for this project, but is left to be reviewed for later.
+This isn't necessary for this project, but is left to be reviewed for later. You may need to change the version number in your package name, i.e.: `neo-burner\ 0.0.4.AppImage` to whatever you see in the `./dist` folder.
 
 The following should be suitable to install on Linux. This has been tested on Ubuntu 18.04
 
 ```
 cd ./dist
-./\ 0.1.0.AppImage
+./neo-burner\ 0.9.0.AppImage
 ```
 
 For complete installation on Ubuntu 18.04 Linux to default directory /opt/ use:
 
 ```
 cd ./dist
-sudo dpkg -i _0.1.0_amd64.deb
+sudo dpkg -i neo-burner_0.9.0_amd64.deb
 sudo chown -R youruser.youruser /opt//
 ```
 

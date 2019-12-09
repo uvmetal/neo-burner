@@ -3,10 +3,10 @@ import { Jumbotron, Button } from 'reactstrap'
 
 import util from 'util'
 
-import '../../style.css'
+import './style.css'
 
-import cozLogo from '../../images/coz-inverted.svg'
-import neoOneLogo from '../../images/neo-one.png'
+import burnerLogo from '../../images/neo-burner-burning-logo-alt-3.png'
+import uvmetalFace from '../../images/uvmetal-tongue.png'
 
 class InstallerHome extends Component {
   constructor(props) {
@@ -43,22 +43,19 @@ class InstallerHome extends Component {
   render() {
     return(
       <React.Fragment>
-        <Jumbotron className="vertical-center">
-        <div className="container hero-container text-center">
-          <h1 className="display-4">Installation </h1>
-          <p className="lead">Welcome, please configure</p>
-          <hr className="my-4" />
+        <Jumbotron className="vertical-center" id="ma" style={this.props.style}>
+        <div className="container hero-container text-center" id="ma">
+          <img src={burnerLogo} width="800" height="175" alt="neo-burner" className=""  />
+          <br/>
+          <img src={uvmetalFace} width="205" height="205" alt="neo-burner" className=""  />
+          <p className="lead">Installation</p>
           <p className="lead mx-auto">
+          <Button onClick={this.letsBurn} color="warning" >Let's Burn!</Button>
           </p>
-          <Button size="sm" onClick={this.lift} >Start Server</Button>
-          <Button size="sm" onClick={this.lower} >Stop Server</Button>
         </div>
-        </Jumbotron>
-        <img src={neoOneLogo} className="img-fluid mx-auto d-block" alt="Neo One" />
-        <div className="footer coz-medium pt-1">
-          <img src={cozLogo} width="276" height="50" alt="City of Zion" className="img-fluid mx-auto d-block" />
-        </div>
+      </Jumbotron>
       </React.Fragment>
+
     )
   }
 }

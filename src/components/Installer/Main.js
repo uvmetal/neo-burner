@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 
 import InstallerHome  from './Home'
+import Footer from './Footer'
 import InstallerHeaderControls from './HeaderControls'
 import InstallerNav  from './VerticalNav'
 
 import About from '../App/About'
+
 
 import '../../style.css'
 
@@ -53,8 +55,7 @@ class InstallerMain extends Component {
     // let leftPaneContent = this.props.leftPaneContent ? this.props.leftPaneContent : ''
     let leftPaneContent = <InstallerNav hidden={this.state.leftPaneHidden} hideWorkspaceRollup={this.state.hideWorkspaceRollup} hideSettingsRollup={this.state.hideSettingsRollup} toggleRollup={this.toggleVerticalNavRollup} />
     let rightPaneContent = this.props.rightPaneContent ? this.props.rightPaneContent : ''
-    let footerContent = this.props.footerContent ? this.props.footerContent : ''
-    footerContent = 'footer footer footer'
+    let footerContent = this.props.footerContent ? this.props.footerContent : <Footer />
 
     if (this.props && this.props.location && this.props.location.pathname) {
 
@@ -75,18 +76,24 @@ class InstallerMain extends Component {
     }
 
     return (
-      <div class='wrapper'>
-        <div class='headerContent'>{headerContent}</div>
-        { !this.state.leftPaneHidden &&
-          <div class='leftPaneContent'>
-         { leftPaneContent }
-          </div>
-        }
-        <div class='rightPaneContent'>
-        {rightPaneContent}
+      <div id="wrapper">
+         <div id="header">
+           {headerContent}
+         </div>
+         <div id="contentWrapper">
+           { !this.state.leftPaneHidden &&
+             <div className='leftPaneContent'>
+            { leftPaneContent }
+             </div>
+           }
+           <div className='rightPaneContent'>
+           {rightPaneContent}
+           </div>
         </div>
-        <div class='footerContent'>{footerContent}</div>
-      </div>
+         <div id="footer">
+            <div className='footerContent'>{footerContent}</div>
+         </div>
+       </div>
     )
   }
 }

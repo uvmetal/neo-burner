@@ -55,24 +55,6 @@ class App extends Component {
             users: sortedList
         })
     })
-
-    // let self = this
-    //
-    // electron.ipcRenderer.on('check-install-reply', function (event, arg) {
-    //   // console.log('Got installer message. systemConfig is ' + arg)
-    //
-    //   self.setState({ systemConfig: arg })
-    // })
-    //
-    // electron.ipcRenderer.send('check-install')
-    //
-    // electron.ipcRenderer.on('update-console-buffer', function (event, arg) {
-    //   console.log('updating console buffer')
-    //   self.state.systemConfig.consoleBuffer.push(arg)
-    //   self.setState({ systemConfig: { consoleBuffer: self.state.systemConfig.consoleBuffer } })
-    // })
-    //
-    // electron.ipcRenderer.send('setup-event-manager')
   }
 
   handleSort() {
@@ -80,17 +62,17 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.systemConfig && this.state.systemConfig.isFirstRun === true) {
-      console.log('redirecting to installer')
-
-      return (
-        <MemoryRouter>
-          <Switch>
-          <Route render={(props) => <InstallerMain {...props} config={this.state.systemConfig} />} />
-          </Switch>
-        </MemoryRouter>
-      )
-    }
+    // if (this.state.systemConfig && this.state.systemConfig.isFirstRun === true) {
+    //   console.log('redirecting to installer')
+    //
+    //   return (
+    //     <MemoryRouter>
+    //       <Switch>
+    //       <Route render={(props) => <InstallerMain {...props} config={this.state.systemConfig} />} />
+    //       </Switch>
+    //     </MemoryRouter>
+    //   )
+    // }
 
     return (
       // <Main rightPaneContent={rightPaneContent} footerContent={footerContent} />

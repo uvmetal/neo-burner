@@ -22,8 +22,12 @@ let sources = []
 
 let URL = process.argv[2] ? process.argv[2] : 'https://O3.network'
 
-exports.gen = async function (path, finalWalletPath, filename, accounts, callback) {
+let phantomJsRootPath
+
+exports.gen = async function (phantomPath, path, finalWalletPath, filename, accounts, callback) {
   let account
+
+  phantomJsRootPath = phantomPath
 
   let i = 0
 
@@ -124,7 +128,6 @@ function makePdf(address, privateKey, url, wif, path, callback) {
   console.log('pkLink: '+pkLink)
 
 
-
   let pub = qr.image(publicAddress, { type: 'png' })
   pub.pipe(require('fs').createWriteStream(path+'public.png'))
   console.log('Public Address: '+publicAddress)
@@ -169,6 +172,10 @@ function makePdf(address, privateKey, url, wif, path, callback) {
       let options = {
         // Rendering options
         format: 'Letter',
+        // phantomPath: './node_modules/phantomjs-prebuilt/bin/phantomjs',
+        phantomPath: phantomJsRootPath+'/node_modules/phantomjs-prebuilt/bin/phantomjs',
+        script: phantomJsRootPath+'/node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js',
+        // script: './node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js',
         // 'base': cwd, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
         'base': 'file://'+path, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
       }

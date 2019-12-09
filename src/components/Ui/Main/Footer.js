@@ -27,12 +27,12 @@ class Footer extends Component {
             <img src={burnerLogo} width="200" height="60" alt="neo-burner" className=""  /> {version}
           </div>
           <div className=" coz-medium pt-1" id="footerRight">
-            <a href="https://github.com/cityofzion/neo-burner" target="_blank">
+            <a href="https://github.com/cityofzion/neo-burner" target="_blank" rel="noopener noreferrer">
               <img src={cozLogo} width="200" height="50" alt="City of Zion" className=""  />
             </a>
             &nbsp;
             &nbsp;
-            <a href="https://github.com/uvmetal" target="_blank">
+            <a href="https://github.com/uvmetal" target="_blank" rel="noopener noreferrer">
               <img src={uvmetalLogo} width="100" height="20" className="img-fluid" alt="uvmetal" />
             </a>
           </div>
