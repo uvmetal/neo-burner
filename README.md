@@ -165,7 +165,11 @@ Only build the software. Do not package it.
 
 ## Create the Package
 
-To build a Linux .deb package for amd64 run the command below. Note: this is still being tested. It should work at this point on Ubuntu 18.04, but stick to `yarn dev` if you need to generate some paper wallets for an event and `yarn dist` isn't working. NOTE: dark mode doesn't work in the dist .deb package.
+To build a Linux .deb package for amd64 run the command below. Note: this is still being tested. It should work at this point on Ubuntu 18.04, but stick to `yarn dev` if you need to generate some paper wallets for an event and `yarn dist` isn't working.
+
+NOTE: Dark mode doesn't work in the dist .deb package.
+
+NOTE: The .deb package is a bit of a kludge right now as the node_modules required for several pdf parts are included in the public folder. This bloats the repo and the generated image. TODO: refactor with a local build step that copies all of the files and generates an image without a need for a repo upload of `public/node_modules`. 
 
 To build and package a distribution file with Electron and send it to the `./dist/` folder do:
 
