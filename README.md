@@ -8,7 +8,7 @@ Create Neo "burner" wallet that will facilitate the requirements mentioned in [W
 
 This project leverages earlier work for the paper wallet [neo-paper](https://github.com/cityofzion/neo-paper).
 
- This version currently does not support wallet conversion, i.e., it can generate accounts linked to events and their respective PDFs for print out, but the web piece is in dev so any conversion would have to be done through the provided neo-burner paper wallet URL configuration, if needed. skip to [Feature List](#feature-list) for full detail.
+ This version currently does not support wallet conversion, i.e., it can generate accounts linked to events and their respective PDFs for print out, but the web piece is in dev so any conversion would have to be done through the provided neo-burner paper wallet URL configuration, if needed. Skip to [Feature List](#feature-list) for full detail.
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
@@ -169,7 +169,7 @@ To build a Linux .deb package for amd64 run the command below. Note: this is sti
 
 NOTE: Dark mode doesn't work in the dist .deb package.
 
-NOTE: The .deb package is a bit of a kludge right now as the node_modules required for several pdf parts are included in the public folder. This bloats the repo and the generated image. TODO: refactor with a local build step that copies all of the files and generates an image without a need for a repo upload of `public/node_modules`. 
+NOTE: The .deb package is a bit of a kludge right now as the node_modules required for several pdf parts are included in the public folder. This bloats the repo and the generated image. TODO: refactor with a local build step that copies all of the files and generates an image without a need for a repo upload of `public/node_modules`.
 
 To build and package a distribution file with Electron and send it to the `./dist/` folder do:
 
