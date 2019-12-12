@@ -117,9 +117,6 @@ function createWindow() {
 
   // TODO move all the file copy to installation component and module
 
-  // ncp.limit = 16
-  // ncp.clobber = true
-
   let options = {
     overwrite: true,
     expand: true
