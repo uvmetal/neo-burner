@@ -43,7 +43,7 @@ class App extends Component {
       // self.setState({ systemConfig: { consoleBuffer: self.state.systemConfig.consoleBuffer } })
     })
 
-    electron.ipcRenderer.send('setup-event-manager')
+    // electron.ipcRenderer.send('setup-event-manager')
   }
 
   componentDidMount() {

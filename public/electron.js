@@ -4,8 +4,8 @@ var rc = require('sails/accessible/rc')
 
 const util = require('util')
 
-// const fs = require('fs')
 const fs = require('fs-extra')
+const fse = require('fs-extra')
 
 const { app, shell, electron, BrowserWindow, Menu } = require('electron')
 
@@ -17,18 +17,14 @@ const ipc = require('electron').ipcMain
 
 const firstRun = require('electron-first-run')
 
-const ipcBin = require('./ipc/BinaryIpcControls')
-
 const { spawn } = require('child_process')
 
 const isFirstRun = firstRun()
 
 const qr = require('./qrpdf')
 
-let ncp = require('ncp').ncp;
+let rcp = require('recursive-copy')
 
-ncp.limit = 16
-ncp.clobber = true
 
 let mainWindow, systemConfig, userSettings, userSettingsFile = 'user-settings.json'
 
@@ -47,8 +43,6 @@ global.serverConfig = { useSails: false }
 
 function createWindow() {
   // Menu.setApplicationMenu(null)
-
-
 
   mainWindow = new BrowserWindow(
     {
@@ -100,6 +94,7 @@ function createWindow() {
 
   let systemConfig = getSystemProfile()
 
+  let srcPath
   // TODO modify installer to install sails for database/api module deployment
 
   if (app.isPackaged) {
@@ -107,68 +102,73 @@ function createWindow() {
     sailsServerPath = systemConfig.exe + '/../server'
     const re = /\/neo-burner$/
     server.serverPath = systemConfig.exe.replace(re, '/server/node_modules/.bin/')
-    // rootpath = __dirname+'/node_modules/phantomjs-prebuilt/bin/phantomjs'
-    // rootpath = __dirname+'/node_modules/phantomjs-prebuilt/bin/phantomjs'
-    // rootpath = __dirname+'/'
+    srcPath = path.join(systemConfig.exe, '..', 'node_modules')
+
   } else {
     sailsIsPackaged = false
     sailsServerPath = './server'
     server.serverPath = './server/node_modules/.bin/'
-    // rootpath = __dirname
-    // rootpath = './node_modules/phantomjs-prebuilt/bin/phantomjs'
+    srcPath = path.join('.', 'node_modules')
   }
-  // rootpath = './node_modules/phantomjs-prebuilt/bin/phantomjs'
   rootpath = systemConfig.userData
-  // rootpath = systemConfig.userData+'/node_modules/phantomjs-prebuilt/bin/phantomjs'
-  // rootpath = __dirname+'/phantomjs'
   console.log('phantomjs-prebuilt rootpath: '+rootpath)
-
-  // console.log('server.serverPath: '+server.serverPath)
-  // ipcBin.addIpcListeners(global, server)
-  // ipcBin.removeIpcListeners()
+  console.log('__dirname: '+__dirname)
+  console.log('phant sources: '+srcPath)
 
   // TODO move all the file copy to installation component and module
 
-  fs.mkdir(systemConfig.userData+'/node_modules/')
+  // ncp.limit = 16
+  // ncp.clobber = true
 
-  ncp(__dirname+'/node_modules/phantomjs-prebuilt/', systemConfig.userData+'/node_modules/phantomjs-prebuilt/', function (err) {
-   if (err) {
-     return console.error(err);
-   }
-   console.log('done!');
+  let options = {
+    overwrite: true,
+    expand: true
+  }
+
+  fs.mkdirpSync(systemConfig.userData+'/node_modules/')
+
+  rcp(srcPath+'/phantomjs-prebuilt/', systemConfig.userData+'/node_modules/phantomjs-prebuilt/', options, function (err) { if (err) {
+      return console.error(err)
+    } console.log('done!')
   })
-  ncp(__dirname+'/node_modules/es6-promise/', systemConfig.userData+'/node_modules/es6-promise/', function (err) {
-   if (err) {
-     return console.error(err);
-   }
-   console.log('done!');
+
+  rcp(srcPath+'/es6-promise/', systemConfig.userData+'/node_modules/es6-promise/', options, function (err) {
+  if (err) {
+    return console.error(err)
+  } console.log('done!')
   })
-  ncp(__dirname+'/node_modules/extract-zip/', systemConfig.userData+'/node_modules/extract-zip/', function (err) {
-   if (err) {
-     return console.error(err);
-   }
-   console.log('done!');
+
+  rcp(srcPath+'/extract-zip/', systemConfig.userData+'/node_modules/extract-zip/', options, function (err) {
+  if (err) {
+    return console.error(err)
+  } console.log('done!')
   })
-  ncp(__dirname+'/node_modules/mkdirp/', systemConfig.userData+'/node_modules/mkdirp/', function (err) {
-   if (err) {
-     return console.error(err);
-   }
-   console.log('done!');
+
+  rcp(srcPath+'/mkdirp/', systemConfig.userData+'/node_modules/mkdirp/', options, function (err) {
+    if (err) {
+      return console.error(err)
+    } console.log('done!')
   })
-  ncp(__dirname+'/node_modules/which/', systemConfig.userData+'/node_modules/which/', function (err) {
-   if (err) {
-     return console.error(err);
-   }
-   console.log('done!');
+
+  rcp(srcPath+'/which/', systemConfig.userData+'/node_modules/which/', options, function (err) {
+  if (err) {
+    return console.error(err)
+  } console.log('done!')
   })
-  ncp(__dirname+'/node_modules/html-pdf/', systemConfig.userData+'/node_modules/html-pdf/', function (err) {
-   if (err) {
-     return console.error(err);
-   }
-   console.log('done!');
+
+  rcp(srcPath+'/html-pdf/', systemConfig.userData+'/node_modules/html-pdf/', options, function (err) {
+    if (err) {
+      return console.error(err)
+    } console.log('done!')
   })
 
   console.log('Installing from data folder: '+__dirname)
+
+  // rcp(__dirname+'/neo-paper/data/', systemConfig.userData+'/', (err) => {
+  //   if (err) {
+  //     return console.error(err)
+  //   } console.log('copied '+__dirname+'/neo-paper/data/* to '+ systemConfig.userData+'/')
+  // }
 
   fs.copy(__dirname+'/neo-paper/data/template.html', systemConfig.userData+'/template.html')
   .then(() => console.log('copied '+__dirname+'/neo-paper/data/template.html to '+ systemConfig.userData+'/template.html'))
@@ -199,11 +199,6 @@ function createWindow() {
   console.log('Writing default user settings to '+filename)
   console.log('data: '+util.inspect(settings, {depth: null}))
   fs.writeFileSync(filename, JSON.stringify(settings).toString())
-
-  // rootpath = global && global.rootPath?(global.rootPath + "/node_modules/phantomjs-prebuilt/lib"):__dirname
-  // rootpath = global && global.rootPath?(global.rootPath + "/node_modules/phantomjs-prebuilt/bin/phantomjs"): './node_modules/phantomjs-prebuilt/bin/phantomjs'
-
-
 }
 
 app.on('ready', createWindow);
@@ -221,9 +216,9 @@ app.on('activate', () => {
 })
 
 // This manages events from the terminal widget under Workspace/Console
-ipc.on('setup-event-manager', function (event, arg) {
-  ipcBin.setupEventManager(event)
-})
+// ipc.on('setup-event-manager', function (event, arg) {
+//   ipcBin.setupEventManager(event)
+// })
 
 // ipc.on('create-pdf', function (event, arg) {
 //   // qr.gen(arg.path, arg.filename, arg.data)

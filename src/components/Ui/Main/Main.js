@@ -12,7 +12,6 @@ import New from '../../App/New'
 import Import from '../../App/Import'
 import Export from '../../App/Export'
 import Report from '../../App/Report'
-import Events from '../../App/Events'
 import Home from '../../App/Home'
 import Settings from '../../App/Settings'
 import PDF from '../../App/PDF'
@@ -239,10 +238,6 @@ class AppMain extends Component {
 
         case '/Report':
         rightPaneContent = <Report />
-        break
-
-        case '/Events':
-        rightPaneContent = <Events />
         break
 
         case '/Settings':
