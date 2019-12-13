@@ -23,7 +23,7 @@ const isFirstRun = firstRun()
 
 const qr = require('./qrpdf')
 
-let rcp = require('recursive-copy')
+// let rcp = require('recursive-copy')
 
 
 let mainWindow, systemConfig, userSettings, userSettingsFile = 'user-settings.json'
@@ -118,10 +118,10 @@ function createWindow() {
 
   // TODO move all the file copy to installation component and module
 
-  let options = {
-    overwrite: true,
-    expand: true
-  }
+  // let options = {
+  //   overwrite: true,
+  //   expand: true
+  // }
 
   // fs.mkdirpSync(systemConfig.userData+'/node_modules/')
   //
