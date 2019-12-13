@@ -110,7 +110,8 @@ function createWindow() {
     server.serverPath = './server/node_modules/.bin/'
     srcPath = path.join('.', 'node_modules')
   }
-  rootpath = systemConfig.userData
+  // rootpath = systemConfig.userData
+  rootpath = srcPath
   console.log('phantomjs-prebuilt rootpath: '+rootpath)
   console.log('__dirname: '+__dirname)
   console.log('phant sources: '+srcPath)
@@ -122,42 +123,42 @@ function createWindow() {
     expand: true
   }
 
-  fs.mkdirpSync(systemConfig.userData+'/node_modules/')
-
-  rcp(srcPath+'/phantomjs-prebuilt/', systemConfig.userData+'/node_modules/phantomjs-prebuilt/', options, function (err) { if (err) {
-      return console.error(err)
-    } console.log('done!')
-  })
-
-  rcp(srcPath+'/es6-promise/', systemConfig.userData+'/node_modules/es6-promise/', options, function (err) {
-  if (err) {
-    return console.error(err)
-  } console.log('done!')
-  })
-
-  rcp(srcPath+'/extract-zip/', systemConfig.userData+'/node_modules/extract-zip/', options, function (err) {
-  if (err) {
-    return console.error(err)
-  } console.log('done!')
-  })
-
-  rcp(srcPath+'/mkdirp/', systemConfig.userData+'/node_modules/mkdirp/', options, function (err) {
-    if (err) {
-      return console.error(err)
-    } console.log('done!')
-  })
-
-  rcp(srcPath+'/which/', systemConfig.userData+'/node_modules/which/', options, function (err) {
-  if (err) {
-    return console.error(err)
-  } console.log('done!')
-  })
-
-  rcp(srcPath+'/html-pdf/', systemConfig.userData+'/node_modules/html-pdf/', options, function (err) {
-    if (err) {
-      return console.error(err)
-    } console.log('done!')
-  })
+  // fs.mkdirpSync(systemConfig.userData+'/node_modules/')
+  //
+  // rcp(srcPath+'/phantomjs-prebuilt/', systemConfig.userData+'/node_modules/phantomjs-prebuilt/', options, function (err) { if (err) {
+  //     return console.error(err)
+  //   } console.log('done!')
+  // })
+  //
+  // rcp(srcPath+'/es6-promise/', systemConfig.userData+'/node_modules/es6-promise/', options, function (err) {
+  // if (err) {
+  //   return console.error(err)
+  // } console.log('done!')
+  // })
+  //
+  // rcp(srcPath+'/extract-zip/', systemConfig.userData+'/node_modules/extract-zip/', options, function (err) {
+  // if (err) {
+  //   return console.error(err)
+  // } console.log('done!')
+  // })
+  //
+  // rcp(srcPath+'/mkdirp/', systemConfig.userData+'/node_modules/mkdirp/', options, function (err) {
+  //   if (err) {
+  //     return console.error(err)
+  //   } console.log('done!')
+  // })
+  //
+  // rcp(srcPath+'/which/', systemConfig.userData+'/node_modules/which/', options, function (err) {
+  // if (err) {
+  //   return console.error(err)
+  // } console.log('done!')
+  // })
+  //
+  // rcp(srcPath+'/html-pdf/', systemConfig.userData+'/node_modules/html-pdf/', options, function (err) {
+  //   if (err) {
+  //     return console.error(err)
+  //   } console.log('done!')
+  // })
 
   console.log('Installing from data folder: '+__dirname)
 

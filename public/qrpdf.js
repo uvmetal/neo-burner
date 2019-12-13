@@ -173,8 +173,8 @@ function makePdf(address, privateKey, url, wif, path, callback) {
         // Rendering options
         format: 'Letter',
         // phantomPath: './node_modules/phantomjs-prebuilt/bin/phantomjs',
-        phantomPath: phantomJsRootPath+'/node_modules/phantomjs-prebuilt/bin/phantomjs',
-        script: phantomJsRootPath+'/node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js',
+        phantomPath: phantomJsRootPath+'/phantomjs-prebuilt/bin/phantomjs',
+        script: phantomJsRootPath+'/html-pdf/lib/scripts/pdf_a4_portrait.js',
         // script: './node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js',
         // 'base': cwd, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
         'base': 'file://'+path, // Base path that's used to load files (images, css, js) when they aren't referenced using a host
