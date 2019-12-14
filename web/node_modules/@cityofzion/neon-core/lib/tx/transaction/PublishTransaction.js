@@ -1,0 +1,118 @@
+import { TX_VERSION } from "../../consts";
+import { ab2hexstring, hexstring2str, num2hexstring, num2VarInt, str2hexstring } from "../../u";
+import { BaseTransaction } from "./BaseTransaction";
+import TransactionType from "./TransactionType";
+export class PublishTransaction extends BaseTransaction {
+    constructor(obj = {}) {
+        super(Object.assign({ version: TX_VERSION.PUBLISH }, obj));
+        this.type = TransactionType.PublishTransaction;
+        this.script = obj.script || "";
+        this.parameterList = obj.parameterList || [0];
+        this.returnType = obj.returnType || 0;
+        this.needStorage = obj.needStorage || false;
+        this.name = obj.name || "";
+        this.codeVersion = obj.codeVersion || "";
+        this.author = obj.author || "";
+        this.email = obj.email || "";
+        this.description = obj.description || "";
+    }
+    static deserializeExclusive(ss, tx) {
+        if (tx.version === undefined) {
+            tx.version = 0;
+        }
+        if (tx.version > 1) {
+            throw new Error(`version need to be less or equal than 1. Got ${tx.version}`);
+        }
+        const script = ss.readVarBytes();
+        const paramList = ss.readVarBytes();
+        const parameterList = [];
+        for (let i = 0; i + 2 <= paramList.length; i = i + 2) {
+            parameterList.push(parseInt(paramList.substring(i, i + 2), 16));
+        }
+        const returnType = parseInt(ss.read(1), 16);
+        if (tx.version >= 1) {
+            throw new Error(`version need to be less or equal than 1. Got ${tx.version}`);
+        }
+        let NeedStorage = false;
+        if (tx.version >= 1) {
+            NeedStorage = !!parseInt(ss.read(1), 16);
+        }
+        const name = hexstring2str(ss.readVarBytes());
+        const codeVersion = hexstring2str(ss.readVarBytes());
+        const author = hexstring2str(ss.readVarBytes());
+        const email = hexstring2str(ss.readVarBytes());
+        const description = hexstring2str(ss.readVarBytes());
+        return Object.assign(tx, {
+            script,
+            parameterList,
+            returnType,
+            NeedStorage,
+            name,
+            codeVersion,
+            author,
+            email,
+            description
+        });
+    }
+    get exclusiveData() {
+        return {
+            script: this.script,
+            parameterList: this.parameterList,
+            returnType: this.returnType,
+            needStorage: this.needStorage,
+            name: this.name,
+            codeVersion: this.codeVersion,
+            author: this.author,
+            email: this.email,
+            description: this.description
+        };
+    }
+    get fees() {
+        return 0;
+    }
+    serializeExclusive() {
+        let out = num2VarInt(this.script.length / 2);
+        out += this.script;
+        out += num2VarInt(this.parameterList.length);
+        out += ab2hexstring(this.parameterList);
+        if (this.version >= 1) {
+            out += num2hexstring(this.needStorage, 1);
+        }
+        out += num2VarInt(this.returnType);
+        out += num2VarInt(this.name.length);
+        out += str2hexstring(this.name);
+        out += num2VarInt(this.codeVersion.length);
+        out += str2hexstring(this.codeVersion);
+        out += num2VarInt(this.author.length);
+        out += str2hexstring(this.author);
+        out += num2VarInt(this.email.length);
+        out += str2hexstring(this.email);
+        out += num2VarInt(this.description.length);
+        out += str2hexstring(this.description);
+        return out;
+    }
+    equals(other) {
+        if (this.type !== other.type) {
+            return false;
+        }
+        if (other instanceof PublishTransaction) {
+            return this.hash === other.hash;
+        }
+        return this.hash === new PublishTransaction(other).hash;
+    }
+    export() {
+        return Object.assign(super.export(), {
+            script: this.script,
+            parameterList: this.parameterList,
+            returnType: this.returnType,
+            needStorage: this.needStorage,
+            name: this.name,
+            codeVersion: this.codeVersion,
+            author: this.author,
+            email: this.email,
+            description: this.description
+        });
+    }
+}
+export default PublishTransaction;
+//# sourceMappingURL=PublishTransaction.js.map

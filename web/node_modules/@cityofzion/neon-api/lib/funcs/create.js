@@ -1,0 +1,56 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { sc, tx, u, wallet } from "@cityofzion/neon-core";
+import { checkProperty } from "./common";
+export function createClaimTx(config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        checkProperty(config, "claims");
+        config.tx = new tx.ClaimTransaction(config.override);
+        config.tx.addClaims(config.claims);
+        return config;
+    });
+}
+export function createContractTx(config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        checkProperty(config, "balance", "intents");
+        config.tx = new tx.ContractTransaction(Object.assign({ outputs: config.intents }, config.override));
+        config.tx.calculate(config.balance, undefined, config.fees);
+        return config;
+    });
+}
+export function createInvocationTx(config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        checkProperty(config, "script");
+        const processedScript = typeof config.script === "object"
+            ? sc.createScript(config.script)
+            : config.script;
+        config.tx = new tx.InvocationTransaction(Object.assign({
+            outputs: config.intents || [],
+            script: processedScript,
+            gas: config.gas || 0
+        }, config.override));
+        config.tx.calculate(config.balance || new wallet.Balance(), undefined, config.fees);
+        return config;
+    });
+}
+export function createStateTx(config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const descriptors = [
+            new tx.StateDescriptor({
+                type: tx.StateType.Account,
+                key: u.reverseHex(config.account.scriptHash),
+                field: "Votes",
+                value: u.int2hex(config.candidateKeys.length) + config.candidateKeys.join("")
+            })
+        ];
+        config.tx = new tx.StateTransaction({ descriptors });
+        return config;
+    });
+}
+//# sourceMappingURL=create.js.map

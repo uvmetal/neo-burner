@@ -1,0 +1,51 @@
+import { ASSET_ID } from "../../consts";
+import { Fixed8, reverseHex, StringStream } from "../../u";
+import { getScriptHashFromAddress } from "../../wallet";
+/**
+ * UTXO that is constructed in this transaction.
+ * This represents a spendable coin in the system.
+ */
+export class TransactionOutput {
+    static deserialize(hex) {
+        const ss = new StringStream(hex);
+        return this.fromStream(ss);
+    }
+    static fromStream(ss) {
+        const assetId = reverseHex(ss.read(32));
+        const value = Fixed8.fromReverseHex(ss.read(8));
+        const scriptHash = reverseHex(ss.read(20));
+        return new TransactionOutput({ assetId, value, scriptHash });
+    }
+    static fromIntent(symbol, value, address) {
+        const assetId = ASSET_ID[symbol];
+        const scriptHash = getScriptHashFromAddress(address);
+        return new TransactionOutput({ assetId, value, scriptHash });
+    }
+    constructor(obj) {
+        if (!obj || !obj.assetId || !obj.value || !obj.scriptHash) {
+            throw new Error("TransactionOutput requires assetId, value and scriptHash fields");
+        }
+        this.assetId = obj.assetId;
+        this.value = new Fixed8(obj.value);
+        this.scriptHash = obj.scriptHash;
+    }
+    serialize() {
+        return (reverseHex(this.assetId) +
+            this.value.toReverseHex() +
+            reverseHex(this.scriptHash));
+    }
+    equals(other) {
+        return (this.assetId === other.assetId &&
+            this.value.equals(other.value) &&
+            this.scriptHash === other.scriptHash);
+    }
+    export() {
+        return {
+            assetId: this.assetId,
+            value: this.value.toNumber(),
+            scriptHash: this.scriptHash
+        };
+    }
+}
+export default TransactionOutput;
+//# sourceMappingURL=TransactionOutput.js.map

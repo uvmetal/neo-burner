@@ -1,0 +1,35 @@
+import Fixed8 from "../../u/Fixed8";
+/**
+ * Contains the information necessary to validate a GAS Claim.
+ * It is a reference to a spent coin.
+ */
+export class ClaimItem {
+    constructor(claimItemLike = {}) {
+        this.claim = new Fixed8(claimItemLike.claim);
+        this.txid = claimItemLike.txid || "";
+        this.index = claimItemLike.index || 0;
+        this.value = claimItemLike.value || 0;
+        this.start = claimItemLike.start;
+        this.end = claimItemLike.end;
+    }
+    export() {
+        return {
+            claim: this.claim.toNumber(),
+            txid: this.txid,
+            index: this.index,
+            value: this.value,
+            start: this.start,
+            end: this.end
+        };
+    }
+    equals(other) {
+        return (this.claim.equals(other.claim || 0) &&
+            this.txid === other.txid &&
+            this.index === other.index &&
+            this.value === other.value &&
+            this.start === other.start &&
+            this.end === other.end);
+    }
+}
+export default ClaimItem;
+//# sourceMappingURL=ClaimItem.js.map

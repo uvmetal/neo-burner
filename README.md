@@ -4,6 +4,8 @@
 ![neo-burner](/src/images/neo-burner-burning-logo-alt-3.png?raw=true "neo-burner")
 ![neo-burner](/src/images/neo-burner-ss.png?raw=true "neo-burner")
 
+neo-burner is the electron desktop frontend for neo-paper CLI. neo-burner-web is the react frontend to a sails API for event administration and user conversion.
+
 Create Neo "burner" wallet that will facilitate the requirements mentioned in [Workflow](#workflow) below. The goal is to translate event participation to measurable Neo Smart Economy wallet conversion with event management, tracking, and reporting.
 
 This project leverages earlier work for the paper wallet [neo-paper](https://github.com/cityofzion/neo-paper).

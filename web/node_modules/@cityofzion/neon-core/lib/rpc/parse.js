@@ -1,0 +1,56 @@
+import { Fixed8, hexstring2str } from "../u";
+/**
+ * Builds a parser to parse the results of the stack.
+ * @param args A list of functions to parse arguments. Each function is mapped to its corresponding StackItem in the result.
+ * @returns parser function
+ */
+export function buildParser(...args) {
+    return (result) => {
+        if (result.stack.length !== args.length) {
+            throw new Error(`Wrong number of items to parse! Expected ${args.length} but got ${result.stack.length}!`);
+        }
+        return result.stack.map((item, i) => args[i](item));
+    };
+}
+/**
+ * This just returns the value of the StackItem.
+ */
+export function NoOpParser(item) {
+    return item.value;
+}
+/**
+ * Parses the result to an integer.
+ */
+export function IntegerParser(item) {
+    return parseInt(item.value || "0", 10);
+}
+/**
+ *  Parses the result to a ASCII string.
+ */
+export function StringParser(item) {
+    return hexstring2str(item.value);
+}
+/**
+ * Parses the result to a Fixed8.
+ */
+export function Fixed8Parser(item) {
+    return Fixed8.fromReverseHex(item.value);
+}
+/**
+ * Parses the VM Stack and returns human readable strings. The types are inferred based on the StackItem type.
+ * @param res RPC Response
+ * @return Array of results
+ */
+export function SimpleParser(res) {
+    return res.stack.map(item => {
+        switch (item.type) {
+            case "ByteArray":
+                return StringParser(item);
+            case "Integer":
+                return IntegerParser(item);
+            default:
+                throw Error(`Unknown type: ${item.type}`);
+        }
+    });
+}
+//# sourceMappingURL=parse.js.map

@@ -1,0 +1,184 @@
+{
+  "name": "neo-burner-web",
+  "description": "A paper wallet event manager for Neo Smart Economy",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
+  "homepage": "./",
+  "author": "test <test@test.com>",
+  "dependencies": {
+    "@babel/core": "7.4.3",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@typescript-eslint/eslint-plugin": "1.6.0",
+    "@typescript-eslint/parser": "1.6.0",
+    "babel-eslint": "10.0.1",
+    "babel-jest": "^24.8.0",
+    "babel-loader": "8.0.5",
+    "babel-plugin-named-asset-import": "^0.3.2",
+    "babel-preset-react-app": "^9.0.0",
+    "bip39": "^3.0.2",
+    "camelcase": "^5.2.0",
+    "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "css-loader": "2.1.1",
+    "easy-pdf-merge": "^0.2.2",
+    "electron-first-run": "^2.0.0",
+    "electron-is-dev": "^1.1.0",
+    "electron-open-link-in-browser": "^1.0.2",
+    "eslint": "5.16.0",
+    "eslint-config-react-app": "^4.0.1",
+    "eslint-loader": "2.1.2",
+    "eslint-plugin-flowtype": "2.50.1",
+    "eslint-plugin-import": "2.16.0",
+    "eslint-plugin-jsx-a11y": "6.2.1",
+    "eslint-plugin-react": "7.12.4",
+    "eslint-plugin-react-hooks": "^1.5.0",
+    "eslint-utils": "^1.4.2",
+    "fs-extra": "^8.1.0",
+    "fstream-ignore": "^1.0.5",
+    "global": "^4.4.0",
+    "html-pdf": "^2.2.0",
+    "html-webpack-plugin": "4.0.0-beta.5",
+    "jest": "24.7.1",
+    "jest-environment-jsdom-fourteen": "0.1.0",
+    "jest-resolve": "24.7.1",
+    "jest-watch-typeahead": "0.3.0",
+    "mini-css-extract-plugin": "0.5.0",
+    "optimize-css-assets-webpack-plugin": "5.0.1",
+    "pdf-viewer-reactjs": "^2.0.0",
+    "phantomjs-prebuilt": "^2.1.16",
+    "pnp-webpack-plugin": "1.2.1",
+    "postcss-flexbugs-fixes": "4.1.0",
+    "postcss-loader": "3.0.0",
+    "postcss-normalize": "7.0.1",
+    "postcss-preset-env": "6.6.0",
+    "postcss-safe-parser": "4.0.1",
+    "qr-image": "^3.2.0",
+    "react": "^16.8.6",
+    "react-app-polyfill": "^1.0.1",
+    "react-dev-utils": "^9.0.1",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
+    "readline": "^1.3.0",
+    "resolve": "1.10.0",
+    "sails": "^1.2.3",
+    "sass-loader": "7.1.0",
+    "semver": "6.0.0",
+    "style-loader": "0.23.1",
+    "terser-webpack-plugin": "1.2.3",
+    "ts-pnp": "1.1.2",
+    "typescript": "^3.5.3",
+    "url-loader": "1.1.2",
+    "webpack": "4.29.6",
+    "webpack-dev-server": "3.2.1",
+    "webpack-manifest-plugin": "2.0.4",
+    "workbox-webpack-plugin": "4.2.0"
+  },
+  "scripts": {
+    "start": "node scripts/start.js",
+    "react-dev": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "package": "build -c.extraMetadata.main=build/electron.js",
+    "prepack": "yarn build",
+    "prep-dist": "mkdir public/node_modules; cp -rf ./node_modules/phantomjs-prebuilt ./public/node_modules/; cp -rf ./node_modules/es6-promise ./public/node_modules/; cp -rf ./node_modules/extract-zip ./public/node_modules; cp -rf ./node_modules/mkdirp ./public/node_modules; cp -rf ./node_modules/which ./public/node_modules; cp -rf ./node_modules/html-pdf ./public/node_modules",
+    "clean-public": "rm -rf public/node_modules",
+    "dist": "yarn build && yarn package",
+    "cdist": "yarn clean; yarn prep-dist; yarn build && yarn package",
+    "clean": "rm -rf dist/*; rm -rf public/node_modules",
+    "rebuild-electron-bins": "cd server && npm rebuild sqlite3 --target=5.0.0 --runtime=electron --dist-url=https://atom.io/download/electron && npm rebuild grpc --target=5.0.0 --runtime=electron --dist-url=https://atom.io/download/electron"
+  },
+  "build": {
+    "appId": "com.example.electron-cra",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "extraFiles": [
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@cityofzion/neon-js": "^4.6.0",
+    "bootstrap": "^4.3.1",
+    "concurrently": "^4.1.1",
+    "electron": "^5.0.6",
+    "electron-builder": "^20.44.4",
+    "react-router": "^5.0.1",
+    "reactstrap": "^8.0.1",
+    "wait-on": "^3.2.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jest-environment-jsdom-fourteen",
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  }
+}

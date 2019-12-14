@@ -1,0 +1,38 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { logging, rpc } from "@cityofzion/neon-core";
+import { checkProperty } from "./common";
+const log = logging.default("api");
+/**
+ * Sends a transaction off within the config object.
+ * @param {object} config - Configuration object.
+ * @return {Promise<object>} Configuration object + response
+ */
+export function sendTx(config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        checkProperty(config, "tx", "url");
+        const response = yield rpc.Query.sendRawTransaction(config.tx).execute(config.url);
+        if (response.result === true) {
+            response.txid = config.tx.hash;
+        }
+        else {
+            log.error(`Transaction failed for ${config.account.address}: ${config.tx.serialize()}`);
+        }
+        return Object.assign(config, { response });
+    });
+}
+export function applyTxToBalance(config) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (config.response && config.response.result && config.balance) {
+            config.balance.applyTx(config.tx, false);
+        }
+        return config;
+    });
+}
+//# sourceMappingURL=send.js.map

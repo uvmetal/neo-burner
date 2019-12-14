@@ -1,0 +1,55 @@
+import { TX_VERSION } from "../../consts";
+import { num2VarInt } from "../../u";
+import { StateDescriptor } from "../components";
+import { BaseTransaction } from "./BaseTransaction";
+import TransactionType from "./TransactionType";
+/**
+ * Transaction used for invoking smart contracts through a VM script.
+ * Can also be used to transfer UTXO assets.
+ */
+export class StateTransaction extends BaseTransaction {
+    constructor(obj = {}) {
+        super(Object.assign({ version: TX_VERSION.STATE }, obj));
+        this.type = TransactionType.StateTransaction;
+        this.descriptors = obj.descriptors
+            ? obj.descriptors.map(d => new StateDescriptor(d))
+            : [];
+    }
+    static deserializeExclusive(ss, tx) {
+        const out = {
+            descriptors: []
+        };
+        const descLength = ss.readVarInt();
+        for (let i = 0; i < descLength; i++) {
+            out.descriptors.push(StateDescriptor.fromStream(ss));
+        }
+        return Object.assign(tx, out);
+    }
+    get exclusiveData() {
+        return { descriptors: this.descriptors };
+    }
+    get fees() {
+        return 0;
+    }
+    serializeExclusive() {
+        let out = num2VarInt(this.descriptors.length);
+        out += this.descriptors.map(d => d.serialize()).join("");
+        return out;
+    }
+    equals(other) {
+        if (this.type !== other.type) {
+            return false;
+        }
+        if (other instanceof StateTransaction) {
+            return this.hash === other.hash;
+        }
+        return this.hash === new StateTransaction(other).hash;
+    }
+    export() {
+        return Object.assign(super.export(), {
+            descriptors: this.descriptors.map(d => d.export())
+        });
+    }
+}
+export default StateTransaction;
+//# sourceMappingURL=StateTransaction.js.map
