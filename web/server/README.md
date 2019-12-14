@@ -65,5 +65,13 @@ The client is [neo-burner-web](https://github.com/cityofzion/neo-burner/web).
 * Event URL - A URL for the event website, if any
 * Payout Amount - This is how much gets paid on conversion (todo: add triggers other than wallet conversion?)
 * Payout Window - This is the window of opportunity. If nothing happens within this date range, no funds are transferred and a maintenance process will recover escrow funds recovery time.
+* Payout Account Addresses
+  * hasPaid
+  * hasDownloaded
+  * whichDownload
+  * hasLoggedIn
+  * loggedInIp
+  * despositAccount
+* Admin Wallet Address Source
 
 # Future
