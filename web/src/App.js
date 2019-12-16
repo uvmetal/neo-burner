@@ -65,6 +65,7 @@ class App extends Component {
     // make a request to sails to find out
     let user = {
       ip: '127.0.0.1'
+      // ip: 'blargl'
     }
     this.setState({user: user})
     return user.ip

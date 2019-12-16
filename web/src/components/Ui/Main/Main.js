@@ -7,15 +7,20 @@ import InstallerHome  from '../../Installer/Home'
 
 import Admin from '../../App/Admin/Admin'
 
+import AdminEventList from '../../App/Events/List'
+
+import About from '../../App/About'
+
+import Settings from '../../App/Settings'
+
+
 import Accounts from '../../App/Accounts'
 import Wallets from '../../App/Wallets'
-import About from '../../App/About'
 import New from '../../App/New'
 import Import from '../../App/Import'
 import Export from '../../App/Export'
 import Report from '../../App/Report'
 import Home from '../../App/Home'
-import Settings from '../../App/Settings'
 import PDF from '../../App/PDF'
 
 import CopyHtmlTemplateModal from '../../App/CopyHtmlTemplate'
@@ -184,6 +189,10 @@ class AppMain extends Component {
 
         case '/Admin':
         rightPaneContent = <Admin />
+        break
+
+        case '/AdminEvents':
+        rightPaneContent = <AdminEventList />
         break
 
         case '/Accounts':

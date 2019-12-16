@@ -9,6 +9,7 @@ class HeaderControls extends Component {
     this.home = this.home.bind(this)
 
     this.admin = this.admin.bind(this)
+    this.events = this.events.bind(this)
     this.getAdminNav = this.getAdminNav.bind(this)
 
     this.new = this.new.bind(this)
@@ -34,9 +35,17 @@ class HeaderControls extends Component {
      this.props.history.push('/Admin')
   }
 
+  events() {
+     this.props.history.push('/AdminEvents')
+  }
+
   getAdminNav() {
     if (this.props.user.admin) {
-      return (<Button size="sm" color="warning" onClick={this.admin} >Admin</Button>)
+      let buttons = []
+      buttons.push(
+        <Button size="sm" color="warning" onClick={this.admin} >Admin</Button>,
+        <Button size="sm" color="warning" onClick={this.events} >Events</Button>)
+      return buttons
     }
   }
 
