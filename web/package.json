@@ -11,6 +11,7 @@
     "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@typescript-eslint/eslint-plugin": "1.6.0",
     "@typescript-eslint/parser": "1.6.0",
+    "axios": "^0.19.0",
     "babel-eslint": "10.0.1",
     "babel-jest": "^24.8.0",
     "babel-loader": "8.0.5",
@@ -21,9 +22,6 @@
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
     "easy-pdf-merge": "^0.2.2",
-    "electron-first-run": "^2.0.0",
-    "electron-is-dev": "^1.1.0",
-    "electron-open-link-in-browser": "^1.0.2",
     "eslint": "5.16.0",
     "eslint-config-react-app": "^4.0.1",
     "eslint-loader": "2.1.2",
@@ -35,8 +33,6 @@
     "eslint-utils": "^1.4.2",
     "fs-extra": "^8.1.0",
     "fstream-ignore": "^1.0.5",
-    "global": "^4.4.0",
-    "html-pdf": "^2.2.0",
     "html-webpack-plugin": "4.0.0-beta.5",
     "jest": "24.7.1",
     "jest-environment-jsdom-fourteen": "0.1.0",
@@ -45,7 +41,6 @@
     "mini-css-extract-plugin": "0.5.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pdf-viewer-reactjs": "^2.0.0",
-    "phantomjs-prebuilt": "^2.1.16",
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
@@ -75,10 +70,10 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "react-dev": "node scripts/start.js",
+    "dev": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "edev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "package": "build -c.extraMetadata.main=build/electron.js",
     "prepack": "yarn build",
     "prep-dist": "mkdir public/node_modules; cp -rf ./node_modules/phantomjs-prebuilt ./public/node_modules/; cp -rf ./node_modules/es6-promise ./public/node_modules/; cp -rf ./node_modules/extract-zip ./public/node_modules; cp -rf ./node_modules/mkdirp ./public/node_modules; cp -rf ./node_modules/which ./public/node_modules; cp -rf ./node_modules/html-pdf ./public/node_modules",
@@ -103,8 +98,7 @@
         "deb"
       ]
     },
-    "extraFiles": [
-    ]
+    "extraFiles": []
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -125,8 +119,6 @@
     "@cityofzion/neon-js": "^4.6.0",
     "bootstrap": "^4.3.1",
     "concurrently": "^4.1.1",
-    "electron": "^5.0.6",
-    "electron-builder": "^20.44.4",
     "react-router": "^5.0.1",
     "reactstrap": "^8.0.1",
     "wait-on": "^3.2.0"

@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "./static/css/main.1fe2d32c.chunk.css",
+    "main.js": "./static/js/main.2c3f7fa0.chunk.js",
+    "main.js.map": "./static/js/main.2c3f7fa0.chunk.js.map",
+    "runtime~main.js": "./static/js/runtime~main.d653cc00.js",
+    "runtime~main.js.map": "./static/js/runtime~main.d653cc00.js.map",
+    "static/css/2.eda29298.chunk.css": "./static/css/2.eda29298.chunk.css",
+    "static/js/2.a2882f35.chunk.js": "./static/js/2.a2882f35.chunk.js",
+    "static/js/2.a2882f35.chunk.js.map": "./static/js/2.a2882f35.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.3e7feed70604a35a508c0a8c45a142db.js": "./precache-manifest.3e7feed70604a35a508c0a8c45a142db.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/2.eda29298.chunk.css.map": "./static/css/2.eda29298.chunk.css.map",
+    "static/css/main.1fe2d32c.chunk.css.map": "./static/css/main.1fe2d32c.chunk.css.map",
+    "static/media/material-icons.css": "./static/media/MaterialIcons-Regular.e79bfd88.eot",
+    "static/media/coz-inverted.svg": "./static/media/coz-inverted.61232fc7.svg",
+    "static/media/neo-burner-burning-logo-alt-3.png": "./static/media/neo-burner-burning-logo-alt-3.0355ddf3.png",
+    "static/media/uvmetal-fire-logo.png": "./static/media/uvmetal-fire-logo.cf34b304.png",
+    "static/media/uvmetal-tongue.png": "./static/media/uvmetal-tongue.a353f8e2.png"
+  }
+}

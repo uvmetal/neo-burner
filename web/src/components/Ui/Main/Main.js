@@ -5,6 +5,8 @@ import VerticalNav from '../VerticalNav/VerticalNav'
 
 import InstallerHome  from '../../Installer/Home'
 
+import Admin from '../../App/Admin/Admin'
+
 import Accounts from '../../App/Accounts'
 import Wallets from '../../App/Wallets'
 import About from '../../App/About'
@@ -25,26 +27,27 @@ import util from 'util'
 
 // import './style.css'
 
-// const electron = window.require('electron')
-
 class AppMain extends Component {
   constructor(props) {
     super(props)
 
     this.leftPaneToggleHidden = this.leftPaneToggleHidden.bind(this)
     this.toggleVerticalNavRollup = this.toggleVerticalNavRollup.bind(this)
+
     this.setAccounts = this.setAccounts.bind(this)
     this.clearAccounts = this.clearAccounts.bind(this)
-    this.setPdfPath = this.setPdfPath.bind(this)
     this.setDarkMode = this.setDarkMode.bind(this)
-    this.setFolder = this.setFolder.bind(this)
-    this.setTemplatePath = this.setTemplatePath.bind(this)
     this.writeUserSettings = this.writeUserSettings.bind(this)
+
+    this.setFolder = this.setFolder.bind(this)
+    this.setPdfPath = this.setPdfPath.bind(this)
+    this.setTemplatePath = this.setTemplatePath.bind(this)
 
     this.state = {
       leftPaneHidden: true,
       hideWorkspaceRollup: true,
       hideSettingsRollup: true,
+
       accounts: [],
       tutorialMode: true,
       darkMode: 'true',
@@ -58,24 +61,12 @@ class AppMain extends Component {
   }
 
   componentWillMount() {
-    let self = this
 
-    // electron.ipcRenderer.on('read-user-settings-reply', function (event, arg) {
-    //   self.setState({
-    //     darkMode: arg.darkMode,
-    //     accountsFile: arg.accountsFile,
-    //     accountsPath: arg.accountsPath,
-    //     templatePath: arg.templatePath,
-    //     pdfPath: arg.pdfPath,
-    //     pdfFile: arg.pdfFile
-    //   })
-    //   console.log('updating user settings from file : ' + util.inspect(arg, {depth: null}))
-    // })
-
-    // electron.ipcRenderer.send('read-user-settings')
   }
 
   componentWillReceiveProps() {
+
+    console.log('user :'+util.inspect(this.props.user, {depth: null}))
     console.log('userData :'+util.inspect(this.props.config, {depth: null}))
   }
 
@@ -172,7 +163,7 @@ class AppMain extends Component {
 
   render() {
     let headerContent = this.props.headerContent ? this.props.headerContent :
-      <HeaderControls {...this.props} leftPaneToggleHidden={this.leftPaneToggleHidden} />
+      <HeaderControls {...this.props} leftPaneToggleHidden={this.leftPaneToggleHidden} user={this.props.user}/>
     // let leftPaneContent = this.props.leftPaneContent ? this.props.leftPaneContent : ''
     let leftPaneContent = <VerticalNav hidden={this.state.leftPaneHidden} hideWorkspaceRollup={this.state.hideWorkspaceRollup} hideSettingsRollup={this.state.hideSettingsRollup} toggleRollup={this.toggleVerticalNavRollup} />
     // let leftPaneContent = <VerticalNav hidden={this.state.leftPaneHidden} hideWorkspaceRollup={this.state.hideWorkspaceRollup} hideSettingsRollup={this.state.hideSettingsRollup} toggleRollup={this.toggleVerticalNavRollup} />
@@ -189,6 +180,10 @@ class AppMain extends Component {
 
         case '/About':
         rightPaneContent = <About />
+        break
+
+        case '/Admin':
+        rightPaneContent = <Admin />
         break
 
         case '/Accounts':

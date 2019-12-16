@@ -7,6 +7,10 @@ class HeaderControls extends Component {
     super(props)
 
     this.home = this.home.bind(this)
+
+    this.admin = this.admin.bind(this)
+    this.getAdminNav = this.getAdminNav.bind(this)
+
     this.new = this.new.bind(this)
     this.import = this.import.bind(this)
     this.export = this.export.bind(this)
@@ -24,6 +28,16 @@ class HeaderControls extends Component {
 
   home() {
      this.props.history.push('/Home')
+  }
+
+  admin() {
+     this.props.history.push('/Admin')
+  }
+
+  getAdminNav() {
+    if (this.props.user.admin) {
+      return (<Button size="sm" color="warning" onClick={this.admin} >Admin</Button>)
+    }
   }
 
   accounts() {
@@ -65,6 +79,9 @@ class HeaderControls extends Component {
 
   }
 
+  componentWillMount() {
+  }
+
   componentDidMount() {
   }
 
@@ -77,6 +94,7 @@ class HeaderControls extends Component {
           <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
           <Button size="sm" color="warning" onClick={this.settings} >Settings</Button>{' '}
           <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
+          {this.getAdminNav()}
         </ButtonGroup>
       </div>
     )

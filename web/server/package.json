@@ -6,14 +6,6 @@
   "keywords": [],
   "dependencies": {
     "@cityofzion/neon-js": "^4.7.0",
-    "@neo-one/cli": "^1.1.5",
-    "@neo-one/node": "^2.0.0",
-    "@neo-one/node-bin": "^2.0.0",
-    "@neo-one/server-client": "^1.1.5",
-    "@neo-one/server-plugin-neotracker": "^1.1.5",
-    "@neo-one/server-plugin-network": "^2.0.0",
-    "@neo-one/server-plugin-project": "^1.4.0",
-    "@neo-one/server-plugin-wallet": "^1.1.5",
     "@sailshq/connect-redis": "^3.2.1",
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
@@ -22,8 +14,7 @@
     "sails-hook-apianalytics": "^2.0.3",
     "sails-hook-organics": "^0.16.0",
     "sails-hook-orm": "^2.1.1",
-    "sails-hook-sockets": "^2.0.0",
-    "sqlite3": "^4.0.9"
+    "sails-hook-sockets": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "5.16.0",
@@ -44,7 +35,7 @@
     "type": "git",
     "url": "git://github.com/fet/server.git"
   },
-  "author": "fet",
+  "author": "uvmetal",
   "license": "",
   "engines": {
     "node": "^10.16"

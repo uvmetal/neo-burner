@@ -19,7 +19,7 @@ module.exports.bootstrap = async function() {
   sails.log('sails.config.isPackaged: '+sails.config.isPackaged)
 
   if (sails.config.isPackaged) {
-    sails.config.globals.neoone.serverPath = __dirname + '/../../../../../server/node_modules/.bin/neo-one'
+    
   }
 
   // This bootstrap version indicates what version of fake data we're dealing with here.
