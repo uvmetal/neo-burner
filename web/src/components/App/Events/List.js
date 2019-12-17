@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, ButtonGroup, Jumbotron } from 'reactstrap'
+import { Button, ButtonGroup, Container, Form, FormGroup, Jumbotron } from 'reactstrap'
 
 import { version } from '../../../neo-paper/neo-paper.js'
 
@@ -24,10 +24,7 @@ class List extends Component {
   }
 
   componentWillMount() {
-    console.log('props: '+util.inspect(this.props, {depth: null}))
-
     this.getEvents()
-
   }
 
   componentDidMount() {
@@ -35,10 +32,35 @@ class List extends Component {
 
   getEvents() {
     let events = [ // Call sails for the real data
-      { name: 'test1', url: 'htpps://github.com/uvmetal/'},
-      { name: 'test2', url: 'htpps://github.com/coz/'}
+      { index:        0,
+        name:         'test1',
+        url:          'https://github.com/uvmetal/',
+        payout:       '1',
+        payoutAsset:  'Neo',    // Neo, Gas, NFT, or another token asset identifier
+        payoutWindow: '24',     // This should be a date object range
+        accounts:     [{
+          address: '',
+          downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+          hasLoggedIn: '',
+          ip: '',
+          depositAccount: '',
+        }]
+      },
+      { index:        1,
+        name:         'test2',
+        url:          'https://github.com/coz/',
+        payout:       '10',
+        payoutAsset:  'Gas',
+        payoutWindow: '24',
+        accounts:     [{
+          address: '',
+          downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+          hasLoggedIn: '',
+          ip: '',
+          depositAccount: '',
+        }]
+      }
     ]
-
     this.setState({events: events})
     return events
   }
@@ -46,34 +68,43 @@ class List extends Component {
   listEvents(events) {
     return (
       <div>
-        <ButtonGroup>
           {events.map(event => (
            <div className="event" key={event.name}>
-           <Button size="sm" color="warning" onClick={() => this.view(event)} >{'View'}</Button>{event.name}
-           <Button size="sm" color="warning" onClick={() => this.edit(event)} >{'Edit'}</Button>{event.name}
+           <ButtonGroup>
+           <Button size="sm" color="warning" onClick={() => this.view(event)} >{'View'}</Button>
+           <Button size="sm" color="warning" onClick={() => this.edit(event)} >{'Edit'}</Button>
+           <Button size="sm" color="warning" onClick={() => this.delete(event)} >{'Delete'}</Button> {event.name}
+           </ButtonGroup>
            </div>
           ))}
-         </ButtonGroup>
       </div>
     )
-  }
-
-  edit(data) {
-    console.log('viewing event: '+data.name)
-
-    this.props.history.push({
-      pathname: '/EditEvent',
-      state: { data: data }
-    })
   }
 
   view(data) {
     console.log('viewing event: '+data.name)
 
     this.props.history.push({
-      pathname: '/ViewEvent',
+      pathname: '/AdminViewEvent',
       state: { data: data }
     })
+  }
+
+  edit(data) {
+    console.log('editing event: '+data.name)
+
+    this.props.history.push({
+      pathname: '/AdminEditEvent',
+      state: { data: data }
+    })
+  }
+
+  delete(data) {
+    console.log('deleting event: '+data.name)
+    // call sails to delete, for now we can remove the object
+    let events = this.state.events
+    events.splice(data.index, 1)
+    this.setState({events: events})
   }
 
   render() {
@@ -86,7 +117,14 @@ class List extends Component {
           <hr className="my-4" />
           <p className="lead mx-auto">
           </p>
-          {this.listEvents(this.state.events)}
+          <Container className="p-5">
+            <Form id="accountsFormLeft">
+              <FormGroup id="fourteenFont">
+                <Button size="sm" color="warning" onClick={() => this.props.history.push('/AdminAddEvent')} >{'Add Event'}</Button>{' '}<br/>
+                {this.listEvents(this.state.events)}
+              </FormGroup>
+            </Form>
+          </Container>
         </div>
         </Jumbotron>
       </React.Fragment>

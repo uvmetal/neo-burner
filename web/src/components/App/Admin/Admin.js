@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Jumbotron } from 'reactstrap'
+import { Jumbotron, Container, Form, FormGroup, Button  } from 'reactstrap'
 import { version } from '../../../neo-paper/neo-paper.js'
 
 // import './style.css'
-
-import burnerLogo from '../../../images/neo-burner-burning-logo-alt-3.png'
 
 class Admin extends Component {
   constructor(props) {
@@ -23,11 +21,19 @@ class Admin extends Component {
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
           <h2 className="display-4">Admin</h2>
-          <p className="lead" id="fourteenFont">Neo-Burner {version} is a paper wallet event manager.</p>
+          <p className="lead" id="fourteenFont">Neo-Burner {version} Admin</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
-            <img src={burnerLogo} width="800" height="175" alt="neo-burner" className=""  />
           </p>
+          <Container className="p-5">
+            <Form id="accountsFormLeft">
+              <FormGroup id="fourteenFont">
+              <Button size="sm" color="warning" onClick={() => this.props.history.push('/Login')} >{'Login'}</Button>{' '}
+              <Button size="sm" color="warning" onClick={() => this.props.history.push('/Logout')} >{'Logout'}</Button>{' '}
+
+              </FormGroup>
+            </Form>
+          </Container>
         </div>
         </Jumbotron>
       </React.Fragment>

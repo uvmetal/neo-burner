@@ -9,6 +9,8 @@ import Admin from '../../App/Admin/Admin'
 
 import AdminEventList from '../../App/Events/List'
 import ViewEvent from '../../App/Events/View'
+import EditEvent from '../../App/Events/Edit'
+import AddEvent from '../../App/Events/Add'
 
 import About from '../../App/About'
 
@@ -196,8 +198,16 @@ class AppMain extends Component {
         rightPaneContent = <AdminEventList {...this.props} />
         break
 
-        case '/ViewEvent':
+        case '/AdminViewEvent':
         rightPaneContent = <ViewEvent {...this.props} />
+        break
+
+        case '/AdminEditEvent':
+        rightPaneContent = <EditEvent {...this.props} />
+        break
+
+        case '/AdminAddEvent':
+        rightPaneContent = <AddEvent {...this.props} />
         break
 
         case '/Accounts':

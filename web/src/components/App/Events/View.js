@@ -1,39 +1,40 @@
 import React, { Component } from 'react'
-import { Jumbotron } from 'reactstrap'
+import { Jumbotron, Container, Form, FormGroup, Button } from 'reactstrap'
 import { version } from '../../../neo-paper/neo-paper.js'
 
 // import './style.css'
-import util from 'util'
-
-import burnerLogo from '../../../images/neo-burner-burning-logo-alt-3.png'
 
 class View extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      data: this.props.location.state.data
-    }
+    this.state = {...this.props.location.state.data}
   }
 
   componentDidMount() {
-    console.log('props: '+util.inspect(this.props, {depth: null}))
-    console.log('state: '+util.inspect(this.state, {depth: null}))
   }
 
   render() {
-
     return(
       <React.Fragment id="ma">
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
-          <h2 className="display-4">View Event</h2>
-          <p className="lead" id="fourteenFont">Add, remove, view, and edit events.</p>
+          <h2 className="display-4">Admin View Event</h2>
+          <p className="lead" id="fourteenFont"></p>
           <hr className="my-4" />
           <p className="lead mx-auto">
           </p>
-          {this.state.data.name}<br/>
-          {this.state.data.url}<br/>
+          <Container className="p-5">
+            <Form id="accountsFormLeft">
+              <FormGroup id="fourteenFont">
+                Name: {this.state.name}<br/>
+                URL: {this.state.url}<br/>
+                Payout: {this.state.payout}<br/>
+                Payout Asset: {this.state.payoutAsset}<br/>
+                Payout Window: {this.state.payoutWindow}<br/>
+              </FormGroup>
+            </Form>
+          </Container>
         </div>
         </Jumbotron>
       </React.Fragment>

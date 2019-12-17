@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
-import { Jumbotron } from 'reactstrap'
+import { Jumbotron, Container, Form, FormGroup, Button, Input } from 'reactstrap'
 import { version } from '../../../neo-paper/neo-paper.js'
 
-// import './style.css'
-
-import burnerLogo from '../../../images/neo-burner-burning-logo-alt-3.png'
+import util from 'util'
 
 class Edit extends Component {
   constructor(props) {
     super(props)
 
-    this.getEvents = this.getEvents.bind(this)
-
-    this.state = {
-      events: []
-    }
+    this.state = {...this.props.location.state.data}
   }
 
   componentDidMount() {
@@ -25,12 +19,27 @@ class Edit extends Component {
       <React.Fragment id="ma">
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
-          <h2 className="display-4">Edit Event</h2>
-          <p className="lead" id="fourteenFont">Add, remove, view, and edit events.</p>
+          <h2 className="display-4">Admin Edit Event</h2>
+          <p className="lead" id="fourteenFont"></p>
           <hr className="my-4" />
           <p className="lead mx-auto">
-            <img src={burnerLogo} width="800" height="175" alt="neo-burner" className=""  />
           </p>
+          <Container className="p-5">
+            <Form id="accountsFormLeft">
+              <FormGroup id="fourteenFont">
+              <Input
+                style={{width: "400px"}}
+                type="text"
+                name="text"
+                placeholder="Event Name"
+                value={this.state.name}
+                onChange={e => this.setState({ name: e.target.value })}
+                id="fourteenFont"
+              />
+              <br/>
+              </FormGroup>
+            </Form>
+          </Container>
         </div>
         </Jumbotron>
       </React.Fragment>
