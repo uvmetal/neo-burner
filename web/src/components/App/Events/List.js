@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { Jumbotron } from 'reactstrap'
+import { Button, ButtonGroup, Jumbotron } from 'reactstrap'
 
 import { version } from '../../../neo-paper/neo-paper.js'
 
 // import './style.css'
+
+import util from 'util'
 
 import burnerLogo from '../../../images/neo-burner-burning-logo-alt-3.png'
 
@@ -13,6 +15,8 @@ class List extends Component {
 
     this.getEvents = this.getEvents.bind(this)
     this.listEvents = this.listEvents.bind(this)
+    this.edit = this.edit.bind(this)
+    this.view = this.view.bind(this)
 
     this.state = {
       events: []
@@ -20,16 +24,19 @@ class List extends Component {
   }
 
   componentWillMount() {
+    console.log('props: '+util.inspect(this.props, {depth: null}))
+
     this.getEvents()
+
   }
 
   componentDidMount() {
   }
 
-  getEvents() { // Call sails for the real data
-    let events = [
-      { name: 'test1', url: 'htpps://github.com/uvmetal/ 1'},
-      { name: 'test2', url: 'htpps://github.com/uvmetal/ 2'}
+  getEvents() {
+    let events = [ // Call sails for the real data
+      { name: 'test1', url: 'htpps://github.com/uvmetal/'},
+      { name: 'test2', url: 'htpps://github.com/coz/'}
     ]
 
     this.setState({events: events})
@@ -39,11 +46,34 @@ class List extends Component {
   listEvents(events) {
     return (
       <div>
-         {events.map(event => (
-           <div className="event" key={event.name}>{event.name}</div>
-         ))}
+        <ButtonGroup>
+          {events.map(event => (
+           <div className="event" key={event.name}>
+           <Button size="sm" color="warning" onClick={() => this.view(event)} >{'View'}</Button>{event.name}
+           <Button size="sm" color="warning" onClick={() => this.edit(event)} >{'Edit'}</Button>{event.name}
+           </div>
+          ))}
+         </ButtonGroup>
       </div>
     )
+  }
+
+  edit(data) {
+    console.log('viewing event: '+data.name)
+
+    this.props.history.push({
+      pathname: '/EditEvent',
+      state: { data: data }
+    })
+  }
+
+  view(data) {
+    console.log('viewing event: '+data.name)
+
+    this.props.history.push({
+      pathname: '/ViewEvent',
+      state: { data: data }
+    })
   }
 
   render() {

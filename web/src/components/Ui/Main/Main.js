@@ -8,6 +8,7 @@ import InstallerHome  from '../../Installer/Home'
 import Admin from '../../App/Admin/Admin'
 
 import AdminEventList from '../../App/Events/List'
+import ViewEvent from '../../App/Events/View'
 
 import About from '../../App/About'
 
@@ -192,7 +193,11 @@ class AppMain extends Component {
         break
 
         case '/AdminEvents':
-        rightPaneContent = <AdminEventList />
+        rightPaneContent = <AdminEventList {...this.props} />
+        break
+
+        case '/ViewEvent':
+        rightPaneContent = <ViewEvent {...this.props} />
         break
 
         case '/Accounts':
