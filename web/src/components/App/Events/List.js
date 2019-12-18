@@ -18,19 +18,6 @@ class List extends Component {
     this.edit = this.edit.bind(this)
     this.view = this.view.bind(this)
 
-    this.state = {
-      events: []
-    }
-  }
-
-  componentWillMount() {
-    this.getEvents()
-  }
-
-  componentDidMount() {
-  }
-
-  getEvents() {
     let events = [ // Call sails for the real data
       { index:        0,
         name:         'test1',
@@ -38,13 +25,22 @@ class List extends Component {
         payout:       '1',
         payoutAsset:  'Neo',    // Neo, Gas, NFT, or another token asset identifier
         payoutWindow: '24',     // This should be a date object range
-        accounts:     [{
-          address: '',
-          downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
-          hasLoggedIn: '',
-          ip: '',
-          depositAccount: '',
-        }]
+        accounts:     [
+          {
+            address: 'test1',
+            downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+            hasLoggedIn: '',
+            ip: '',
+            depositAccount: '',
+          },
+          {
+            address: 'test2',
+            downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+            hasLoggedIn: '',
+            ip: '',
+            depositAccount: '',
+          }
+        ]
       },
       { index:        1,
         name:         'test2',
@@ -61,8 +57,23 @@ class List extends Component {
         }]
       }
     ]
-    this.setState({events: events})
-    return events
+
+    this.state = {
+      events: events
+    }
+  }
+
+  componentWillMount() {
+    this.getEvents()
+  }
+
+  componentDidMount() {
+  }
+
+  getEvents() {
+
+    // this.setState({events: events})
+    return this.state.events
   }
 
   listEvents(events) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Jumbotron, Container, Form, FormGroup, Button, Input } from 'reactstrap'
+import { Jumbotron, Container, Form, FormGroup, Button, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap'
 import { version } from '../../../neo-paper/neo-paper.js'
 
 import util from 'util'
@@ -8,10 +8,29 @@ class Edit extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {...this.props.location.state.data}
+    this.select = this.select.bind(this)
+    this.toggle = this.toggle.bind(this)
+
+    this.state = {
+      ...this.props.location.state.data,
+      dropdownOpen: false
+    }
   }
 
   componentDidMount() {
+  }
+
+  select(event) {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen,
+      payoutAsset: event.target.innerText
+    })
+
+    console.log('selected: '+event.target.innerText)
+  }
+
+  toggle() {
+    this.setState({dropdownOpen: !this.state.dropdownOpen})
   }
 
   render() {
@@ -37,6 +56,54 @@ class Edit extends Component {
                 id="fourteenFont"
               />
               <br/>
+              <Input
+                style={{width: "400px"}}
+                type="text"
+                name="text"
+                placeholder="Event URL"
+                value={this.state.url}
+                onChange={e => this.setState({ url: e.target.value })}
+                id="fourteenFont"
+              />
+              <br/>
+              <Input
+                style={{width: "400px"}}
+                type="text"
+                name="text"
+                placeholder="Payout"
+                value={this.state.payout}
+                onChange={e => this.setState({ payout: e.target.value })}
+                id="fourteenFont"
+              />
+              <br/>
+              <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                 <DropdownToggle caret id="fourteenFont">
+                   {'Asset Type: '+this.state.payoutAsset}
+                   </DropdownToggle>
+                 <DropdownMenu id="fourteenFont">
+                   <DropdownItem onClick={this.select} id="fourteenFont">{'Neo'}</DropdownItem>
+                   <DropdownItem onClick={this.select}>{'Gas'}</DropdownItem>
+                 </DropdownMenu>
+              </Dropdown>
+              <br/>
+              <Input
+                style={{width: "400px"}}
+                type="text"
+                name="text"
+                placeholder="Payout"
+                value={this.state.payoutWindow}
+                onChange={e => this.setState({ payoutWindow: e.target.value })}
+                id="fourteenFont"
+              />
+              <br/>
+              <textarea
+               id="accountsTextArea"
+               disabled
+               cols="100"
+               rows="40"
+               name="accounts"
+               value={util.inspect(this.state.accounts, {depth:null})}/>
+               <br/>
               </FormGroup>
             </Form>
           </Container>

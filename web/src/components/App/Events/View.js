@@ -4,6 +4,8 @@ import { version } from '../../../neo-paper/neo-paper.js'
 
 // import './style.css'
 
+import util from 'util'
+
 class View extends Component {
   constructor(props) {
     super(props)
@@ -32,6 +34,14 @@ class View extends Component {
                 Payout: {this.state.payout}<br/>
                 Payout Asset: {this.state.payoutAsset}<br/>
                 Payout Window: {this.state.payoutWindow}<br/>
+                <textarea
+                 id="accountsTextArea"
+                 disabled
+                 cols="100"
+                 rows="40"
+                 name="accounts"
+                 value={util.inspect(this.state.accounts, {depth:null})}/>
+                 <br/>
               </FormGroup>
             </Form>
           </Container>
