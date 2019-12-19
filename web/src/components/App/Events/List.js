@@ -22,7 +22,7 @@ class List extends Component {
       { index:        0,
         name:         'test1',
         url:          'https://github.com/uvmetal/',
-        payout:       '1',
+        payout:       1,
         payoutAsset:  'Neo',    // Neo, Gas, NFT, or another token asset identifier
         payoutWindow: '24',     // This should be a date object range
         accounts:     [
@@ -45,7 +45,7 @@ class List extends Component {
       { index:        1,
         name:         'test2',
         url:          'https://github.com/coz/',
-        payout:       '10',
+        payout:       10,
         payoutAsset:  'Gas',
         payoutWindow: '24',
         accounts:     [{
@@ -131,7 +131,7 @@ class List extends Component {
           <Container className="p-5">
             <Form id="accountsFormLeft">
               <FormGroup id="fourteenFont">
-                <Button size="sm" color="warning" onClick={() => this.props.history.push('/AdminAddEvent')} >{'Add Event'}</Button>{' '}<br/>
+                <Button size="sm" color="warning" onClick={() => this.props.history.push('/AdminAccounts')} >{'Add Event'}</Button>{' '}<br/>
                 {this.listEvents(this.state.events)}
               </FormGroup>
             </Form>

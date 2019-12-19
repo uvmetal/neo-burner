@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { Jumbotron, Container, Form, FormGroup, Button, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, } from 'reactstrap'
+import { Jumbotron, Container, Form, FormGroup, Button, ButtonGroup, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import InputModal from '../../Ui/Modal/InputModal'
+
 import { version } from '../../../neo-paper/neo-paper.js'
+import { generateAccounts } from '../../../neo-paper/accounts.js'
 
 import util from 'util'
 
@@ -10,6 +13,8 @@ class Edit extends Component {
 
     this.select = this.select.bind(this)
     this.toggle = this.toggle.bind(this)
+    this.update = this.update.bind(this)
+    this.addAccounts = this.addAccounts.bind(this)
 
     this.state = {
       ...this.props.location.state.data,
@@ -33,6 +38,26 @@ class Edit extends Component {
     this.setState({dropdownOpen: !this.state.dropdownOpen})
   }
 
+  update() {
+    // call sails api to commit the updated state to waterline
+  }
+
+  async addAccounts() {
+    // add more accounts to this event
+    console.log('accounts: '+util.inspect(this.state.accounts, {depth: null}))
+    console.log('this.state.amount: '+this.state.amount)
+
+    let accounts = generateAccounts(this.state.amount, this.state.name, this.state.url, this.state.payout, this.state.payoutWindow, this.state.payoutAsset)
+
+    let newAccounts = this.state.accounts.concat(accounts)
+
+    this.props.setAccounts(newAccounts, '', '')
+
+    await this.setState({accounts: newAccounts})
+
+    // don't forget to update sails!
+  }
+
   render() {
     return(
       <React.Fragment id="ma">
@@ -44,8 +69,9 @@ class Edit extends Component {
           <p className="lead mx-auto">
           </p>
           <Container className="p-5">
-            <Form id="accountsFormLeft">
+            <Form id="editForm">
               <FormGroup id="fourteenFont">
+              Event Name
               <Input
                 style={{width: "400px"}}
                 type="text"
@@ -56,6 +82,7 @@ class Edit extends Component {
                 id="fourteenFont"
               />
               <br/>
+              Event URL
               <Input
                 style={{width: "400px"}}
                 type="text"
@@ -66,6 +93,7 @@ class Edit extends Component {
                 id="fourteenFont"
               />
               <br/>
+              Payout Amount
               <Input
                 style={{width: "400px"}}
                 type="text"
@@ -76,6 +104,7 @@ class Edit extends Component {
                 id="fourteenFont"
               />
               <br/>
+              Payout Asset
               <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                  <DropdownToggle caret id="fourteenFont">
                    {'Asset Type: '+this.state.payoutAsset}
@@ -86,6 +115,7 @@ class Edit extends Component {
                  </DropdownMenu>
               </Dropdown>
               <br/>
+              Payout Window (Should be date range)
               <Input
                 style={{width: "400px"}}
                 type="text"
@@ -96,6 +126,7 @@ class Edit extends Component {
                 id="fourteenFont"
               />
               <br/>
+              Linked Account Details
               <textarea
                id="accountsTextArea"
                disabled
@@ -103,7 +134,27 @@ class Edit extends Component {
                rows="40"
                name="accounts"
                value={util.inspect(this.state.accounts, {depth:null})}/>
-               <br/>
+              <br/>
+              <ButtonGroup>
+                <Button size="sm" color="warning" onClick={() => this.update()} >{'Update'}</Button>
+                <InputModal buttonLabel='Add Accounts' title={'How many accounts would you like to add?'}
+                  body={
+                    <Input
+                      style={{width: "200px"}}
+                      type="text"
+                      name="text"
+                      placeholder="How many accounts?"
+                      value={this.state.amount}
+                      onChange={e => this.setState({ amount: e.target.value })}
+                      id="fourteenFont"
+                      />
+                        }
+                  okayButtonText='Generate'
+                  onOkayButtonClick={() => this.addAccounts()}
+                  cancelButtonText='Cancel'
+                />
+                <Button size="sm" color="warning" onClick={() => this.props.history.push('/AdminEvents')} >{'Cancel'}</Button>
+              </ButtonGroup>
               </FormGroup>
             </Form>
           </Container>

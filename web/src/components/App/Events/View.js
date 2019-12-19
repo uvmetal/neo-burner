@@ -27,7 +27,7 @@ class View extends Component {
           <p className="lead mx-auto">
           </p>
           <Container className="p-5">
-            <Form id="accountsFormLeft">
+            <Form id="editForm">
               <FormGroup id="fourteenFont">
                 Name: {this.state.name}<br/>
                 URL: {this.state.url}<br/>

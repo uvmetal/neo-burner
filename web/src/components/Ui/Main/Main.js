@@ -6,6 +6,7 @@ import VerticalNav from '../VerticalNav/VerticalNav'
 import InstallerHome  from '../../Installer/Home'
 
 import Admin from '../../App/Admin/Admin'
+import AdminAccounts from '../../App/Admin/Accounts'
 
 import AdminEventList from '../../App/Events/List'
 import ViewEvent from '../../App/Events/View'
@@ -114,7 +115,7 @@ class AppMain extends Component {
       accountsFile: filename
     })
 
-    this.writeUserSettings()
+    // this.writeUserSettings()
   }
 
   clearAccounts(accounts) {
@@ -194,6 +195,14 @@ class AppMain extends Component {
         rightPaneContent = <Admin />
         break
 
+        case '/AdminAccounts':
+        rightPaneContent = <AdminAccounts {...this.props}
+          accounts={this.state.accounts}
+          setAccounts={this.setAccounts}
+          clearAccounts={this.clearAccounts}
+          />
+        break
+
         case '/AdminEvents':
         rightPaneContent = <AdminEventList {...this.props} />
         break
@@ -203,7 +212,9 @@ class AppMain extends Component {
         break
 
         case '/AdminEditEvent':
-        rightPaneContent = <EditEvent {...this.props} />
+        rightPaneContent = <EditEvent {...this.props}
+          setAccounts={this.setAccounts}
+          />
         break
 
         case '/AdminAddEvent':
