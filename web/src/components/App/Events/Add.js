@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import {Jumbotron, Container, Form, FormGroup, Button, ButtonGroup, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import { version } from '../../../neo-paper/neo-paper.js'
+import { Jumbotron, Container, Form, FormGroup, Button, ButtonGroup, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import InputModal from '../../Ui/Modal/InputModal'
 
-// import './style.css'
+import { version } from '../../../neo-paper/neo-paper.js'
+import { generateAccounts } from '../../../neo-paper/accounts.js'
 
 import util from 'util'
 
@@ -12,21 +13,18 @@ class Add extends Component {
 
     this.select = this.select.bind(this)
     this.toggle = this.toggle.bind(this)
-    this.save = this.save.bind(this)
-    this.addAccount = this.addAccount.bind(this)
-    this.importAccounts = this.importAccounts.bind(this)
+    this.create = this.create.bind(this)
+    this.addAccounts = this.addAccounts.bind(this)
 
     this.state = {
-      name: '',
-      url: '',
-      payout: '',
-      payoutAsset: '',
-      payoutWindow: '',
-      accounts: []
+      ...this.props.location.state.data,
+      events: this.props.events,
+      dropdownOpen: false
     }
   }
 
   componentDidMount() {
+    console.log('this.state: '+util.inspect(this.state, {depth:null}))
   }
 
   select(event) {
@@ -42,23 +40,45 @@ class Add extends Component {
     this.setState({dropdownOpen: !this.state.dropdownOpen})
   }
 
-  save() {
+  async create() {
     // call sails api to commit the updated state to waterline
+    let newEvent = {
+      index: this.state.events ? this.state.events[this.state.events.length-1].index+1 : 0,
+      name: this.state.name,
+      url: this.state.url,
+      payout: this.state.payout,
+      payoutAsset: this.state.payoutAsset,
+      payoutWindow: this.state.payoutWindow,
+      accounts: this.state.accounts
+    }
+
+    let newEvents
+    if (this.state.events) {
+      newEvents = this.state.events.concat(newEvent)
+    } else newEvents = [newEvent]
+
+    this.props.setEvents(newEvents)
+
+    await this.setState({events: newEvents})
   }
 
-  // Add a new account linked to this event by data entry
-  addAccount() {
+  async addAccounts() {
+    // add more accounts to this event
+    console.log('accounts: '+util.inspect(this.state.accounts, {depth: null}))
+    console.log('this.state.amount: '+this.state.amount)
 
-  }
+    let accounts = generateAccounts(this.state.amount, this.state.name, this.state.url, this.state.payout, this.state.payoutWindow, this.state.payoutAsset)
 
-  // This should be an option to do here, but neo-burner desktop should be able to call sails directly at event inception. That feature is not enabled yet as the sails api is still in development.
-  importAccounts() {
+    let newAccounts
+    if (this.state.accounts) {
+      newAccounts = this.state.accounts.concat(accounts)
+    } else newAccounts = accounts
 
-  }
+    this.props.setAccounts(newAccounts, '', '')
 
-  // Generate accounts to be added
-  generateAccounts() {
+    await this.setState({accounts: newAccounts})
 
+    // don't forget to update sails!
   }
 
   render() {
@@ -66,7 +86,7 @@ class Add extends Component {
       <React.Fragment id="ma">
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
-          <h2 className="display-4">Add Event</h2>
+          <h2 className="display-4">Admin Add Event</h2>
           <p className="lead" id="fourteenFont"></p>
           <hr className="my-4" />
           <p className="lead mx-auto">
@@ -129,7 +149,7 @@ class Add extends Component {
                 id="fourteenFont"
               />
               <br/>
-              Linked Account Details
+              Linked Account Details ({this.state.accounts ? this.state.accounts.length : 0})
               <textarea
                id="accountsTextArea"
                disabled
@@ -137,10 +157,25 @@ class Add extends Component {
                rows="40"
                name="accounts"
                value={util.inspect(this.state.accounts, {depth:null})}/>
-               <Button size="sm" color="warning" onClick={() => this.addAccount()} >{'Add Account'}</Button>
               <br/>
               <ButtonGroup>
-                <Button size="sm" color="warning" onClick={() => this.save()} >{'Save'}</Button>
+                <Button size="sm" color="warning" onClick={() => this.create()} >{'Create Event'}</Button>
+                <InputModal buttonLabel='Add Accounts' title={'How many accounts would you like to add?'}
+                  body={
+                    <Input
+                      style={{width: "200px"}}
+                      type="text"
+                      name="text"
+                      placeholder="How many accounts?"
+                      value={this.state.amount}
+                      onChange={e => this.setState({ amount: e.target.value })}
+                      id="fourteenFont"
+                      />
+                        }
+                  okayButtonText='Generate'
+                  onOkayButtonClick={() => this.addAccounts()}
+                  cancelButtonText='Cancel'
+                />
                 <Button size="sm" color="warning" onClick={() => this.props.history.push('/AdminEvents')} >{'Cancel'}</Button>
               </ButtonGroup>
               </FormGroup>

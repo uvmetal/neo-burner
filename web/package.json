@@ -1,7 +1,7 @@
 {
   "name": "neo-burner-web",
   "description": "A paper wallet event manager for Neo Smart Economy",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "private": true,
   "main": "index.js",
   "homepage": "./",

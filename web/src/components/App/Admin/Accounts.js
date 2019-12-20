@@ -158,7 +158,7 @@ class Accounts extends Component {
                  />
                  <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle caret id="fourteenFont">
-                      {'Asset Type'+this.state.assetType}
+                      {'Asset Type '+this.state.assetType}
                       </DropdownToggle>
                     <DropdownMenu id="fourteenFont">
                       <DropdownItem onClick={this.select} id="fourteenFont">{'Neo'}</DropdownItem>

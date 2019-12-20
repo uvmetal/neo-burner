@@ -18,53 +18,54 @@ class List extends Component {
     this.edit = this.edit.bind(this)
     this.view = this.view.bind(this)
 
-    let events = [ // Call sails for the real data
-      { index:        0,
-        name:         'test1',
-        url:          'https://github.com/uvmetal/',
-        payout:       1,
-        payoutAsset:  'Neo',    // Neo, Gas, NFT, or another token asset identifier
-        payoutWindow: '24',     // This should be a date object range
-        accounts:     [
-          {
-            address: 'test1',
-            downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
-            hasLoggedIn: '',
-            ip: '',
-            depositAccount: '',
-          },
-          {
-            address: 'test2',
-            downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
-            hasLoggedIn: '',
-            ip: '',
-            depositAccount: '',
-          }
-        ]
-      },
-      { index:        1,
-        name:         'test2',
-        url:          'https://github.com/coz/',
-        payout:       10,
-        payoutAsset:  'Gas',
-        payoutWindow: '24',
-        accounts:     [{
-          address: '',
-          downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
-          hasLoggedIn: '',
-          ip: '',
-          depositAccount: '',
-        }]
-      }
-    ]
+    // let events = [ // Call sails for the real data
+    //   { index:        0,
+    //     name:         'test1',
+    //     url:          'https://github.com/uvmetal/',
+    //     payout:       1,
+    //     payoutAsset:  'Neo',    // Neo, Gas, NFT, or another token asset identifier
+    //     payoutWindow: '24',     // This should be a date object range
+    //     accounts:     [
+    //       {
+    //         address: 'test1',
+    //         downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+    //         hasLoggedIn: '',
+    //         ip: '',
+    //         depositAccount: '',
+    //       },
+    //       {
+    //         address: 'test2',
+    //         downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+    //         hasLoggedIn: '',
+    //         ip: '',
+    //         depositAccount: '',
+    //       }
+    //     ]
+    //   },
+    //   { index:        1,
+    //     name:         'test2',
+    //     url:          'https://github.com/coz/',
+    //     payout:       10,
+    //     payoutAsset:  'Gas',
+    //     payoutWindow: '24',
+    //     accounts:     [{
+    //       address: '',
+    //       downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+    //       hasLoggedIn: '',
+    //       ip: '',
+    //       depositAccount: '',
+    //     }]
+    //   }
+    // ]
 
     this.state = {
-      events: events
+      events: this.props.events
     }
   }
 
   componentWillMount() {
     this.getEvents()
+    console.log('events: '+util.inspect(this.state.events, {depth: null}))
   }
 
   componentDidMount() {
@@ -79,11 +80,10 @@ class List extends Component {
   listEvents(events) {
     return (
       <div>
-          {events.map(event => (
+          {events.map((event, index) => (
            <div className="event" key={event.name}>
            <ButtonGroup>
-           <Button size="sm" color="warning" onClick={() => this.view(event)} >{'View'}</Button>
-           <Button size="sm" color="warning" onClick={() => this.edit(event)} >{'Edit'}</Button>
+           <Button size="sm" color="warning" onClick={() => this.edit(event, index)} >{'Edit'}</Button>
            <Button size="sm" color="warning" onClick={() => this.delete(event)} >{'Delete'}</Button> {event.name}
            </ButtonGroup>
            </div>
@@ -101,12 +101,12 @@ class List extends Component {
     })
   }
 
-  edit(data) {
+  edit(data, index) {
     console.log('editing event: '+data.name)
 
     this.props.history.push({
       pathname: '/AdminEditEvent',
-      state: { data: data }
+      state: { data: data, index: index }
     })
   }
 
@@ -131,7 +131,7 @@ class List extends Component {
           <Container className="p-5">
             <Form id="accountsFormLeft">
               <FormGroup id="fourteenFont">
-                <Button size="sm" color="warning" onClick={() => this.props.history.push('/AdminAccounts')} >{'Add Event'}</Button>{' '}<br/>
+                <Button size="sm" color="warning" onClick={() => this.props.history.push({pathname: '/AdminAddEvent', state: {data: this.state.events, events: this.state.events}})} >{'Add Event'}</Button>{' '}<br/>
                 {this.listEvents(this.state.events)}
               </FormGroup>
             </Form>

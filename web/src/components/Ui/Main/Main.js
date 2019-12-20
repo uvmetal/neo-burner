@@ -45,6 +45,8 @@ class AppMain extends Component {
 
     this.setAccounts = this.setAccounts.bind(this)
     this.clearAccounts = this.clearAccounts.bind(this)
+    this.setEvents = this.setEvents.bind(this)
+    this.clearEvents = this.clearEvents.bind(this)
     this.setDarkMode = this.setDarkMode.bind(this)
     this.writeUserSettings = this.writeUserSettings.bind(this)
 
@@ -52,12 +54,53 @@ class AppMain extends Component {
     this.setPdfPath = this.setPdfPath.bind(this)
     this.setTemplatePath = this.setTemplatePath.bind(this)
 
+    let events = [ // Call sails for the real data
+      { index:        0,
+        name:         'test1',
+        url:          'https://github.com/uvmetal/',
+        payout:       1,
+        payoutAsset:  'Neo',    // Neo, Gas, NFT, or another token asset identifier
+        payoutWindow: '24',     // This should be a date object range
+        accounts:     [
+          {
+            address: 'test1',
+            downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+            hasLoggedIn: '',
+            ip: '',
+            depositAccount: '',
+          },
+          {
+            address: 'test2',
+            downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+            hasLoggedIn: '',
+            ip: '',
+            depositAccount: '',
+          }
+        ]
+      },
+      { index:        1,
+        name:         'test2',
+        url:          'https://github.com/coz/',
+        payout:       10,
+        payoutAsset:  'Gas',
+        payoutWindow: '24',
+        accounts:     [{
+          address: '',
+          downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
+          hasLoggedIn: '',
+          ip: '',
+          depositAccount: '',
+        }]
+      }
+    ]
+
     this.state = {
       leftPaneHidden: true,
       hideWorkspaceRollup: true,
       hideSettingsRollup: true,
 
       accounts: [],
+      events: events,
       tutorialMode: true,
       darkMode: 'true',
       accountsPath: '/tmp',
@@ -122,6 +165,20 @@ class AppMain extends Component {
     console.log('clearing accounts: '+this.state.accounts)
     this.setState({
       accounts: []
+    })
+  }
+
+  async setEvents(events) {
+    console.log('got events in main: '+util.inspect(events, {depth: null}))
+    await this.setState({
+      events: events
+    })
+  }
+
+  clearEvents(events) {
+    console.log('clearing events: '+this.state.events)
+    this.setState({
+      events: []
     })
   }
 
@@ -204,7 +261,9 @@ class AppMain extends Component {
         break
 
         case '/AdminEvents':
-        rightPaneContent = <AdminEventList {...this.props} />
+        rightPaneContent = <AdminEventList {...this.props}
+          events={this.state.events}
+        />
         break
 
         case '/AdminViewEvent':
@@ -214,11 +273,18 @@ class AppMain extends Component {
         case '/AdminEditEvent':
         rightPaneContent = <EditEvent {...this.props}
           setAccounts={this.setAccounts}
+          setEvents={this.setEvents}
+          clearEvents={this.clearEvents}
           />
         break
 
         case '/AdminAddEvent':
-        rightPaneContent = <AddEvent {...this.props} />
+        rightPaneContent = <AddEvent {...this.props}
+          events={this.state.events}
+          setAccounts={this.setAccounts}
+          setEvents={this.setEvents}
+          clearEvents={this.clearEvents}
+        />
         break
 
         case '/Accounts':

@@ -18,6 +18,7 @@ class Edit extends Component {
 
     this.state = {
       ...this.props.location.state.data,
+      index: this.props.location.state.index,
       dropdownOpen: false
     }
   }
@@ -38,8 +39,22 @@ class Edit extends Component {
     this.setState({dropdownOpen: !this.state.dropdownOpen})
   }
 
-  update() {
+  async update() {
     // call sails api to commit the updated state to waterline
+
+    console.log('index: '+this.state.index)
+
+    let event = {
+      index: this.state.index,
+      name: this.state.name,
+      url: this.state.url,
+      payout: this.state.payout,
+      payoutAsset: this.state.payoutAsset,
+      payoutWindow: this.state.payoutWindow,
+      accounts: this.state.accounts
+    }
+
+
   }
 
   async addAccounts() {
@@ -126,7 +141,7 @@ class Edit extends Component {
                 id="fourteenFont"
               />
               <br/>
-              Linked Account Details
+              Linked Account Details ({this.state.accounts ? this.state.accounts.length : 0})
               <textarea
                id="accountsTextArea"
                disabled
