@@ -36,6 +36,8 @@ import util from 'util'
 
 // import './style.css'
 
+// TODO Escape buttons should go back
+
 class AppMain extends Component {
   constructor(props) {
     super(props)

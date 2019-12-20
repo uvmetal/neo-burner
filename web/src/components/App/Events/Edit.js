@@ -19,6 +19,7 @@ class Edit extends Component {
     this.state = {
       ...this.props.location.state.data,
       index: this.props.location.state.index,
+      events: this.props.location.state.events,
       dropdownOpen: false
     }
   }
@@ -54,7 +55,15 @@ class Edit extends Component {
       accounts: this.state.accounts
     }
 
+    let events = this.state.events
 
+    events[event.index] = event
+
+    await this.setState({events: events})
+
+    // don't forget to update sails!
+
+    this.props.history.push('/AdminEvents')
   }
 
   async addAccounts() {

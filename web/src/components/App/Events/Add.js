@@ -42,6 +42,9 @@ class Add extends Component {
 
   async create() {
     // call sails api to commit the updated state to waterline
+
+    let index = 0
+
     let newEvent = {
       index: this.state.events ? this.state.events[this.state.events.length-1].index+1 : 0,
       name: this.state.name,
@@ -60,6 +63,8 @@ class Add extends Component {
     this.props.setEvents(newEvents)
 
     await this.setState({events: newEvents})
+
+    this.props.history.push('/AdminEvents')
   }
 
   async addAccounts() {

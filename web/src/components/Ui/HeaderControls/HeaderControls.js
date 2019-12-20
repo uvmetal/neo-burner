@@ -45,8 +45,7 @@ class HeaderControls extends Component {
       buttons.push
       (
         <Button size="sm" color="danger" onClick={this.admin} key='0' >Admin</Button>,
-        <Button size="sm" color="danger" onClick={() => this.props.history.push('/AdminAccounts')} key='1' >Accounts</Button>,
-        <Button size="sm" color="danger" onClick={this.events} key='2'>Events</Button>
+        <Button size="sm" color="danger" onClick={this.events} key='1'>Events</Button>
       )
       return buttons
     }

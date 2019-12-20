@@ -18,46 +18,6 @@ class List extends Component {
     this.edit = this.edit.bind(this)
     this.view = this.view.bind(this)
 
-    // let events = [ // Call sails for the real data
-    //   { index:        0,
-    //     name:         'test1',
-    //     url:          'https://github.com/uvmetal/',
-    //     payout:       1,
-    //     payoutAsset:  'Neo',    // Neo, Gas, NFT, or another token asset identifier
-    //     payoutWindow: '24',     // This should be a date object range
-    //     accounts:     [
-    //       {
-    //         address: 'test1',
-    //         downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
-    //         hasLoggedIn: '',
-    //         ip: '',
-    //         depositAccount: '',
-    //       },
-    //       {
-    //         address: 'test2',
-    //         downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
-    //         hasLoggedIn: '',
-    //         ip: '',
-    //         depositAccount: '',
-    //       }
-    //     ]
-    //   },
-    //   { index:        1,
-    //     name:         'test2',
-    //     url:          'https://github.com/coz/',
-    //     payout:       10,
-    //     payoutAsset:  'Gas',
-    //     payoutWindow: '24',
-    //     accounts:     [{
-    //       address: '',
-    //       downloadedWallet: '', // Will be set if has downloaded. This flag ultimately determines payout
-    //       hasLoggedIn: '',
-    //       ip: '',
-    //       depositAccount: '',
-    //     }]
-    //   }
-    // ]
-
     this.state = {
       events: this.props.events
     }
@@ -72,7 +32,6 @@ class List extends Component {
   }
 
   getEvents() {
-
     // this.setState({events: events})
     return this.state.events
   }
@@ -83,8 +42,8 @@ class List extends Component {
           {events.map((event, index) => (
            <div className="event" key={event.name}>
            <ButtonGroup>
-           <Button size="sm" color="warning" onClick={() => this.edit(event, index)} >{'Edit'}</Button>
-           <Button size="sm" color="warning" onClick={() => this.delete(event)} >{'Delete'}</Button> {event.name}
+           <Button size="sm" color="warning" onClick={() => this.edit(event, index, events)} >{'Edit'}</Button>
+           <Button size="sm" color="warning" onClick={() => this.delete(event, index)} >{'Delete'}</Button> {event.name}
            </ButtonGroup>
            </div>
           ))}
@@ -101,20 +60,20 @@ class List extends Component {
     })
   }
 
-  edit(data, index) {
+  edit(data, index, events) {
     console.log('editing event: '+data.name)
 
     this.props.history.push({
       pathname: '/AdminEditEvent',
-      state: { data: data, index: index }
+      state: { data: data, index: index, events: events }
     })
   }
 
-  delete(data) {
+  delete(data, index) {
     console.log('deleting event: '+data.name)
     // call sails to delete, for now we can remove the object
     let events = this.state.events
-    events.splice(data.index, 1)
+    events.splice(index, 1)
     this.setState({events: events})
   }
 
