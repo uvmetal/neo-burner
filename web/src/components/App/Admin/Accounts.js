@@ -7,8 +7,6 @@ import util from 'util'
 
 // import './style.css'
 
-// const electron = window.require('electron')
-
 const divStyle = {
   display: 'flex',
   alignItems: 'center'
@@ -17,14 +15,6 @@ const divStyle = {
 class Accounts extends Component {
   constructor(props) {
     super(props)
-
-    this.generate = this.generate.bind(this)
-    this.import = this.import.bind(this)
-    this.help = this.help.bind(this)
-    this.renderGenerateAccounts = this.renderGenerateAccounts.bind(this)
-    this.createWallet = this.createWallet.bind(this)
-    this.toggle = this.toggle.bind(this)
-    this.select = this.select.bind(this)
 
     this.state = {
       amount: '',
@@ -42,7 +32,7 @@ class Accounts extends Component {
   componentDidMount() {
   }
 
-  generate(e) {
+  generate = (e) => {
     console.log('Generating: '+this.state.amount)
     console.log('Name: '+this.state.name)
     console.log('URL: '+this.state.url)
@@ -70,7 +60,7 @@ class Accounts extends Component {
     // window.ipcRenderer.send('write-file', { path: realpath+'/'+this.state.filename, data: JSON.stringify(accounts).toString() })
   }
 
-  import(e) {
+  import = (e) => {
     // TODO add flash dialog for operations status
 
     let realpath
@@ -88,15 +78,15 @@ class Accounts extends Component {
     // electron.ipcRenderer.send('read-file', realpath+'/'+this.state.filename)
   }
 
-  help(e) {
+  help = (e) => {
 
   }
 
-  createWallet() {
+  createWallet = () => {
     this.props.history.push('Wallets')
   }
 
-  select(event) {
+  select = (event) => {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
       assetType: event.target.innerText
@@ -105,11 +95,11 @@ class Accounts extends Component {
     console.log('selected: '+event.target.innerText)
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({dropdownOpen: !this.state.dropdownOpen})
   }
 
-  getUpload() {
+  getUpload = () => {
     if (document.getElementsByTagName('input')[0].files[0])
     {
       let folder = document.getElementsByTagName('input')[0].files[0].path
@@ -118,7 +108,7 @@ class Accounts extends Component {
     }
   }
 
-  renderGenerateAccounts() {
+  renderGenerateAccounts = () => {
     return(
       <React.Fragment>
         <Jumbotron className="vertical-center" id="ma">

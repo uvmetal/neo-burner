@@ -28,7 +28,7 @@ class Admin extends Component {
           <Container className="p-5">
             <Form id="accountsFormLeft">
               <FormGroup id="fourteenFont">
-              <Button size="sm" color="warning" onClick={() => this.props.history.push('/Login')} >{'Login'}</Button>{' '}
+              <Button size="sm" color="warning" onClick={() => this.props.history.push({pathname: '/Login', referrer: '/Admin'})} >{'Login'}</Button>{' '}
               <Button size="sm" color="warning" onClick={() => this.props.history.push('/Logout')} >{'Logout'}</Button>{' '}
 
               </FormGroup>

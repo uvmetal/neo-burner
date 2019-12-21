@@ -11,11 +11,6 @@ class Add extends Component {
   constructor(props) {
     super(props)
 
-    this.select = this.select.bind(this)
-    this.toggle = this.toggle.bind(this)
-    this.create = this.create.bind(this)
-    this.addAccounts = this.addAccounts.bind(this)
-
     this.state = {
       ...this.props.location.state.data,
       events: this.props.events,
@@ -27,7 +22,7 @@ class Add extends Component {
     console.log('this.state: '+util.inspect(this.state, {depth:null}))
   }
 
-  select(event) {
+  select = (event) => {
     this.setState({
       dropdownOpen: !this.state.dropdownOpen,
       payoutAsset: event.target.innerText
@@ -36,11 +31,11 @@ class Add extends Component {
     console.log('selected: '+event.target.innerText)
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({dropdownOpen: !this.state.dropdownOpen})
   }
 
-  async create() {
+  create = async () => {
     // call sails api to commit the updated state to waterline
 
     let index = 0
@@ -67,7 +62,7 @@ class Add extends Component {
     this.props.history.push('/AdminEvents')
   }
 
-  async addAccounts() {
+  addAccounts = async () => {
     // add more accounts to this event
     console.log('accounts: '+util.inspect(this.state.accounts, {depth: null}))
     console.log('this.state.amount: '+this.state.amount)

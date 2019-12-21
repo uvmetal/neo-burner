@@ -5,15 +5,13 @@ import axios from 'axios'
 
 import AppMain from './components/Ui/Main/Main'
 
+import util from 'util'
+
 import './App.css'
 
 class App extends Component {
   constructor(props) {
     super(props)
-
-    this.getClientIp = this.getClientIp.bind(this) // sails route to get request IP
-    this.getAllowedAdminIps = this.getAllowedAdminIps.bind(this) // sails route to get ALLOWED admin request IPs
-    this.getDataAxios = this.getDataAxios.bind(this) // http helper
 
     this.state = {
       isLoading: true,
@@ -55,13 +53,14 @@ class App extends Component {
         console.log('not an admin ip: '+clientIp+' != '+adminIp)
       }
     })
+    
     this.setState({user: user})
   }
 
   componentDidMount() {
   }
 
-  getClientIp() {
+  getClientIp = () => {
     // make a request to sails to find out
     let user = {
       ip: '127.0.0.1'
@@ -71,22 +70,27 @@ class App extends Component {
     return user.ip
   }
 
-  getAllowedAdminIps() {
+  getAllowedAdminIps = () => {
     let adminIps = ['localhost', '127.0.0.1']
 
     return adminIps
   }
 
-  async getDataAxios(url){
+  getDataAxios = async (url) => {
     const response = await axios.get(url)
     console.log(response.data)
+  }
+
+  updateUser = async (user) => {
+    console.log('updateUser(): '+util.inspect(user, {depth: null}))
+    await this.setState({user: user})
   }
 
   render() {
     return (
       <MemoryRouter>
         <Switch>
-        <Route render={(props) => <AppMain {...props} config={this.state.systemConfig} user={this.state.user} />} />
+        <Route render={(props) => <AppMain {...props} config={this.state.systemConfig} user={this.state.user} updateUser={(user) => this.updateUser(user)} />} />
         </Switch>
       </MemoryRouter>
     )

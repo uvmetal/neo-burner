@@ -38,23 +38,11 @@ import util from 'util'
 
 // TODO Escape buttons should go back
 
+let user
+
 class AppMain extends Component {
   constructor(props) {
     super(props)
-
-    this.leftPaneToggleHidden = this.leftPaneToggleHidden.bind(this)
-    this.toggleVerticalNavRollup = this.toggleVerticalNavRollup.bind(this)
-
-    this.setAccounts = this.setAccounts.bind(this)
-    this.clearAccounts = this.clearAccounts.bind(this)
-    this.setEvents = this.setEvents.bind(this)
-    this.clearEvents = this.clearEvents.bind(this)
-    this.setDarkMode = this.setDarkMode.bind(this)
-    this.writeUserSettings = this.writeUserSettings.bind(this)
-
-    this.setFolder = this.setFolder.bind(this)
-    this.setPdfPath = this.setPdfPath.bind(this)
-    this.setTemplatePath = this.setTemplatePath.bind(this)
 
     let events = [ // Call sails for the real data
       { index:        0,
@@ -127,7 +115,7 @@ class AppMain extends Component {
   componentDidMount() {
   }
 
-  writeUserSettings() {
+  writeUserSettings = () => {
     let settings = {
       darkMode: this.state.darkMode,
       accountsPath: this.state.accountsPath,
@@ -140,19 +128,19 @@ class AppMain extends Component {
     // electron.ipcRenderer.send('write-user-settings', settings)
   }
 
-  async setFolder(folder) {
+  setFolder = async (folder) => {
     console.log('main setting folder: '+folder)
     await this.setState({folder: folder})
     this.writeUserSettings()
   }
 
-  async setTemplatePath(folder) {
+  setTemplatePath = async (folder) => {
     console.log('main setting template folder: '+folder)
     await this.setState({templatePath: folder})
     this.writeUserSettings()
   }
 
-  async setAccounts(accounts, folder, filename) {
+  setAccounts = async (accounts, folder, filename) => {
     console.log('got accounts in main: '+util.inspect(accounts, {depth: null}))
     await this.setState({
       accounts: accounts,
@@ -163,28 +151,28 @@ class AppMain extends Component {
     // this.writeUserSettings()
   }
 
-  clearAccounts(accounts) {
+  clearAccounts = (accounts) => {
     console.log('clearing accounts: '+this.state.accounts)
     this.setState({
       accounts: []
     })
   }
 
-  async setEvents(events) {
+  setEvents = async (events) => {
     console.log('got events in main: '+util.inspect(events, {depth: null}))
     await this.setState({
       events: events
     })
   }
 
-  clearEvents(events) {
+  clearEvents = (events) => {
     console.log('clearing events: '+this.state.events)
     this.setState({
       events: []
     })
   }
 
-  async setPdfPath(folder, file) {
+  setPdfPath = async (folder, file) => {
     console.log('setPdfPath(): '+folder+file)
     await this.setState({
       pdfPath: folder,
@@ -195,7 +183,7 @@ class AppMain extends Component {
     this.writeUserSettings()
   }
 
-  async setDarkMode(e) {
+  setDarkMode = async (e) => {
     // TODO Fix this it only works one way - from dark to light, can't return
     console.log('darkMode: '+e.target.checked)
     await this.setState({ darkMode: e.target.checked })
@@ -210,7 +198,7 @@ class AppMain extends Component {
     }
   }
 
-  toggleVerticalNavRollup(rollup) {
+  toggleVerticalNavRollup = (rollup) => {
     if(rollup === 'workspace') {
       this.setState({
         hideWorkspaceRollup: !this.state.hideWorkspaceRollup,
@@ -223,7 +211,7 @@ class AppMain extends Component {
     }
   }
 
-  leftPaneToggleHidden () {
+  leftPaneToggleHidden = () => {
     this.setState({
       leftPaneHidden: !this.state.leftPaneHidden
     })
@@ -231,7 +219,7 @@ class AppMain extends Component {
 
   render() {
     let headerContent = this.props.headerContent ? this.props.headerContent :
-      <HeaderControls {...this.props} leftPaneToggleHidden={this.leftPaneToggleHidden} user={this.props.user}/>
+      <HeaderControls {...this.props} leftPaneToggleHidden={this.leftPaneToggleHidden} user={this.props.user} />
     // let leftPaneContent = this.props.leftPaneContent ? this.props.leftPaneContent : ''
     let leftPaneContent = <VerticalNav hidden={this.state.leftPaneHidden} hideWorkspaceRollup={this.state.hideWorkspaceRollup} hideSettingsRollup={this.state.hideSettingsRollup} toggleRollup={this.toggleVerticalNavRollup} />
     // let leftPaneContent = <VerticalNav hidden={this.state.leftPaneHidden} hideWorkspaceRollup={this.state.hideWorkspaceRollup} hideSettingsRollup={this.state.hideSettingsRollup} toggleRollup={this.toggleVerticalNavRollup} />
@@ -242,6 +230,7 @@ class AppMain extends Component {
     if (this.props && this.props.location && this.props.location.pathname) {
       // this.setState({templateFolder: this.props.config.userData+'/'})
       // console.log(this.props.config.consoleBuffer)
+      console.log('this.props.user: '+util.inspect(this.props.user, {depth: null}))
       rightPaneContent = <Home />
 
       switch(this.props.location.pathname) {
@@ -251,7 +240,7 @@ class AppMain extends Component {
         break
 
         case '/Admin':
-        rightPaneContent = <Admin />
+        rightPaneContent = <Admin {...this.props}/>
         break
 
         case '/AdminAccounts':
@@ -287,6 +276,22 @@ class AppMain extends Component {
           setEvents={this.setEvents}
           clearEvents={this.clearEvents}
         />
+        break
+
+        case '/Login':
+          console.log('/Login')
+          user = this.props.user
+          user.loggedIn = true
+          this.props.updateUser(user)
+          this.props.history.push(this.props.location.referrer)
+        break
+
+        case '/Logout':
+          console.log('/Logout')
+          user = this.props.user
+          user.loggedIn = false
+          this.props.updateUser(user)
+          this.props.history.push('/Home')
         break
 
         case '/Accounts':

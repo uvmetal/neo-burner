@@ -13,11 +13,6 @@ class List extends Component {
   constructor(props) {
     super(props)
 
-    this.getEvents = this.getEvents.bind(this)
-    this.listEvents = this.listEvents.bind(this)
-    this.edit = this.edit.bind(this)
-    this.view = this.view.bind(this)
-
     this.state = {
       events: this.props.events
     }
@@ -31,19 +26,19 @@ class List extends Component {
   componentDidMount() {
   }
 
-  getEvents() {
+  getEvents = () => {
     // this.setState({events: events})
     return this.state.events
   }
 
-  listEvents(events) {
+  listEvents = (events) => {
     return (
       <div>
           {events.map((event, index) => (
            <div className="event" key={event.name}>
            <ButtonGroup>
            <Button size="sm" color="warning" onClick={() => this.edit(event, index, events)} >{'Edit'}</Button>
-           <Button size="sm" color="warning" onClick={() => this.delete(event, index)} >{'Delete'}</Button> {event.name}
+           <Button size="sm" color="warning" onClick={() => this.delete(event, index)} >{'Delete'}</Button> {' ' +event.name}
            </ButtonGroup>
            </div>
           ))}
@@ -51,7 +46,7 @@ class List extends Component {
     )
   }
 
-  view(data) {
+  view = (data) => {
     console.log('viewing event: '+data.name)
 
     this.props.history.push({
@@ -60,7 +55,7 @@ class List extends Component {
     })
   }
 
-  edit(data, index, events) {
+  edit = (data, index, events) => {
     console.log('editing event: '+data.name)
 
     this.props.history.push({
@@ -69,12 +64,12 @@ class List extends Component {
     })
   }
 
-  delete(data, index) {
+  delete = async (data, index) => {
     console.log('deleting event: '+data.name)
     // call sails to delete, for now we can remove the object
     let events = this.state.events
     events.splice(index, 1)
-    this.setState({events: events})
+    await this.setState({events: events})
   }
 
   render() {
@@ -90,7 +85,7 @@ class List extends Component {
           <Container className="p-5">
             <Form id="accountsFormLeft">
               <FormGroup id="fourteenFont">
-                <Button size="sm" color="warning" onClick={() => this.props.history.push({pathname: '/AdminAddEvent', state: {data: this.state.events, events: this.state.events}})} >{'Add Event'}</Button>{' '}<br/>
+                <Button size="sm" color="warning" onClick={() => this.props.history.push({pathname: '/AdminAddEvent', state: {data: this.state.events, events: this.state.events}})} >{'Add Event'}</Button>{' '}<br/><br/>
                 {this.listEvents(this.state.events)}
               </FormGroup>
             </Form>

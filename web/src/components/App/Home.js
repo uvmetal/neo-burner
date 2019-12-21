@@ -10,10 +10,7 @@ class Home extends Component {
   constructor(props) {
     super(props)
 
-    this.letsBurn = this.letsBurn.bind(this)
-
     this.state = {
-
     }
   }
 
@@ -23,7 +20,7 @@ class Home extends Component {
   componentDidMount() {
   }
 
-  letsBurn() {
+  letsBurn = () => {
     this.props.history.push('/Accounts')
   }
 

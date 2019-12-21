@@ -2,24 +2,11 @@ import React, { Component } from 'react'
 import { Button, ButtonGroup } from 'reactstrap'
 // import './style.css'
 
+let adminNav
+
 class HeaderControls extends Component {
   constructor(props) {
     super(props)
-
-    this.home = this.home.bind(this)
-
-    this.admin = this.admin.bind(this)
-    this.events = this.events.bind(this)
-    this.getAdminNav = this.getAdminNav.bind(this)
-
-    this.new = this.new.bind(this)
-    this.import = this.import.bind(this)
-    this.export = this.export.bind(this)
-    this.about = this.about.bind(this)
-    this.report = this.report.bind(this)
-    this.settings = this.settings.bind(this)
-    this.accounts = this.accounts.bind(this)
-    this.wallets = this.wallets.bind(this)
 
     this.state = {
       isOpen: false,
@@ -27,76 +14,103 @@ class HeaderControls extends Component {
     }
   }
 
-  home() {
-     this.props.history.push('/Home')
+  home = () => {
+    this.props.history.push('/Home')
   }
 
-  admin() {
-     this.props.history.push('/Admin')
+  admin = () => {
+    this.props.history.push('/Admin')
   }
 
-  events() {
-     this.props.history.push('/AdminEvents')
+  events = () => {
+    this.props.history.push('/AdminEvents')
   }
 
-  getAdminNav() {
+  getAdminNav = () => {
+    console.log('getAdminNav()')
+    let buttons = []
     if (this.props.user.admin) {
-      let buttons = []
       buttons.push
       (
         <Button size="sm" color="danger" onClick={this.admin} key='0' >Admin</Button>,
         <Button size="sm" color="danger" onClick={this.events} key='1'>Events</Button>
       )
-      return buttons
     }
+    if (this.props.user.loggedIn) {
+      buttons.push
+      (
+        <Button size="sm" color="danger" onClick={this.props.history.push('/Logout')} key='2'>Logout</Button>
+      )
+    } else {
+
+    }
+    return buttons
   }
 
-  accounts() {
+  accounts = () => {
     this.props.history.push('/Accounts')
   }
 
-  wallets() {
+  wallets = () => {
     this.props.history.push('/Wallets')
   }
 
-  new() {
-     this.props.history.push('/New')
+  new = () => {
+    this.props.history.push('/New')
   }
 
-  import() {
-     this.props.history.push('/Import')
+  import = () => {
+    this.props.history.push('/Import')
   }
 
-  export() {
-     this.props.history.push('/Export')
+  export = () => {
+    this.props.history.push('/Export')
   }
 
-  about() {
-     this.props.history.push('/About')
+  about = () => {
+    this.props.history.push('/About')
   }
 
-  settings() {
-     this.props.history.push('/Settings')
+  settings = () => {
+    this.props.history.push('/Settings')
   }
 
-  report() {
-     this.props.history.push('/Report')
+  report = () => {
+    this.props.history.push('/Report')
   }
 
-  toggleNetworkStatus() {
-      this.setState({
-          networkStatusToggle: !this.state.networkStatusToggle
-      })
+  componentWillReceiveProps() {
 
   }
 
   componentWillMount() {
+    // adminNav = this.getAdminNav()
   }
 
   componentDidMount() {
   }
 
   render() {
+    let loginButtons
+    let adminButtons
+    let buttonColor = 'warning'
+    if (this.props.user.admin) {
+      buttonColor = 'danger'
+      adminButtons = [
+        <Button size="sm" color="danger" onClick={this.admin} key='0' >Admin</Button>,
+        <Button size="sm" color="danger" onClick={this.events} key='1'>Events</Button>
+      ]
+    } else buttonColor = 'warning'
+
+    if (this.props.user.loggedIn) {
+      loginButtons = [
+        <Button size="sm" color={buttonColor} onClick={() => this.props.history.push('/Logout')} key='2'>Logout</Button>
+      ]
+    } else {
+      loginButtons = [
+        <Button size="sm" color={buttonColor} onClick={() => this.props.history.push({pathname: '/Login', referrer: '/Home'})} key='2'>Login</Button>
+      ]
+    }
     return(
       <div id="ma">
         <ButtonGroup>
@@ -105,7 +119,8 @@ class HeaderControls extends Component {
           <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
           <Button size="sm" color="warning" onClick={this.settings} >Settings</Button>{' '}
           <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
-          {this.getAdminNav()}
+
+          {adminButtons}{loginButtons}
         </ButtonGroup>
       </div>
     )
