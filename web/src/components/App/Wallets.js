@@ -10,16 +10,6 @@ class Wallets extends Component {
   constructor(props) {
     super(props)
 
-    this.goToAccounts = this.goToAccounts.bind(this)
-    this.setFolder = this.setFolder.bind(this)
-    this.createPdf = this.createPdf.bind(this)
-    this.viewPdf = this.viewPdf.bind(this)
-    this.customizePdf = this.customizePdf.bind(this)
-    this.resetTemplatePath = this.resetTemplatePath.bind(this)
-    // this.currentModalBody = this.currentModalBody.bind(this)
-
-    // TODO Refactor state/prop management
-
     this.state = {
       folder: this.props.folder,
       filename: this.props.filename,
@@ -51,16 +41,16 @@ class Wallets extends Component {
     // })
   }
 
-  goToAccounts() {
+  goToAccounts = () => {
     this.props.history.push('Accounts')
   }
 
-  setFolder(e) {
+  setFolder = (e) => {
     this.setState({ folder: document.getElementsByTagName('input')[0].files[0].path })
     this.props.setFolder(document.getElementsByTagName('input')[0].files[0].path)
   }
 
-  createPdf() {
+  createPdf = () => {
     this.setState({ generatingPdf: true })
     this.props.setPdfPath(this.state.folder+'/', this.state.filename)
     this.props.history.push('Wallets')
@@ -72,19 +62,19 @@ class Wallets extends Component {
     console.log('wallet folder: '+this.state.folder+'/'+this.state.filename)
   }
 
-  viewPdf() {
+  viewPdf = () => {
     this.props.history.push('PDF')
   }
 
-  customizePdf() {
+  customizePdf = () => {
     this.props.history.push('CopyHtmlTemplate')
   }
 
-  nextModal() {
+  nextModal = () => {
     console.log('nextClick')
   }
 
-  resetTemplatePath(){
+  resetTemplatePath = () => {
     this.props.setTemplatePath(this.props.config.userData+'/')
   }
 

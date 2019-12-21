@@ -53,7 +53,8 @@ class App extends Component {
         console.log('not an admin ip: '+clientIp+' != '+adminIp)
       }
     })
-    
+    // user.admin = false
+
     this.setState({user: user})
   }
 
@@ -90,7 +91,7 @@ class App extends Component {
     return (
       <MemoryRouter>
         <Switch>
-        <Route render={(props) => <AppMain {...props} config={this.state.systemConfig} user={this.state.user} updateUser={(user) => this.updateUser(user)} />} />
+        <Route render={(props) => <AppMain {...props} config={this.state.systemConfig} user={this.state.user} updateUser={(user) => this.updateUser(user)}  />} />
         </Switch>
       </MemoryRouter>
     )

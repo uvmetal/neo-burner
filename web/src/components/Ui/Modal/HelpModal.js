@@ -6,12 +6,6 @@ class HelpModal extends Component {
   constructor(props) {
     super(props)
 
-    this.toggle = this.toggle.bind(this)
-    // this.nextButtonClick = this.nextButtonClick.bind(this)
-    // this.onNextClick = this.onNextClick.bind(this)
-    // this.cancelButtonClick = this.cancelButtonClick.bind(this)
-    // this.onCancelClick = this.onCancelClick.bind(this)
-
     this.state = {
       modal: false
     }
@@ -21,7 +15,7 @@ class HelpModal extends Component {
 
   }
 
-  toggle() {
+  toggle = () => {
 
     this.setState({ modal: !this.state.modal })
     // if (this.props.onNextClick) this.props.onNextClick()

@@ -21,7 +21,7 @@ class Home extends Component {
   }
 
   letsBurn = () => {
-    this.props.history.push('/Accounts')
+    this.props.history.push('/Login')
   }
 
   render() {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Button, ButtonGroup } from 'reactstrap'
-// import './style.css'
+import { Button, ButtonGroup, Input } from 'reactstrap'
+import LoginModalButton from '../../Ui/Modal/LoginModal'
 
-let adminNav
+// import './style.css'
 
 class HeaderControls extends Component {
   constructor(props) {
@@ -24,27 +24,6 @@ class HeaderControls extends Component {
 
   events = () => {
     this.props.history.push('/AdminEvents')
-  }
-
-  getAdminNav = () => {
-    console.log('getAdminNav()')
-    let buttons = []
-    if (this.props.user.admin) {
-      buttons.push
-      (
-        <Button size="sm" color="danger" onClick={this.admin} key='0' >Admin</Button>,
-        <Button size="sm" color="danger" onClick={this.events} key='1'>Events</Button>
-      )
-    }
-    if (this.props.user.loggedIn) {
-      buttons.push
-      (
-        <Button size="sm" color="danger" onClick={this.props.history.push('/Logout')} key='2'>Logout</Button>
-      )
-    } else {
-
-    }
-    return buttons
   }
 
   accounts = () => {
@@ -84,7 +63,6 @@ class HeaderControls extends Component {
   }
 
   componentWillMount() {
-    // adminNav = this.getAdminNav()
   }
 
   componentDidMount() {
@@ -100,17 +78,10 @@ class HeaderControls extends Component {
         <Button size="sm" color="danger" onClick={this.admin} key='0' >Admin</Button>,
         <Button size="sm" color="danger" onClick={this.events} key='1'>Events</Button>
       ]
-    } else buttonColor = 'warning'
-
-    if (this.props.user.loggedIn) {
-      loginButtons = [
-        <Button size="sm" color={buttonColor} onClick={() => this.props.history.push('/Logout')} key='2'>Logout</Button>
-      ]
     } else {
-      loginButtons = [
-        <Button size="sm" color={buttonColor} onClick={() => this.props.history.push({pathname: '/Login', referrer: '/Home'})} key='2'>Login</Button>
-      ]
+      buttonColor = 'warning'
     }
+
     return(
       <div id="ma">
         <ButtonGroup>
@@ -119,8 +90,8 @@ class HeaderControls extends Component {
           <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
           <Button size="sm" color="warning" onClick={this.settings} >Settings</Button>{' '}
           <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
-
-          {adminButtons}{loginButtons}
+          {adminButtons}
+          <LoginModalButton {...this.props} />
         </ButtonGroup>
       </div>
     )

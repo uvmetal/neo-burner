@@ -217,19 +217,20 @@ class AppMain extends Component {
     })
   }
 
+  loginUser = async (user) => {
+    this.props.history.push({pathname: '/Login', referrer: '/Admin'})
+  }
+
   render() {
     let headerContent = this.props.headerContent ? this.props.headerContent :
-      <HeaderControls {...this.props} leftPaneToggleHidden={this.leftPaneToggleHidden} user={this.props.user} />
-    // let leftPaneContent = this.props.leftPaneContent ? this.props.leftPaneContent : ''
+      <HeaderControls {...this.props} leftPaneToggleHidden={this.leftPaneToggleHidden} loginUser={(user) => this.loginUser(user)} />
+
     let leftPaneContent = <VerticalNav hidden={this.state.leftPaneHidden} hideWorkspaceRollup={this.state.hideWorkspaceRollup} hideSettingsRollup={this.state.hideSettingsRollup} toggleRollup={this.toggleVerticalNavRollup} />
-    // let leftPaneContent = <VerticalNav hidden={this.state.leftPaneHidden} hideWorkspaceRollup={this.state.hideWorkspaceRollup} hideSettingsRollup={this.state.hideSettingsRollup} toggleRollup={this.toggleVerticalNavRollup} />
+
     let rightPaneContent = this.props.rightPaneContent ? this.props.rightPaneContent : ''
     let footerContent = this.props.footerContent ? this.props.footerContent : <Footer />
-    // footerContent = 'footer footer footer'
 
     if (this.props && this.props.location && this.props.location.pathname) {
-      // this.setState({templateFolder: this.props.config.userData+'/'})
-      // console.log(this.props.config.consoleBuffer)
       console.log('this.props.user: '+util.inspect(this.props.user, {depth: null}))
       rightPaneContent = <Home />
 
@@ -279,7 +280,6 @@ class AppMain extends Component {
         break
 
         case '/Login':
-          console.log('/Login')
           user = this.props.user
           user.loggedIn = true
           this.props.updateUser(user)
@@ -287,7 +287,6 @@ class AppMain extends Component {
         break
 
         case '/Logout':
-          console.log('/Logout')
           user = this.props.user
           user.loggedIn = false
           this.props.updateUser(user)
