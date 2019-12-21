@@ -217,7 +217,7 @@ class AppMain extends Component {
     })
   }
 
-  loginUser = async (user) => {
+  loginUser = async (admin) => {
     this.props.history.push({pathname: '/Login', referrer: '/Admin'})
   }
 

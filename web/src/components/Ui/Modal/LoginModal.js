@@ -19,7 +19,6 @@ class LoginModalButton extends Component {
   toggle = () => {
 
     this.setState({ modal: !this.state.modal })
-    // if (this.props.onCancelClick) this.props.onCancelClick()
   }
 
   okayButtonClick = () => {
