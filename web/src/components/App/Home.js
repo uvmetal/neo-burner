@@ -21,7 +21,7 @@ class Home extends Component {
   }
 
   letsBurn = () => {
-    this.props.history.push('/Login')
+    this.props.history.push('/Redeem')
   }
 
   render() {
@@ -34,7 +34,7 @@ class Home extends Component {
             <img src={uvmetalFace} width="205" height="205" alt="neo-burner" className=""  />
             <p className="lead">Paper Wallet Event Manager</p>
             <p className="lead mx-auto">
-            <Button onClick={this.letsBurn} color="warning" >Let's Burn!</Button>
+            <Button onClick={this.letsBurn} color="warning" >Get started!</Button>
             </p>
           </div>
         </Jumbotron>

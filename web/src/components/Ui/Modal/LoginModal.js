@@ -13,11 +13,9 @@ class LoginModalButton extends Component {
   }
 
   componentDidMount() {
-
   }
 
   toggle = () => {
-
     this.setState({ modal: !this.state.modal })
   }
 
@@ -73,7 +71,7 @@ class LoginModalButton extends Component {
 
     if (this.props.user.loggedIn) {
       button =
-        <Button size="sm" color={color} onClick={() => this.props.history.push('/Logout')} key='2'>Logout</Button>
+        <Button color={color} onClick={() => this.props.history.push('/Logout')} id="fourteenFont" key='2'>Logout</Button>
     }
 
     return(

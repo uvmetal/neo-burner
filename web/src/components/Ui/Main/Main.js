@@ -13,6 +13,11 @@ import ViewEvent from '../../App/Events/View'
 import EditEvent from '../../App/Events/Edit'
 import AddEvent from '../../App/Events/Add'
 
+import Redeem from '../../App/User/Redeem'
+import ViewAccount from '../../App/User/ViewAccount'
+import ChooseWallet from '../../App/User/ChooseWallet'
+import SendFunds from '../../App/User/SendFunds'
+
 import About from '../../App/About'
 
 import Settings from '../../App/Settings'
@@ -218,7 +223,27 @@ class AppMain extends Component {
   }
 
   loginUser = async (admin) => {
-    this.props.history.push({pathname: '/Login', referrer: '/Admin'})
+    // call sails and get a session
+    user = this.props.user
+    user.loggedIn = true
+    this.props.updateUser(user)
+    // this.props.history.push(this.props.location.referrer)
+
+    if (admin) {
+      this.props.history.push('/Admin')
+      // this.props.history.push({pathname: '/Login', referrer: '/Admin'})
+
+    } else {
+      // this.props.history.push({pathname: '/Login', referrer: '/Home'})
+      this.props.history.push('/Home')
+    }
+  }
+
+  logoutUser = async () => {
+    user = this.props.user
+    user.loggedIn = false
+    this.props.updateUser(user)
+    this.props.history.push('/Home')
   }
 
   render() {
@@ -280,17 +305,27 @@ class AppMain extends Component {
         break
 
         case '/Login':
-          user = this.props.user
-          user.loggedIn = true
-          this.props.updateUser(user)
-          this.props.history.push(this.props.location.referrer)
+
         break
 
         case '/Logout':
-          user = this.props.user
-          user.loggedIn = false
-          this.props.updateUser(user)
-          this.props.history.push('/Home')
+          this.logoutUser()
+        break
+
+        case '/Redeem':
+          rightPaneContent = <Redeem {...this.props} />
+        break
+
+        case '/ViewAccount':
+          rightPaneContent = <ViewAccount {...this.props} />
+        break
+
+        case '/ChooseWallet':
+          rightPaneContent = <ChooseWallet {...this.props} />
+        break
+
+        case '/SendFunds':
+          rightPaneContent = <SendFunds {...this.props} />
         break
 
         case '/Accounts':

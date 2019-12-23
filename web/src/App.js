@@ -44,15 +44,15 @@ class App extends Component {
       admin: false
     }
 
-    allowedAdminIps.forEach((adminIp) => { // maintain by sails admin session
-      if (adminIp === clientIp) {
-        user.admin = true
-        console.log('found admin ip: '+adminIp+' = '+clientIp)
-        return
-      } else {
-        console.log('not an admin ip: '+clientIp+' != '+adminIp)
-      }
-    })
+    // allowedAdminIps.forEach((adminIp) => { // maintain by sails admin session
+    //   if (adminIp === clientIp) {
+    //     user.admin = true
+    //     console.log('found admin ip: '+adminIp+' = '+clientIp)
+    //     return
+    //   } else {
+    //     console.log('not an admin ip: '+clientIp+' != '+adminIp)
+    //   }
+    // })
     // user.admin = false
 
     this.setState({user: user})
