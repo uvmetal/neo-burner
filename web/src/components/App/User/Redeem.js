@@ -30,23 +30,16 @@ class Redeem extends Component {
           <p className="lead mx-auto">
           </p>
           <Container className="p-5">
-            <Form id="editForm">
+            <Form id="redeemFormLeft">
               <FormGroup id="fourteenFont">
-                Name: {this.state.name}<br/>
-                URL: {this.state.url}<br/>
-                Payout: {this.state.payout}<br/>
-                Payout Asset: {this.state.payoutAsset}<br/>
-                Payout Window: {this.state.payoutWindow}<br/>
-                <textarea
-                 id="accountsTextArea"
-                 disabled
-                 cols="100"
-                 rows="40"
-                 name="accounts"
-                 value={util.inspect(this.state.accounts, {depth:null})}/>
-                 <br/>
-                 <LoginModalButton {...this.props} />
-                 <Button size="sm" color="warning" onClick={() => this.props.history.push('/ViewAccount')} >{'Next'}</Button>
+                <div id="sixteenFont">
+                  Login to redeem your paper wallet account. You will be able to review the account details, choose a wallet to download, and, once downloaded, send some funds to your new desktop or mobile wallet.
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <LoginModalButton {...this.props} />
+                <Button size="sm" color="warning" onClick={() => this.props.history.push('/ViewAccount')} >{'Next'}</Button>
               </FormGroup>
             </Form>
           </Container>

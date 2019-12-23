@@ -41,7 +41,12 @@ class App extends Component {
 
     let user = {
       ip: clientIp,
-      admin: false
+      admin: false,
+      account: {
+        wif: 'L2nQbvGZVvjZpdQ4pewsZpp4fFL1PnnwhLUNLaBSzRPkiwBTyU8k',
+        address: 'APR3zqwFPmSwQgmZ3f3pVrnLmqbmBGHt2o',
+        bip39: 'plastic aunt rent dose primary sustain mansion advance deputy love seat wagon water duty grant list friend thrive solid dog shell drop pizza knock'
+      }
     }
 
     // allowedAdminIps.forEach((adminIp) => { // maintain by sails admin session

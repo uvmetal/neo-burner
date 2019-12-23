@@ -43,6 +43,13 @@ body {
     color: black;
 }
 
+#redeemFormLeft {
+    text-align: left;
+    padding-left: 20%;
+    background-color: black;
+    color: white;
+}
+
 #accountsTextArea
 {
     height: 150px;
