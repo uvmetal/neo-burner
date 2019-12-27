@@ -28,7 +28,8 @@ body {
 
 #accountsFormLeft {
     text-align: left;
-    padding-left: 40%;
+	width: fit-content;
+	display: inline-block;
 }
 
 #modalFormLeft {
