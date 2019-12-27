@@ -143,9 +143,8 @@ class AppMain extends Component {
 
     this.writeUserSettings()
 
-    if (e.target.checked) {
+    if (this.state.darkMode) {
       require('./style.css')
-
     } else {
       require('./style-light.css')
     }
