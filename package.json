@@ -33,6 +33,7 @@
     "eslint-plugin-react": "7.12.4",
     "eslint-plugin-react-hooks": "^1.5.0",
     "eslint-utils": "^1.4.2",
+    "file-loader": "^5.0.2",
     "fs-extra": "^8.1.0",
     "fstream-ignore": "^1.0.5",
     "global": "^4.4.0",
