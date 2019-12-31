@@ -406,6 +406,7 @@ function getSystemProfile() {
     }
   }
 
+
   console.log('systemConfig is ' + util.inspect(systemConfig, {depth: null}))
 
   return systemConfig

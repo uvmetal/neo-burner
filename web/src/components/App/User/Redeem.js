@@ -39,7 +39,7 @@ class Redeem extends Component {
                 <br/>
                 <br/>
                 <LoginModalButton {...this.props} />
-                <Button size="sm" color="warning" onClick={() => this.props.history.push('/ViewAccount')} >{'Next'}</Button>
+
               </FormGroup>
             </Form>
           </Container>
@@ -50,3 +50,4 @@ class Redeem extends Component {
   }
 }
 export default Redeem
+                // <Button size="sm" color="warning" onClick={() => this.props.history.push('/ViewAccount')} >{'Next'}</Button>

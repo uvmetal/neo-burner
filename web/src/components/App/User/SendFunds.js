@@ -56,8 +56,8 @@ class SendFunds extends Component {
                 </Dropdown>
                  <br/>
                 <ButtonGroup>
-                  <Button size="sm" color="warning" onClick={() => this.props.history.push('/SendFunds')} >{'Send'}</Button>
                   <Button size="sm" color="warning" onClick={() => this.props.history.push('/ViewAccount')} >{'Back'}</Button>
+                  <Button size="sm" color="warning" onClick={() => this.props.history.push('/SendFunds')} >{'Send'}</Button>
                 </ButtonGroup>
               </FormGroup>
             </Form>

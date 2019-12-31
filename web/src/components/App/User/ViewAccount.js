@@ -46,8 +46,8 @@ class ViewAccount extends Component {
                  value={util.inspect(this.state.accounts, {depth:null})}/>
                  <br/>
                 <ButtonGroup>
-                  <Button size="sm" color="warning" onClick={() => this.props.history.push('/ChooseWallet')} >{'Next'}</Button>
                   <Button size="sm" color="warning" onClick={() => this.props.history.push('/Redeem')} >{'Back'}</Button>
+                  <Button size="sm" color="warning" onClick={() => this.props.history.push('/ChooseWallet')} >{'Next'}</Button>
                 </ButtonGroup>
               </FormGroup>
             </Form>

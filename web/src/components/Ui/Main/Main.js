@@ -195,7 +195,7 @@ class AppMain extends Component {
 
     this.writeUserSettings()
 
-    if (e.target.checked) {
+    if (this.state.darkMode) {
       require('./style.css')
 
     } else {
@@ -225,7 +225,18 @@ class AppMain extends Component {
   loginUser = async (admin) => {
     // call sails and get a session
     user = this.props.user
+
+    // if session is valid
     user.loggedIn = true
+    // else false and return
+
+    // Look up account by recovering address from WIF, bip seed, or private key.
+
+    // Find correct event by looking through database for an account linked to an events
+
+    // Check if this account has already been redeemed. If it has been redeemed, flash a message and end the session.
+
+    // update user with the data from sails
     this.props.updateUser(user)
     // this.props.history.push(this.props.location.referrer)
 
@@ -235,7 +246,7 @@ class AppMain extends Component {
 
     } else {
       // this.props.history.push({pathname: '/Login', referrer: '/Home'})
-      this.props.history.push('/Home')
+      this.props.history.push('/ViewAccount')
     }
   }
 
@@ -313,7 +324,7 @@ class AppMain extends Component {
         break
 
         case '/Redeem':
-          rightPaneContent = <Redeem {...this.props} />
+          rightPaneContent = <Redeem {...this.props} loginUser={this.loginUser} />
         break
 
         case '/ViewAccount':

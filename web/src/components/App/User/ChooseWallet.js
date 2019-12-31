@@ -56,8 +56,8 @@ class ChooseWallet extends Component {
                 </Dropdown>
                  <br/>
                 <ButtonGroup>
+                <Button size="sm" color="warning"   onClick={() => this.props.history.push('/ViewAccount')} >{'Back'}</Button>
                   <Button size="sm" color="warning" onClick={() => this.props.history.push('/SendFunds')} >{'Next'}</Button>
-                  <Button size="sm" color="warning" onClick={() => this.props.history.push('/ViewAccount')} >{'Back'}</Button>
                 </ButtonGroup>
               </FormGroup>
             </Form>

@@ -22,7 +22,7 @@ module.exports.custom = {
   * > but it can also be used for user-uploaded images, webhooks, etc.      *
   *                                                                         *
   **************************************************************************/
-  baseUrl: 'http://localhost:2328',
+  baseUrl: 'http://localhost:23053',
 
   /**************************************************************************
   *                                                                         *

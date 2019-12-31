@@ -22,11 +22,11 @@ class About extends Component {
       <React.Fragment id="ma">
         <Jumbotron className="vertical-center" id="ma">
         <div className="container hero-container text-center" id="ma">
+        <img src={burnerLogo} width="800" height="175" alt="neo-burner" className=""  />
           <h2 className="display-4">About</h2>
           <p className="lead" id="fourteenFont">Neo-Burner {version} is a paper wallet event manager.</p>
           <hr className="my-4" />
           <p className="lead mx-auto">
-            <img src={burnerLogo} width="800" height="175" alt="neo-burner" className=""  />
           </p>
         </div>
         </Jumbotron>

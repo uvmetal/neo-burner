@@ -4,6 +4,7 @@
 # dependencies
 node_modules/*
 release-builds/*
+web/node_modules/*
 
 dist/
 env/

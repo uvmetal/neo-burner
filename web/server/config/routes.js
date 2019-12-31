@@ -53,6 +53,87 @@ module.exports.routes = {
   // Note that, in this app, these API endpoints may be accessed using the `Cloud.*()` methods
   // from the Parasails library, or by using those method names as the `action` in <ajax-form>.
 
+  // redeem user functions
+  // -----------------------------------------------
+  'POST /api/v1/redeem/login': { action: 'redeem/login' },
+  'POST /api/v1/redeem/logout': { action: 'redeem/logout' },
+
+  // This should only be accessible by a private key paper wallet / qr wallet holder.
+  // The destination is the address of the mobile or desktop wallet as setup during the redemption wizard in burner.
+  // Payout should be triggered for next payout round if within the redemption payout window
+  'POST /api/v1/redeem/set-payout-address': { action: 'redeem/set-payout-address' },
+
+
+  // admin user management functions
+  // -----------------------------------------------
+  // login (email, pasword)
+  'POST /api/v1/admin/login': { action: 'admin/login' },
+
+  // logout (email, password)
+  'POST /api/v1/admin/logout': { action: 'admin/logout' },
+
+  // list admins
+  'POST /api/v1/admin/list': { action: 'admin/list' },
+
+  // add admin (email, password)
+  'POST /api/v1/admin/add': { action: 'admin/add' },
+
+  // remove admin (email, password, keepUserAccount)
+  'DELETE /api/v1/admin/remove': { action: 'admin/remove' },
+
+  // edit admin (emai, password, walletPermissions)
+  'PATCH /api/v1/admin/edit': { action: 'admin/edit' },
+
+
+  // admin event management functions
+  // -----------------------------------------------
+  // add event
+  'POST /api/v1/admin/event/add': { action: 'admin/event/add' },
+
+  // list events
+  'POST /api/v1/admin/event/list': { action: 'admin/event/list' },
+
+  // remove event
+  'DELETE /api/v1/admin/event/remove': { action: 'admin/event/remove' },
+
+  // edit event
+  'PATCH /api/v1/admin/event/edit': { action: 'admin/event/edit' },
+
+  // add accounts to event
+  'POST /api/v1/admin/event/add-accounts': { action: 'admin/event/add-accounts' },
+
+  // remove accounts fromt event
+  'POST /api/v1/admin/event/remove-accounts': { action: 'admin/event/remove-accounts' },
+
+
+  // admin wallet management functions
+  // -----------------------------------------------
+  // create wallet
+  'POST /api/v1/admin/wallet/create': { action: 'admin/wallet/create' },
+
+  // delete wallet
+  'DELETE /api/v1/admin/wallet/delete': { action: 'admin/wallet/delete' },
+
+  // list wallets
+  'POST /api/v1/admin/wallet/list': { action: 'admin/wallet/list' },
+
+  // view wallet
+  'GET /admin/wallet/view': { action: 'admin/wallet/view' },
+
+  // send funds from wallet / defund wallet
+  'POST /api/v1/admin/wallet/defund-wallet': { action: 'admin/wallet/defund-wallet' },
+
+  // link events to wallet
+  'POST /api/v1/admin/wallet/link-events': { action: 'admin/wallet/link-events' },
+
+  // set wallet maintenance period
+  'PATCH /api/v1/admin/wallet/edit-maintenance': { action: 'admin/wallet/edit-maintenance' },
+
+  // set wallet admin permissions
+   'PATCH /api/v1/admin/wallet/edit-permissions': { action: 'admin/wallet/edit-permissions' },
+
+
+
   '/api/v1/account/logout':                           { action: 'account/logout' },
   'PUT   /api/v1/account/update-password':            { action: 'account/update-password' },
   'PUT   /api/v1/account/update-profile':             { action: 'account/update-profile' },
@@ -62,48 +143,4 @@ module.exports.routes = {
   'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
-
-  // Neo-One API Interface
-  'GET /api/v1/neo-one/accounts':                     { action: 'neo-one/accounts' },
-  'GET /api/v1/neo-one/blocks':                       { action: 'neo-one/blocks' },
-  'GET /api/v1/neo-one/contracts':                    { action: 'neo-one/contracts' },
-  'GET /api/v1/neo-one/events':                       { action: 'neo-one/events' },
-  'GET /api/v1/neo-one/transactions':                 { action: 'neo-one/transactions' },
-
-  // Neo-One API for server, network, and contract management
-  'GET /api/v1/neo-one/server/start':                 { action: 'neo-one/server/start' },
-  'GET /api/v1/neo-one/server/status':                { action: 'neo-one/server/status' },
-  'GET /api/v1/neo-one/server/stop':                  { action: 'neo-one/server/stop' },
-
-  'GET /api/v1/neo-one/network/activate':             { action: 'neo-one/network/activate' },
-  'GET /api/v1/neo-one/network/create':               { action: 'neo-one/network/create' },
-  'GET /api/v1/neo-one/network/deactivate':           { action: 'neo-one/network/deactivate' },
-  'GET /api/v1/neo-one/network/delete':               { action: 'neo-one/network/delete' },
-  'GET /api/v1/neo-one/network/describe':             { action: 'neo-one/network/describe' },
-  'GET /api/v1/neo-one/network/get':                  { action: 'neo-one/network/get' },
-  'GET /api/v1/neo-one/network/start':                { action: 'neo-one/network/start' },
-  'GET /api/v1/neo-one/network/status':               { action: 'neo-one/network/status' },
-  'GET /api/v1/neo-one/network/stop':                 { action: 'neo-one/network/stop' },
-
-  'GET /api/v1/neo-one/wallet/activate':              { action: 'neo-one/wallet/activate' },
-  'GET /api/v1/neo-one/wallet/create':                { action: 'neo-one/wallet/create' },
-  'GET /api/v1/neo-one/wallet/deactivate':            { action: 'neo-one/wallet/deactivate' },
-  'GET /api/v1/neo-one/wallet/delete':                { action: 'neo-one/wallet/delete' },
-  'GET /api/v1/neo-one/wallet/describe':              { action: 'neo-one/wallet/describe' },
-  'GET /api/v1/neo-one/wallet/get':                   { action: 'neo-one/wallet/get' },
-
-  'GET /api/v1/neo-one/neotracker/create':            { action: 'neo-one/neotracker/create' },
-  'GET /api/v1/neo-one/neotracker/delete':            { action: 'neo-one/neotracker/delete' },
-  'GET /api/v1/neo-one/neotracker/describe':          { action: 'neo-one/neotracker/describe' },
-  'GET /api/v1/neo-one/neotracker/get':               { action: 'neo-one/neotracker/get' },
-  'GET /api/v1/neo-one/neotracker/start':             { action: 'neo-one/neotracker/start' },
-  'GET /api/v1/neo-one/neotracker/status':            { action: 'neo-one/neotracker/status' },
-  'GET /api/v1/neo-one/neotracker/stop':              { action: 'neo-one/neotracker/stop' },
-
-  'GET /api/v1/neo-one/init':                         { action: 'neo-one/init' },
-  'GET /api/v1/neo-one/bootstrap':                    { action: 'neo-one/bootstrap' },
-  'GET /api/v1/neo-one/build':                        { action: 'neo-one/build' },
-  'GET /api/v1/neo-one/verify':                       { action: 'neo-one/verify' },
-  'GET /api/v1/neo-one/version':                      { action: 'neo-one/version' },
-
 };

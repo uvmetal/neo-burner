@@ -86,16 +86,16 @@ class HeaderControls extends Component {
       <div id="ma">
         <ButtonGroup>
           <Button size="sm" color="warning" onClick={this.home} >Home</Button>{' '}
-          <Button size="sm" color="warning" onClick={this.settings} >Settings</Button>{' '}
           <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
           {adminButtons}
-          <LoginModalButton {...this.props} />
         </ButtonGroup>
       </div>
     )
   }
 }
 export default HeaderControls
+// <LoginModalButton {...this.props} />
+
 // <Button size="sm" color="warning" onClick={this.accounts} >Accounts</Button>{' '}
 // <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
 // <Button size="sm" color="warning" onClick={this.new} >New</Button>{' '}
