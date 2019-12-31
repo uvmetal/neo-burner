@@ -103,7 +103,10 @@ module.exports.routes = {
   'POST /api/v1/admin/event/add-accounts': { action: 'admin/event/add-accounts' },
 
   // remove accounts fromt event
-  'POST /api/v1/admin/event/remove-accounts': { action: 'admin/event/remove-accounts' },
+  'DELETE /api/v1/admin/event/remove-accounts': { action: 'admin/event/remove-accounts' },
+
+  // show status report of event -- all payouts, redemptions, which wallets, IPs, etc
+  'POST /api/v1/admin/event/report': { action: 'admin/event/report' },
 
 
   // admin wallet management functions

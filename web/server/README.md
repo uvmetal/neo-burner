@@ -75,3 +75,5 @@ The client is [neo-burner-web](https://github.com/cityofzion/neo-burner/web).
 * Admin Wallet Address Source
 
 # Future
+
+* Announce events, status, and notifications via social media.
