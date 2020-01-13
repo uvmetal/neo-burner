@@ -1,0 +1,25 @@
+<div id="redeem-login" v-cloak>
+  <div class="container">
+    <h1 class="text-center">Please provide a BIP-39 seed, WIF, or Private Key to access your account.</h1>
+    <div class="form-container">
+      <hr/>
+      <ajax-form action="doRedeemLogin" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+        <div class="form-group">
+          <input type="data" class="form-control" placeholder="Enter Account Recovery Data Here" :class="[formErrors.data ? 'is-invalid' : '']" v-model.trim="formData.data" autocomplete="data" focus-first>
+          <div class="invalid-feedback" v-if="formErrors.data">Please provide a BIP-39 seed, WIF, or Private Key to access your account.</div>
+        </div>
+        <div class="form-group form-check">
+            <input type="radio" name="type" value="bip" v-model="formData.type" :checked="[formData.type === 'bip' ? 'checked' : '']"> BIP-39 <br>
+            <input type="radio" name="type" value="wif" v-model="formData.type" :checked="[formData.type === 'wif' ? 'checked' : '']"> WIF <br>
+            <input type="radio" name="type" value="pk" v-model="formData.type" :checked="[formData.type === 'pk' ? 'checked' : '']"> Private Key <br>
+        </div>
+        <p class="text-danger" v-if="cloudError==='badCombo'"><small>The data you entered are not associated with an account. Please check your input and try again. Make sure you are using the right type for the data you provided. </small></p>
+        <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+        <div class="form-group">
+          <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Recover Account</ajax-button>
+        </div>
+      </ajax-form>
+    </div>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>

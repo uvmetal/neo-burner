@@ -6,7 +6,6 @@ module.exports = {
 
   description: 'Display "Edit profile" page.',
 
-
   exits: {
 
     success: {

@@ -62,6 +62,7 @@ parasails.registerComponent('ajaxButton', {
   methods: {
 
     click: async function(){
+      console.log('click1')
       this.$emit('click');
     },
 

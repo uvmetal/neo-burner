@@ -1,4 +1,4 @@
-parasails.registerPage('edit-profile', {
+parasails.registerPage('redeem-login', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
@@ -7,11 +7,20 @@ parasails.registerPage('edit-profile', {
     syncing: false,
 
     // Form data
-    formData: { /* … */ },
+    formData: {
+      type: "bip", // "0 = bip39, 1 = wif, 2 = private key"
+    },
 
     // For tracking client-side validation errors in our form.
     // > Has property set to `true` for each invalid property in `formData`.
     formErrors: { /* … */ },
+
+    // A set of validation rules for our form.
+    // > The form will not be submitted if these are invalid.
+    formRules: {
+      data: { required: true },
+      type: { required: true },
+    },
 
     // Server error state for the form
     cloudError: '',
@@ -21,13 +30,9 @@ parasails.registerPage('edit-profile', {
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
   beforeMount: function() {
-    // Attach raw data exposed by the server.
+    // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
 
-    // Set the form data.
-    this.formData.fullName = this.me.fullName;
-    this.formData.emailAddress = this.me.emailChangeCandidate ? this.me.emailChangeCandidate : this.me.emailAddress;
-    this.formData.isSuperAdmin = this.me.isSuperAdmin;
   },
   mounted: async function() {
     //…
@@ -39,15 +44,11 @@ parasails.registerPage('edit-profile', {
   methods: {
 
     submittedForm: async function() {
-      // Redirect to the account page on success.
+      // Redirect to the logged-in dashboard on success.
       // > (Note that we re-enable the syncing state here.  This is on purpose--
       // > to make sure the spinner stays there until the page navigation finishes.)
       this.syncing = true;
-      window.location = '/account';
-    },
-
-    click: async function() {
-      console.log('click')
+      window.location = '/redeem-account';
     },
 
     handleParsingForm: function() {
@@ -56,16 +57,19 @@ parasails.registerPage('edit-profile', {
 
       var argins = this.formData;
 
-      // Validate name:
-      if(!argins.fullName) {
-        this.formErrors.fullName = true;
+      // validate data
+      if(!argins.data) {
+        this.formErrors.data = true;
       }
 
-      // Validate email:
-      if(!argins.emailAddress) {
-        this.formErrors.emailAddress = true;
+
+      // validate type
+      if(!argins.type) {
+        this.formErrors.type = true;
       }
 
+      console.log('data: '+this.formData.data)
+      console.log('type: '+this.formData.type)
       // If there were any issues, they've already now been communicated to the user,
       // so simply return undefined.  (This signifies that the submission should be
       // cancelled.)

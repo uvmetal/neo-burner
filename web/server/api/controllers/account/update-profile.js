@@ -17,6 +17,10 @@ module.exports = {
       type: 'string'
     },
 
+    isSuperAdmin: {
+      type: 'boolean'
+    },
+
   },
 
 
@@ -72,10 +76,17 @@ module.exports = {
     }
 
 
+    let isSuper = false
+
+    if (inputs.isSuperAdmin) isSuper = true
+
+    console.log('setting superadmin to: ' + isSuper)
+
     // Start building the values to set in the db.
     // (We always set the fullName if provided.)
     var valuesToSet = {
       fullName: inputs.fullName,
+      isSuperAdmin: isSuper,
     };
 
     switch (desiredEmailEffect) {
@@ -119,6 +130,10 @@ module.exports = {
     await User.updateOne({id: this.req.me.id })
     .set(valuesToSet);
 
+    let testuser =  await User.findOne({id: this.req.me.id});
+
+    sails.log('admin: '+testuser.isSuperAdmin)
+
     // If this is an immediate change, and billing features are enabled,
     // then also update the billing email for this user's linked customer entry
     // in the Stripe API to make sure they receive email receipts.
@@ -154,7 +169,7 @@ module.exports = {
       });
     }
 
-  }
 
+  }
 
 };

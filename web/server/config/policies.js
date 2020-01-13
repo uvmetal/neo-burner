@@ -11,6 +11,11 @@
 module.exports.policies = {
 
   '*': 'is-logged-in',
+  // '*': 'is-super-admin',
+  'redeem/*': 'account-to-redeem',
+
+  // Bypass 'account-to-redeem' policy for:
+  'redeem/do-redeem-login': true,
 
   // Bypass the `is-logged-in` policy for:
   'entrance/*': true,
@@ -21,18 +26,5 @@ module.exports.policies = {
   'legal/view-terms': true,
   'legal/view-privacy': true,
   'deliver-contact-form-message': true,
-  'neo-one/accounts': true,
-  'neo-one/blocks': true,
-  'neo-one/contracts': true,
-  'neo-one/events': true,
-  'neo-one/transactions': true,
-
-  'neo-one/network/start': true,
-  'neo-one/network/stop': true,
-  'neo-one/network/status': true,
-
-  'neo-one/server/start': true,
-  'neo-one/server/stop': true,
-  'neo-one/server/status': true,
 
 };

@@ -34,6 +34,10 @@ module.exports.routes = {
   'GET /account/profile':    { action: 'account/view-edit-profile' },
 
 
+  'GET /redeem-login':       { action: 'entrance/view-redeem-login' },
+  'GET /redeem-account':     { action: 'redeem/redeem-account-overview' },
+
+
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
@@ -55,7 +59,9 @@ module.exports.routes = {
 
   // redeem user functions
   // -----------------------------------------------
-  'POST /api/v1/redeem/login': { action: 'redeem/login' },
+  // 'POST /api/v1/redeem/login': { action: 'redeem/login' },
+  'PUT   /api/v1/redeem/do-redeem-login': { action: 'redeem/do-redeem-login' },
+
   'POST /api/v1/redeem/logout': { action: 'redeem/logout' },
 
   // This should only be accessible by a private key paper wallet / qr wallet holder.
