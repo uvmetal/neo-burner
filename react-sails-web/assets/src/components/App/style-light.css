@@ -1,0 +1,45 @@
+/* todo: consolidate CSS into one file */
+
+body {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* min-height: 100vh; */
+  /* height: 100%; */
+  /* width: 100%; */
+  background-color: white;
+}
+
+
+#ma {
+  background-color: white;
+    color: black;
+}
+
+
+.h1{
+
+}
+
+#formLeft {
+    text-align: left;
+    padding-left: 35%;
+}
+
+#accountsFormLeft {
+    text-align: left;
+    padding-left: 40%;
+}
+
+#accountsTextArea
+{
+    height: 150px;
+    max-height: 200px;
+    font-size: 10px;
+}
+
+#upload_button {
+  display: inline-block;
+}
+#upload_button input[type=file] {
+  display:none;
+}

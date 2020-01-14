@@ -13,7 +13,6 @@ module.exports = function defineCustomHook(sails) {
     initialize: async function () {
 
       sails.log.info('Initializing project hook... (`api/hooks/custom/`)');
-      sails.log.info('here!')
 
       // Check Stripe/Mailgun configuration (for billing and emails).
       var IMPORTANT_STRIPE_CONFIG = ['stripeSecret', 'stripePublishableKey'];

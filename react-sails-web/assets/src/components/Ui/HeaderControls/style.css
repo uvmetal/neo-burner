@@ -1,0 +1,11 @@
+.body {
+  background-color: black;
+  color: white;
+}
+
+
+.button {
+  marginLeft: '1rem';
+  marginBottom: '1rem';
+  padding: 5px;
+}

@@ -1,0 +1,30 @@
+.body {
+  background-color: black;
+  color: white;
+}
+
+
+.button {
+  marginLeft: '1rem';
+  marginBottom: '1rem';
+  padding: 5px;
+}
+
+
+#ModalBody {
+  background-color: black;
+  color: white;
+}
+
+
+#sixteenFont {
+  font-size: 16px;
+}
+
+#fourteenFont {
+  font-size: 14px;
+}
+
+#twelveFont {
+  font-size: 12px;
+}

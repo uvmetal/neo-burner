@@ -1,0 +1,69 @@
+/* todo: consolidate CSS into one file */
+
+body {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* min-height: 100vh; */
+  /* height: 100%; */
+  /* width: 100%; */
+  background-color: black;
+}
+
+
+#ma {
+  background-color: black;
+  color: white;
+  flex-direction: row;
+}
+
+
+.h1{
+
+}
+
+#formLeft {
+    text-align: left;
+    padding-left: 35%;
+}
+
+#accountsFormLeft {
+    text-align: left;
+    padding-left: 40%;
+}
+
+#modalFormLeft {
+    text-align: left;
+    padding-left: 20%;
+    background-color: white;
+    color: black;
+}
+
+#accountsTextArea
+{
+    height: 150px;
+    max-height: 200px;
+    font-size: 10px;
+}
+
+#padQr {
+  padding-bottom: 10px;
+}
+
+#upload_button {
+  display: inline-block;
+}
+#upload_button input[type=file] {
+  display:none;
+}
+
+#sixteenFont {
+  font-size: 16px;
+}
+
+#fourteenFont {
+  font-size: 14px;
+}
+
+#twelveFont {
+  font-size: 12px;
+}

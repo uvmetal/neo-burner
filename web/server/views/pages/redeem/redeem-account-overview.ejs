@@ -8,9 +8,12 @@
       </div>
       <div class="col-sm-6">
         <span class="float-sm-right">
-          <a class="btn btn-sm btn-outline-info account-settings-button" href="/account/profile">Edit profile</a>
         </span>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-3">Event Name:</div>
+      <div class="col"><strong>{{accountToRedeem.eventName}}</strong></div>
     </div>
     <div class="row">
       <div class="col-3">Address:</div>
@@ -19,84 +22,34 @@
     <div class="row">
       <div class="col-3">{{accountToRedeem.privateDataTypeLabel}}:</div>
       <div class="col">
-        <strong :class=""></strong>
-        <span v-if="0" class="badge badge-pill badge-warning">Unverified</span>
+        <strong :class="">{{accountToRedeem.privateData}}</strong>
       </div>
     </div>
     <hr/>
     <div class="row mb-3">
       <div class="col-sm-6">
-        <h4>Password</h4>
+        <h4>How to redeem your account</h4>
       </div>
       <div class="col-sm-6">
-        <span class="float-sm-right">
-          <a class="btn btn-sm btn-outline-info account-settings-button" href="/account/password">Change password</a>
-        </span>
       </div>
     </div>
     <div class="row">
-      <div class="col-3">Password:</div>
-      <div class="col"><strong>••••••••••</strong></div>
-    </div>
-    <hr/>
-    <div class="row">
-      <div class="col-3">Administrator:</div>
-      <div class="col"></div>
-    </div>
-    <hr/>
-    <div class="row mb-3" v-if="0">
-      <div class="col-sm-6">
-        <h4>Billing</h4>
-      </div>
-      <div class="col-sm-6">
-        <span class="float-sm-right">
-          <ajax-button :syncing="syncingOpenCheckout || syncingUpdateCard" class="btn btn-sm btn-outline-info account-settings-button" @click="clickStripeCheckoutButton()">
-            <span slot="syncing-state">
-              <span v-if="syncingOpenCheckout">Connecting...</span>
-              <span v-else>Updating...</span>
-            </span>
-            <span slot="default"></span>
-          </ajax-button>
-        </span>
-      </div>
-    </div>
-    <div v-if="0">
-      <div class="row">
-        <div class="col-3">Credit card:</div>
-        <div class="col"> ending in <strong></strong> <a class="remove-button ml-2" @click="clickRemoveCardButton()">Remove</a></div>
-      </div>
-      <div class="row">
-        <div class="col-3">Expiration:</div>
-        <div class="col"></div>
-      </div>
-    </div>
-    <div class="alert alert-danger" v-else-if="0">
-      There was an error updating your credit card information. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.
-    </div>
-    <div class="alert alert-secondary" v-else-if="0">
-      You have not linked a payment source to your account. In order to access paid features, you'll need to provide your credit card information. (Don't worry: you will only be charged when you've reached the limit of your free plan.)
-    </div>
-  </div>
+      <div class="col">
+        These are the instructions for recovering funds linked to an event you've attended.<br><br>
 
-  <% /* Confirm Remove Card Info Modal */ %>
-  <modal v-if="removeCardModalVisible" @close="closeRemoveCardModal()" v-cloak>
-    <div class="modal-header">
-      <h5 class="modal-title">Remove Card Info?</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span>&times;</span>
-      </button>
+        1. Choose a link below to download a wallet. This can be a mobile or desktop wallet.<br><br>
+        2. Install the wallet and create an account.<br><br>
+        3. Take note of the public address of your new wallet account. That address is where the event attendance funds will be sent once you complete this process.<br><br>
+
+      </div>
     </div>
-    <ajax-form action="updateBillingCard" :syncing.sync="syncingRemoveCard" :cloud-error.sync="cloudError" :handle-parsing="handleParsingRemoveCardForm" @submitted="submittedRemoveCardForm()">
-      <div class="modal-body">
-        <p>Are you sure you want to remove your ending in <strong></strong>?</p>
-        <p class="text-muted">This may restrict your access to paid features.</p>
-        <p class="text-danger" v-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+    <div class="row">
+      <div class="col">
+        <br/>
+        <a class="btn btn-sm btn-outline-info account-settings-button" href="/redeem/send">Send Funds</a>
       </div>
-      <div class="modal-footer">
-        <button data-dismiss="modal" class="btn btn-outline-secondary mr-1">Nevermind</button>
-        <ajax-button type="submit" :syncing="syncingRemoveCard" class="btn btn-danger ml-1">Remove</ajax-button>
-      </div>
-    </ajax-form>
-  </modal>
+    </div>
+    <hr/>
+  </div>
 </div>
 <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
