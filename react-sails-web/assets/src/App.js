@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { MemoryRouter, Switch, Route  } from 'react-router'
+import axios from 'axios'
 
 import AppMain from './components/Ui/Main/Main'
 
@@ -11,71 +12,80 @@ import './App.css'
 
 class App extends Component {
   constructor(props) {
-      super(props)
+    super(props)
 
-      this.state = {
-          isLoading: true,
-          users: [],
-          isSorting: false,
-          systemConfig: {
+    this.updateUser = this.updateUser.bind(this)
+    this.getDataAxios = this.getDataAxios.bind(this)
 
-          }
+    this.state = {
+      isLoading: true,
+      users: [],
+      isSorting: false,
+      systemConfig: {
+
+      },
+      user: {
+        name: '',
+        email: '',          // not required if not admin - observe in sails schema
+        loggedIn: false,
+        admin: false,
+        ip: '',
+        account: {
+          wif: '',
+          address: ''
+        },
+        redeemAccount: {
+          wif: '',
+          address: ''
+        }
       }
+    }
   }
 
   componentWillMount() {
-    let self = this
+    let clientIp = this.getClientIp()
+    
+    let user = {
+      ip: clientIp,
+      admin: false,
+      account: {
+        wif: 'L2nQbvGZVvjZpdQ4pewsZpp4fFL1PnnwhLUNLaBSzRPkiwBTyU8k',
+        address: 'APR3zqwFPmSwQgmZ3f3pVrnLmqbmBGHt2o',
+        bip39: 'plastic aunt rent dose primary sustain mansion advance deputy love seat wagon water duty grant list friend thrive solid dog shell drop pizza knock'
+      }
+    }
 
-    // electron.ipcRenderer.on('check-install-reply', function (event, arg) {
-    //   self.setState({ systemConfig: arg })
-    //   console.log('userData :'+arg.userData)
-    // })
-    //
-    // electron.ipcRenderer.send('check-install')
-    //
-    // electron.ipcRenderer.on('update-console-buffer', function (event, arg) {
-    //   console.log('updating console buffer')
-    //   // self.state.systemConfig.consoleBuffer.push(arg)
-    //   // self.setState({ systemConfig: { consoleBuffer: self.state.systemConfig.consoleBuffer } })
-    // })
-
-    // electron.ipcRenderer.send('setup-event-manager')
+    this.setState({user: user})
   }
 
   componentDidMount() {
-    // this.worker = new WebWorker(worker)
-    //
-    // this.worker.addEventListener('message', event => {
-    //     const sortedList = event.data
-    //     this.setState({
-    //         users: sortedList
-    //     })
-    // })
   }
 
-  handleSort() {
-      // this.worker.postMessage(this.state.users)
+  async getClientIp() {
+    // make a request to sails to find out
+    let user = {
+      ip: '127.0.0.1'
+      // ip: 'blargl'
+    }
+    await this.setState({user: user})
+    return user.ip
+  }
+
+  async getDataAxios(url) {
+    const response = await axios.get(url)
+    console.log(response.data)
+  }
+
+  async updateUser(user) {
+    console.log('updateUser(): '+util.inspect(user, {depth: null}))
+    await this.setState({user: user})
   }
 
   render() {
-    // if (this.state.systemConfig && this.state.systemConfig.isFirstRun === true) {
-    //   console.log('redirecting to installer')
-    //
-    //   return (
-    //     <MemoryRouter>
-    //       <Switch>
-    //       <Route render={(props) => <InstallerMain {...props} config={this.state.systemConfig} />} />
-    //       </Switch>
-    //     </MemoryRouter>
-    //   )
-    // }
-
     return (
-      // <Main rightPaneContent={rightPaneContent} footerContent={footerContent} />
-
       <MemoryRouter>
         <Switch>
-        <Route render={(props) => <AppMain {...props} config={this.state.systemConfig} />} />
+        <Route render={(props) => <AppMain {...props} config={this.state.systemConfig} user={this.state.user} updateUser={(user) => this.updateUser(user)}  />} />
         </Switch>
       </MemoryRouter>
     )

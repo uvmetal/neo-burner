@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Button, ButtonGroup } from 'reactstrap'
+import regeneratorRuntime from 'regenerator-runtime'
+
 // import './style.css'
 
 class HeaderControls extends Component {
@@ -15,6 +17,9 @@ class HeaderControls extends Component {
     this.settings = this.settings.bind(this)
     this.accounts = this.accounts.bind(this)
     this.wallets = this.wallets.bind(this)
+    this.admin = this.admin.bind(this)
+    this.events = this.events.bind(this)
+    this.redeem = this.redeem.bind(this)
 
     this.state = {
       isOpen: false,
@@ -58,11 +63,16 @@ class HeaderControls extends Component {
      this.props.history.push('/Report')
   }
 
-  toggleNetworkStatus() {
-      this.setState({
-          networkStatusToggle: !this.state.networkStatusToggle
-      })
+  admin () {
+    this.props.history.push('/Admin')
+  }
 
+  events () {
+    this.props.history.push('/AdminEvents')
+  }
+
+  redeem () {
+    this.props.history.push('/Redeem')
   }
 
   componentDidMount() {
@@ -73,9 +83,9 @@ class HeaderControls extends Component {
       <div id="ma">
         <ButtonGroup>
           <Button size="sm" color="warning" onClick={this.home} >Home</Button>{' '}
-          <Button size="sm" color="warning" onClick={this.accounts} >Accounts</Button>{' '}
-          <Button size="sm" color="warning" onClick={this.wallets} >Wallets</Button>{' '}
-          <Button size="sm" color="warning" onClick={this.settings} >Settings</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.events} >Events</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.redeem} >Redeem</Button>{' '}
+          <Button size="sm" color="warning" onClick={this.admin} >Admin</Button>{' '}
           <Button size="sm" color="warning" onClick={this.about} >About</Button>{' '}
         </ButtonGroup>
       </div>
