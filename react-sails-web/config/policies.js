@@ -11,7 +11,10 @@
 module.exports.policies = {
 
   '*': 'is-logged-in',
-
+  // '*': 'is-super-admin',
+  // 'redeem/*': 'account-to-redeem',
+  'redeem/*': true,
+  'security/*': true,
   // Bypass the `is-logged-in` policy for:
   'entrance/*': true,
   'account/logout': true,

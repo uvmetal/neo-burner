@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { MemoryRouter, Switch, Route  } from 'react-router'
 import axios from 'axios'
+import https from 'https'
 
 import AppMain from './components/Ui/Main/Main'
 
-// import util from 'util'
+import util from 'util'
 
 import './App.css'
 
-// const electron = window.require('electron')
+// TODO REMEMBER to set this to production using process.env
+let baseUrl  = 'http://localhost:1337'
+
+let instance
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +20,8 @@ class App extends Component {
 
     this.updateUser = this.updateUser.bind(this)
     this.getDataAxios = this.getDataAxios.bind(this)
+    this.putDataAxios = this.putDataAxios.bind(this)
+    this.postDataAxios = this.postDataAxios.bind(this)
 
     this.state = {
       isLoading: true,
@@ -24,6 +30,7 @@ class App extends Component {
       systemConfig: {
 
       },
+      _csrf: '',
       user: {
         name: '',
         email: '',          // not required if not admin - observe in sails schema
@@ -42,9 +49,27 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
+  async componentWillMount() {
+    instance = await axios.create({
+    		// jar:cookieJar,
+        baseURL: baseUrl,
+    		withCredentials: true,
+    		httpsAgent: new https.Agent({ rejectUnauthorized: false, requestCert: true, keepAlive: true})
+    	})
+
+    const response = await instance.get('http://localhost:1337/api/v1/security/grant-csrf-token')
+
+    const _csrf = response.data._csrf
+    console.log('_csrf: '+_csrf)
+
+    instance.defaults.headers.common['X-CSRF-TOKEN'] = _csrf
+
+    console.log('axios headers: '+instance.defaults.headers.common['X-CSRF-TOKEN'])
+
+    this.postDataAxios('/api/v1/redeem/do-redeem-login', {data: 'test data', type: 'bip'})
+
     let clientIp = this.getClientIp()
-    
+
     let user = {
       ip: clientIp,
       admin: false,
@@ -58,7 +83,9 @@ class App extends Component {
     this.setState({user: user})
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+
+
   }
 
   async getClientIp() {
@@ -72,7 +99,17 @@ class App extends Component {
   }
 
   async getDataAxios(url) {
-    const response = await axios.get(url)
+    const response = await instance.get(url)
+    console.log(response.data)
+  }
+
+  async putDataAxios(url, data) {
+    const response = await instance.put(url, data)
+    console.log(response.data)
+  }
+
+  async postDataAxios(url, data) {
+    const response = await instance.post(url, data)
     console.log(response.data)
   }
 
@@ -82,6 +119,9 @@ class App extends Component {
   }
 
   render() {
+
+
+
     return (
       <MemoryRouter>
         <Switch>

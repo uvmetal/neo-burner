@@ -122,21 +122,6 @@ class AppMain extends Component {
   }
 
   componentWillMount() {
-    let self = this
-
-    // electron.ipcRenderer.on('read-user-settings-reply', function (event, arg) {
-    //   self.setState({
-    //     darkMode: arg.darkMode,
-    //     accountsFile: arg.accountsFile,
-    //     accountsPath: arg.accountsPath,
-    //     templatePath: arg.templatePath,
-    //     pdfPath: arg.pdfPath,
-    //     pdfFile: arg.pdfFile
-    //   })
-    //   console.log('updating user settings from file : ' + util.inspect(arg, {depth: null}))
-    // })
-    //
-    // electron.ipcRenderer.send('read-user-settings')
   }
 
   componentWillReceiveProps() {

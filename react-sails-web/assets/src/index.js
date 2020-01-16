@@ -11,4 +11,6 @@ import App from './App';
 //   );
 // };
 
+// console.log('index.js')
+
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -10,6 +10,8 @@
 
 module.exports.routes = {
 
+  'GET /api/v1/security/grant-csrf-token': { action: 'security/grant-csrf-token' },
+
   //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
   //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
@@ -61,5 +63,15 @@ module.exports.routes = {
   'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
+
+
+
+    // redeem user functions
+    // -----------------------------------------------
+    // 'POST /api/v1/redeem/login': { action: 'redeem/login' },
+    'PUT /api/v1/redeem/do-redeem-login': { action: 'redeem/do-redeem-login' },
+    'POST /api/v1/redeem/do-redeem-login': { action: 'redeem/do-redeem-login' },
+
+    'POST /api/v1/redeem/logout': { action: 'redeem/logout' },
 
 };

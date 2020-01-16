@@ -34,7 +34,13 @@ module.exports.security = {
   //   allowCredentials: false,
   // },
 
-
+cors: {
+  allRoutes: true,
+  allowOrigins: ["http://localhost:8080"],
+  allowCredentials: true,
+  allowRequestHeaders: "content-type, authorization, x-csrf-token",
+  allowRequestMethods: 'GET,PUT,POST,OPTIONS,HEAD'
+},
   /****************************************************************************
   *                                                                           *
   * CSRF protection should be enabled for this application.                   *
