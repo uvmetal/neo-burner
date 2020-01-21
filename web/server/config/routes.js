@@ -60,7 +60,8 @@ module.exports.routes = {
   // redeem user functions
   // -----------------------------------------------
   // 'POST /api/v1/redeem/login': { action: 'redeem/login' },
-  'PUT   /api/v1/redeem/do-redeem-login': { action: 'redeem/do-redeem-login' },
+  'PUT /api/v1/redeem/do-redeem-login': { action: 'redeem/do-redeem-login' },
+  'POST /api/v1/redeem/do-redeem-login': { action: 'redeem/do-redeem-login' },
 
   'POST /api/v1/redeem/logout': { action: 'redeem/logout' },
 

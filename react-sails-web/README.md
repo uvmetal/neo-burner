@@ -28,12 +28,25 @@ Note:  Generators are usually run using the globally-installed `sails` CLI (comm
 
 ## Run
 
-# to build assets
-npm run build
+### Build
 
-# to run our server
-npm run start
+This will produce a `bundle.js` that our Sails app can run in production.
 
-# running app using lift
-# similar as sails lift
-npm run lift​
+`yarn run build`
+
+### Develop
+
+Run this command to stand up a webpack dev server and the sails api.
+
+`yarn run start`
+
+### Production
+
+One would normally start sails using something like pm2 or or forever on the production server with the `bundle.js` file produced from the build step.
+
+
+### Testing sails API alone
+
+This step will stand up the sails api for modular testing.
+
+`yarn run lift​`

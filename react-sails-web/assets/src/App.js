@@ -3,6 +3,8 @@ import { MemoryRouter, Switch, Route  } from 'react-router'
 import axios from 'axios'
 import https from 'https'
 
+import * as web from './httpHelpers'
+
 import AppMain from './components/Ui/Main/Main'
 
 import util from 'util'
@@ -50,23 +52,33 @@ class App extends Component {
   }
 
   async componentWillMount() {
-    instance = await axios.create({
-    		// jar:cookieJar,
-        baseURL: baseUrl,
-    		withCredentials: true,
-    		httpsAgent: new https.Agent({ rejectUnauthorized: false, requestCert: true, keepAlive: true})
-    	})
+    // instance = await axios.create({
+  	// 	// jar:cookieJar,
+    //   baseURL: baseUrl,
+  	// 	withCredentials: true,
+  	// 	httpsAgent: new https.Agent({ rejectUnauthorized: false, requestCert: true, keepAlive: true})
+  	// })
 
-    const response = await instance.get('http://localhost:1337/api/v1/security/grant-csrf-token')
+    instance = web.init({
+  		// jar:cookieJar,
+      baseURL: baseUrl,
+  		withCredentials: true,
+  		httpsAgent: new https.Agent({ rejectUnauthorized: false, requestCert: true, keepAlive: true })
+    })
 
-    const _csrf = response.data._csrf
-    console.log('_csrf: '+_csrf)
+    // const response = await instance.get('http://localhost:1337/api/v1/security/grant-csrf-token')
 
-    instance.defaults.headers.common['X-CSRF-TOKEN'] = _csrf
+    web.get('http://localhost:1337/api/v1/security/grant-csrf-token').then(function(response) {
 
-    console.log('axios headers: '+instance.defaults.headers.common['X-CSRF-TOKEN'])
+      const _csrf = response.data._csrf
+      console.log('_csrf: '+_csrf)
 
-    this.postDataAxios('/api/v1/redeem/do-redeem-login', {data: 'test data', type: 'bip'})
+      instance.defaults.headers.common['X-CSRF-TOKEN'] = _csrf
+
+      console.log('axios headers: '+instance.defaults.headers.common['X-CSRF-TOKEN'])
+
+      web.put('/api/v1/redeem/do-redeem-login', {data: 'test data', type: 'bip'})
+    })
 
     let clientIp = this.getClientIp()
 
@@ -84,8 +96,6 @@ class App extends Component {
   }
 
   async componentDidMount() {
-
-
   }
 
   async getClientIp() {
@@ -119,8 +129,6 @@ class App extends Component {
   }
 
   render() {
-
-
 
     return (
       <MemoryRouter>

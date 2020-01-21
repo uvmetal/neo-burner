@@ -7,8 +7,6 @@ import util from 'util'
 
 import './style.css'
 
-// const electron = window.require('electron')
-
 const divStyle = {
   display: 'flex',
   alignItems: 'center'
