@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Jumbotron, Container, Form, FormGroup, Button } from 'reactstrap'
-import LoginModalButton from '../../Ui/Modal/LoginModal'
+import RedeemModalButton from '../../Ui/Modal/RedeemModal'
 
 import { version } from '../../../neo-paper/neo-paper.js'
 
@@ -33,12 +33,12 @@ class Redeem extends Component {
             <Form id="redeemFormLeft">
               <FormGroup id="fourteenFont">
                 <div id="sixteenFont">
-                  Login to redeem your paper wallet account. You will be able to review the account details, choose a wallet to download, and, once downloaded, send some funds to your new desktop or mobile wallet.
+                  Login to redeem your paper wallet account. You will be able to review the account details, choose a wallet to download, and once downloaded, send some funds to your new desktop or mobile wallet. Click below to begin.
                 </div>
                 <br/>
                 <br/>
                 <br/>
-                <LoginModalButton {...this.props} />
+                <RedeemModalButton {...this.props} />
 
               </FormGroup>
             </Form>

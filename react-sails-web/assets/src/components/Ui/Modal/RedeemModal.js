@@ -67,58 +67,37 @@ class RedeemModalButton extends Component {
 
     let button
 
-    if (this.props.user.admin) {
-      color = 'danger'
-      button = <InputModal color="danger" buttonLabel='Login' title={'Admin Login'}
-        body={
-          <Input
-            style={{width: "200px"}}
-            type="text"
-            name="text"
-            placeholder="Email"
-            value={this.state.amount}
-            onChange={e => this.setState({ amount: e.target.value })}
-            id="fourteenFont"
-            />
-
+    color = 'warning'
+    button = <InputModal color="warning" buttonLabel='Login' title={'Redeem Login'}
+      body={
+        <div>
+            <textarea name="message" placeholder={this.state.placeholder}
+              onChange={e => this.setState({ dataValue: e.target.value })}
+              rows="10" cols="50">
+            {this.state.dataValue}
+            </textarea>
+          <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropDown}>
+              <DropdownToggle caret id="fourteenFont">
+                {this.state.dataType}
+                </DropdownToggle>
+              <DropdownMenu id="fourteenFont">
+                <DropdownItem onClick={this.select} id="fourteenFont">{'BIP39'}</DropdownItem>
+                <DropdownItem onClick={this.select}>{'WIF'}</DropdownItem>
+                <DropdownItem onClick={this.select}>{'Private Key'}</DropdownItem>
+              </DropdownMenu>
+          </Dropdown>
+          <br/>
+          Note: this data can be found if you scan the relevant QR code on your paper wallet. When you login you will be able to see the amount that you will be able to send to your new account once you download and install a wallet.
+        </div>
         }
-        okayButtonText='Login'
-        onOkayButtonClick={() => this.props.loginUser(true)}
-        cancelButtonText='Cancel'
-      />
-    } else {
-      color = 'warning'
-      button = <InputModal color="warning" buttonLabel='Login' title={'User Login'}
-        body={
-          <div>
-              <textarea name="message" placeholder={this.state.placeholder}
-                onChange={e => this.setState({ dataValue: e.target.value })}
-                rows="10" cols="50">
-              {this.state.dataValue}
-              </textarea>
-            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropDown}>
-                <DropdownToggle caret id="fourteenFont">
-                  {this.state.dataType}
-                  </DropdownToggle>
-                <DropdownMenu id="fourteenFont">
-                  <DropdownItem onClick={this.select} id="fourteenFont">{'BIP39'}</DropdownItem>
-                  <DropdownItem onClick={this.select}>{'WIF'}</DropdownItem>
-                  <DropdownItem onClick={this.select}>{'Private Key'}</DropdownItem>
-                </DropdownMenu>
-            </Dropdown>
-            <br/>
-            Note: this data can be found if you scan the relevant QR code on your paper wallet. Once you login you will be able to see the amount that you will be able to send to your new account once you download and install a wallet.
-          </div>
-          }
-        okayButtonText='Login'
-        onOkayButtonClick={() => this.props.loginUser()}
-        cancelButtonText='Cancel'
-      />
-     }
+      okayButtonText='Login'
+      onOkayButtonClick={() => this.props.redeemLogin()}
+      cancelButtonText='Cancel'
+    />
 
-    if (this.props.user.loggedIn) {
+    if (this.props.user.redeemLoggedIn) {
       button =
-        <Button color={color} onClick={() => this.props.history.push('/Logout')} id="fourteenFont" key='2'>Logout</Button>
+        <Button color={color} onClick={() => this.props.redeemLogout} id="fourteenFont" key='2'>Logout</Button>
     }
 
     return(

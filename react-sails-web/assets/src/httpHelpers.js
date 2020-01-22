@@ -20,7 +20,8 @@ export function get(url) {
   return new Promise(function(resolve, reject) {
     instance.get(url).then(function (response) {
       // handle success
-      console.log(response.data)
+      console.log('web.get()')
+      console.log(response)
       resolve(response)
     })
     .catch(function (error) {
@@ -39,6 +40,7 @@ export  function put(url, data) {
   return new Promise(function(resolve, reject) {
     instance.put(url, data).then(function (response) {
       // handle success
+      console.log('web.put()')
       console.log(response)
       resolve(response)
     })
@@ -58,6 +60,7 @@ export  function post(url, data) {
   return new Promise(function(resolve, reject) {
     instance.post(url, data).then(function (response) {
       // handle success
+      console.log('web.post()')
       console.log(response)
       resolve(response)
     })

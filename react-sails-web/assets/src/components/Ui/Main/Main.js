@@ -39,7 +39,7 @@ import util from 'util'
 
 // import './style.css'
 
-// const electron = window.require('electron')
+let user
 
 class AppMain extends Component {
   constructor(props) {
@@ -61,7 +61,6 @@ class AppMain extends Component {
     this.redeemLogin = this.redeemLogin.bind(this)
     this.redeemLogout = this.redeemLogout.bind(this)
 
-    let user
 
     let events = [ // Call sails for the real data
       { index:        0,
@@ -246,7 +245,7 @@ class AppMain extends Component {
     user = this.props.user
 
     // if session is valid
-    user.loggedIn = true
+    user.redeemLoggedIn = true
     // else false and return
 
     // Look up account by recovering address from WIF, bip seed, or private key.
@@ -259,14 +258,7 @@ class AppMain extends Component {
     this.props.updateUser(user)
     // this.props.history.push(this.props.location.referrer)
 
-    if (admin) {
-      this.props.history.push('/Admin')
-      // this.props.history.push({pathname: '/Login', referrer: '/Admin'})
-
-    } else {
-      // this.props.history.push({pathname: '/Login', referrer: '/Home'})
-      this.props.history.push('/ViewAccount')
-    }
+    this.props.history.push('/ViewAccount')
   }
 
   async redeemLogout() {
@@ -313,6 +305,10 @@ class AppMain extends Component {
         filename={this.state.pdfFile}
         setTemplatePath={this.setTemplatePath}
         />
+        break
+
+        case '/Redeem':
+        rightPaneContent = <Redeem {...this.props} redeemLogin={this.redeemLogin} redeemLogout={this.redeemLogout} />
         break
 
         // case '/PDF':

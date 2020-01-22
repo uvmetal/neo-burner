@@ -116,6 +116,13 @@ will be disabled and/or hidden in the UI.
             // attach a couple of guaranteed locals.
             if (req.method === 'GET') {
 
+              // Add a view local for redeem account details. This means a user has successfully performed do-redeem-login and a session object has been allocated.
+              if (req.session.accountToRedeem) {
+                sails.log.info('found an account to redeem on the session')
+                res.locals.accountToRedeem = req.session.accountToRedeem
+              }
+              else sails.log.info('no account to redeem was found')
+
               // The  `_environment` local lets us do a little workaround to make Vue.js
               // run in "production mode" without unnecessarily involving complexities
               // with webpack et al.)
@@ -238,6 +245,8 @@ will be disabled and/or hidden in the UI.
               // are enabled for this app, and whether email verification is required.
               res.locals.isBillingEnabled = sails.config.custom.enableBillingFeatures;
               res.locals.isEmailVerificationRequired = sails.config.custom.verifyEmailAddresses;
+
+
 
             }//ﬁ
 

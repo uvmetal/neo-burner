@@ -49,7 +49,7 @@ and exposed as \`req.me\`.)`
   },
 
 
-  fn: async function (inputs) {
+  fn: async function (inputs,exits) {
     sails.log('inputs: '+inputs.data+' '+inputs.type)
 
     let privateDataTypeLabel
@@ -79,16 +79,23 @@ and exposed as \`req.me\`.)`
 
     // else throw 'badCombo'
 
+    // If everything works out we'll set up a session object for this account to redeem so the account data can be reviewed.
+
     sails.log.info('Creating account to redeem session object.')
 
-    this.req.session.accountToRedeem = {
+    let accountToRedeem = {
       eventName: 'mock event name',
       accountAddress: address,
       privateDataTypeLabel: privateDataTypeLabel,
       privateData: privateData
     }
+
+    this.req.session.accountToRedeem = accountToRedeem
     // All done.
 
+    sails.log.debug(this.req.session.accountToRedeem)
+
+    return this.res.status(200).send(accountToRedeem)
   }
 
 
