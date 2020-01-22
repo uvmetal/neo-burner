@@ -79,14 +79,16 @@ and exposed as \`req.me\`.)`
 
     // else throw 'badCombo'
 
-    sails.log.info('Creating account to redeem session object.')
+    // If everything works out we'll set up a session object for this account to redeem so the account data can be reviewed.
 
-    this.req.session.accountToRedeem = {
-      eventName: 'mock event name',
-      accountAddress: address,
-      privateDataTypeLabel: privateDataTypeLabel,
-      privateData: privateData
-    }
+    // sails.log.info('Creating account to redeem session object.')
+    //
+    // this.req.session.accountToRedeem = {
+    //   eventName: 'mock event name',
+    //   accountAddress: address,
+    //   privateDataTypeLabel: privateDataTypeLabel,
+    //   privateData: privateData
+    // }
     // All done.
 
   }
