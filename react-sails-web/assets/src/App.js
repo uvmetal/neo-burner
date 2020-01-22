@@ -41,8 +41,10 @@ class App extends Component {
           address: ''
         },
         redeemAccount: {
-          wif: '',
-          address: ''
+          eventName: '',
+          accountAddress: '',
+          privateDataTypeLabel: '',
+          privateData: ''
         }
       }
     }
@@ -67,31 +69,28 @@ class App extends Component {
       console.log('axios headers: '+instance.defaults.headers.common['X-CSRF-TOKEN'])
 
       web.post('/api/v1/redeem/do-redeem-login', {data: 'test data', type: 'bip'}).then(function(response) {
-        // console.log('post')
-        // console.log(response)
 
-        // web.get('/redeem-account').then(function(response){
-        //   console.log('get: ')
-        //   console.log(response)
-        // })
+        let user = {
+          _csrf: _csrf,
+          ip: clientIp,
+          admin: false,
+          redeemLoggedIn: false,
+          account: {
+            wif: 'L2nQbvGZVvjZpdQ4pewsZpp4fFL1PnnwhLUNLaBSzRPkiwBTyU8k',
+            address: 'APR3zqwFPmSwQgmZ3f3pVrnLmqbmBGHt2o',
+            bip39: 'plastic aunt rent dose primary sustain mansion advance deputy love seat wagon water duty grant list friend thrive solid dog shell drop pizza knock'
+          },
+          redeemAccount: {...response.data}
+        }
+
+        console.log('redeemAccount: ')
+        console.log(user.redeemAccount)
+
+        self.setState({user: user})
       })
 
 
       let clientIp = self.getClientIp()
-
-      let user = {
-        _csrf: _csrf,
-        ip: clientIp,
-        admin: false,
-        redeemLoggedIn: false,
-        account: {
-          wif: 'L2nQbvGZVvjZpdQ4pewsZpp4fFL1PnnwhLUNLaBSzRPkiwBTyU8k',
-          address: 'APR3zqwFPmSwQgmZ3f3pVrnLmqbmBGHt2o',
-          bip39: 'plastic aunt rent dose primary sustain mansion advance deputy love seat wagon water duty grant list friend thrive solid dog shell drop pizza knock'
-        }
-      }
-
-      self.setState({user: user})
     })
   }
 
