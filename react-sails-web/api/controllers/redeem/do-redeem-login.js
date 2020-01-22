@@ -52,27 +52,44 @@ and exposed as \`req.me\`.)`
   fn: async function (inputs,exits) {
     sails.log('inputs: '+inputs.data+' '+inputs.type)
 
+    let wallet = sails.neonWallet
+
     let privateDataTypeLabel
     let privateDataType = inputs.type
     let privateData = inputs.data
-    let address
+    let address, account
 
     // Recover the account from the provided data: bip, wif, or pk
-    if (privateDataType === 'bip') {
-      address = 'a bip converted address'
+    if (privateDataType === 'BIP39') {
+      let reversedPK = sails.bip39.mnemonicToEntropy(privateData)
+      sails.log.debug('Mnemonic Reversed Back to PK: \n'+reversedPK)
+      account = new wallet.Account(reversedPK)
+      sails.log.debug('account')
+      sails.log.debug(account)
+      sails.log.debug(account.address)
+      address = account.address
       privateDataTypeLabel = 'Mnemonic'
-    } else if (type === 'wif') {
-      address = 'a wif converted address'
+    } else if (privateDataType === 'WIF') {
+      account = new wallet.Account(privateData)
+      address = account.address
+      sails.log.debug('account')
+      sails.log.debug(account)
+      sails.log.debug(account.address)
       privateDataTypeLabel = 'WIF'
-    } else if (type === 'pk') {
-      address = 'a pk converted address'
+    } else if (privateDataType === 'Private Key') {
+      account = new wallet.Account(privateData)
+      address = account.address
+      sails.log.debug('account')
+      sails.log.debug(account)
+      sails.log.debug(account.address)
       privateDataTypeLabel = 'Private Key'
     } else throw 'badCombo'
 
-    let account, event
+    let event = {}
     // account = await Accounts.findOne({address: address})
 
     if (account) {
+      event.name = 'mock event name'
       // Search the event database for an event with that account
       // event =  await Event.findOne({id: this.req.me.id});
     }
@@ -84,7 +101,7 @@ and exposed as \`req.me\`.)`
     sails.log.info('Creating account to redeem session object.')
 
     let accountToRedeem = {
-      eventName: 'mock event name',
+      eventName: event.name,
       accountAddress: address,
       privateDataTypeLabel: privateDataTypeLabel,
       privateData: privateData

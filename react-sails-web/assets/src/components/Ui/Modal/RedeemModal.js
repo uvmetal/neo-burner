@@ -91,13 +91,13 @@ class RedeemModalButton extends Component {
         </div>
         }
       okayButtonText='Login'
-      onOkayButtonClick={() => this.props.redeemLogin()}
+      onOkayButtonClick={() => this.props.redeemLogin(this.state.dataValue, this.state.dataType)}
       cancelButtonText='Cancel'
     />
 
     if (this.props.user.redeemLoggedIn) {
       button =
-        <Button color={color} onClick={() => this.props.redeemLogout} id="fourteenFont" key='2'>Logout</Button>
+        <Button color={color} onClick={() => this.props.redeemLogout()} id="fourteenFont" key='2'>Logout</Button>
     }
 
     return(

@@ -37,6 +37,8 @@ import Footer from '../../Ui/Main/Footer'
 
 import util from 'util'
 
+import * as web from '../../../httpHelpers'
+
 // import './style.css'
 
 let user
@@ -240,29 +242,43 @@ class AppMain extends Component {
 
   }
 
-  async redeemLogin() {
+  async redeemLogin(data, type) {
+    console.log('redeemLogin')
+    console.log(data)
+    console.log(type)
+
     // call sails and get a session
     user = this.props.user
 
-    // if session is valid
-    user.redeemLoggedIn = true
-    // else false and return
+    web.post('/api/v1/redeem/do-redeem-login', {data: data, type: type}).then(function(response) {
+      // if session is valid
 
-    // Look up account by recovering address from WIF, bip seed, or private key.
+      user.redeemAccount = {...response.data}
+      console.log('user.redeemAccount: ')
+      console.log(user.redeemAccount)
 
-    // Find correct event by looking through database for an account linked to an events
+      user.redeemLoggedIn = true
+      // else false and return
 
-    // Check if this account has already been redeemed. If it has been redeemed, flash a message and end the session.
+      // Look up account by recovering address from WIF, bip seed, or private key.
 
-    // update user with the data from sails
-    this.props.updateUser(user)
-    // this.props.history.push(this.props.location.referrer)
+      // Find correct event by looking through database for an account linked to an events
 
-    this.props.history.push('/ViewAccount')
+      // Check if this account has already been redeemed. If it has been redeemed, flash a message and end the session.
+
+      // update user with the data from sails
+      this.props.updateUser(user)
+      // this.props.history.push(this.props.location.referrer)
+
+      this.props.history.push('/ViewAccount')
+    })
   }
 
   async redeemLogout() {
-
+    console.log('redeemLogout')
+    user.redeemLoggedIn = false
+    user.redeemAccount = undefined
+    this.props.updateUser(user)
   }
 
   render() {
