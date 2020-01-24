@@ -50,7 +50,7 @@ and exposed as \`req.me\`.)`
 
 
   fn: async function (inputs,exits) {
-    sails.log('inputs: '+inputs.data+' '+inputs.type)
+    sails.log('inputs: ', inputs.data, inputs.type)
 
     let wallet = sails.neonWallet
 
@@ -61,27 +61,22 @@ and exposed as \`req.me\`.)`
 
     // Recover the account from the provided data: bip, wif, or pk
     if (privateDataType === 'BIP39') {
+      if (!sails.bip39.validateMnemonic(privateData)) throw 'badCombo'
       let reversedPK = sails.bip39.mnemonicToEntropy(privateData)
       sails.log.debug('Mnemonic Reversed Back to PK: \n'+reversedPK)
       account = new wallet.Account(reversedPK)
-      sails.log.debug('account')
-      sails.log.debug(account)
-      sails.log.debug(account.address)
+      sails.log.debug('account', account, account.address)
       address = account.address
       privateDataTypeLabel = 'Mnemonic'
     } else if (privateDataType === 'WIF') {
       account = new wallet.Account(privateData)
       address = account.address
-      sails.log.debug('account')
-      sails.log.debug(account)
-      sails.log.debug(account.address)
+      sails.log.debug('account', account, account.address)
       privateDataTypeLabel = 'WIF'
     } else if (privateDataType === 'Private Key') {
       account = new wallet.Account(privateData)
       address = account.address
-      sails.log.debug('account')
-      sails.log.debug(account)
-      sails.log.debug(account.address)
+      sails.log.debug('account', account, account.address)
       privateDataTypeLabel = 'Private Key'
     } else throw 'badCombo'
 
@@ -98,8 +93,6 @@ and exposed as \`req.me\`.)`
 
     // If everything works out we'll set up a session object for this account to redeem so the account data can be reviewed.
 
-    sails.log.info('Creating account to redeem session object.')
-
     let accountToRedeem = {
       eventName: event.name,
       accountAddress: address,
@@ -110,7 +103,7 @@ and exposed as \`req.me\`.)`
     this.req.session.accountToRedeem = accountToRedeem
     // All done.
 
-    sails.log.debug(this.req.session.accountToRedeem)
+    sails.log.debug('Created account to redeem session object.', this.req.session.accountToRedeem)
 
     return this.res.status(200).send(accountToRedeem)
   }

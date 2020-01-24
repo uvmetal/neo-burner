@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Jumbotron, Container, Form, FormGroup, Button } from 'reactstrap'
 import RedeemModalButton from '../../Ui/Modal/RedeemModal'
+import FlashModal from '../../Ui/Modal/FlashModal'
 
 import { version } from '../../../neo-paper/neo-paper.js'
 
@@ -39,7 +40,7 @@ class Redeem extends Component {
                 <br/>
                 <br/>
                 <RedeemModalButton {...this.props} />
-
+                {this.props.message ? <FlashModal title={this.props.message.title} body={this.props.message.body} okayButtonText={this.props.message.buttonLabel} buttonAction={this.props.message.buttonAction} id='fourteenFont' /> : ''}
               </FormGroup>
             </Form>
           </Container>

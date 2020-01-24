@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup } from 'reactstrap'
 // import './style.css'
 
-class HelpModal extends Component {
+class FlashModal extends Component {
   constructor(props) {
     super(props)
 
@@ -13,7 +13,7 @@ class HelpModal extends Component {
     // this.onCancelClick = this.onCancelClick.bind(this)
 
     this.state = {
-      modal: false
+      modal: true
     }
   }
 
@@ -21,7 +21,7 @@ class HelpModal extends Component {
   }
 
   async componentDidMount() {
-    if(this.props.isOpen) await this.setState({modal: true})
+    // if(this.props.isOpen) await this.setState({modal: true})
   }
 
   toggle() {
@@ -29,6 +29,8 @@ class HelpModal extends Component {
     this.setState({ modal: !this.state.modal })
     // if (this.props.onNextClick) this.props.onNextClick()
     // if (this.props.onCancelClick) this.props.onCancelClick()
+    if (this.props.buttonAction) this.props.buttonAction()
+    
   }
 
   // onNextClick(){
@@ -42,7 +44,6 @@ class HelpModal extends Component {
   render() {
     return(
       <div id="fourteenFont">
-        <Button color="warning" onClick={this.toggle} id="fourteenFont">{this.props.buttonLabel}</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>{this.props.title}</ModalHeader>
           <ModalBody id="fourteenFont">
@@ -59,4 +60,4 @@ class HelpModal extends Component {
     )
   }
 }
-export default HelpModal
+export default FlashModal

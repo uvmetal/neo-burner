@@ -123,7 +123,7 @@ class App extends Component {
   }
 
   async updateUser(user) {
-    console.log('updateUser(): '+util.inspect(user, {depth: null}))
+    console.log('updateUser(): ', user)
     await this.setState({user: user})
   }
 

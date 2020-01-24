@@ -243,19 +243,16 @@ class AppMain extends Component {
   }
 
   async redeemLogin(data, type) {
-    console.log('redeemLogin')
-    console.log(data)
-    console.log(type)
-
+    let self = this
+    console.log('redeemLogin', data, type)
     // call sails and get a session
     user = this.props.user
 
     web.post('/api/v1/redeem/do-redeem-login', {data: data, type: type}).then(function(response) {
       // if session is valid
-
+      console.log('do-redeem-login success', response)
       user.redeemAccount = {...response.data}
-      console.log('user.redeemAccount: ')
-      console.log(user.redeemAccount)
+      console.log('user.redeemAccount: ', user.redeemAccount)
 
       user.redeemLoggedIn = true
       // else false and return
@@ -267,18 +264,26 @@ class AppMain extends Component {
       // Check if this account has already been redeemed. If it has been redeemed, flash a message and end the session.
 
       // update user with the data from sails
-      this.props.updateUser(user)
+      self.props.updateUser(user)
       // this.props.history.push(this.props.location.referrer)
 
-      this.props.history.push('/ViewAccount')
+      self.props.history.push('/ViewAccount')
+    }).catch(function(error) {
+      console.log('do-redeem-login error', error)
+      let message = 'No account found for this data. Please ensure you input is correct and try again.'
+      self.props.history.push({pathname: '/Redeem', message: message, title: 'Redeem Login Failure', buttonLabel: 'Try Again', buttonAction: () => self.props.history.push('/Redeem')})
+      // self.props.history.push('/Redeem')
     })
   }
 
   async redeemLogout() {
-    console.log('redeemLogout')
-    user.redeemLoggedIn = false
-    user.redeemAccount = undefined
-    this.props.updateUser(user)
+    web.get('/api/v1/redeem/logout').then(function(response) {
+      console.log('redeemLogout')
+      user.redeemLoggedIn = false
+      user.redeemAccount = undefined
+      this.props.updateUser(user)
+      this.props.history.push('/Home')
+    })
   }
 
   render() {
@@ -324,7 +329,17 @@ class AppMain extends Component {
         break
 
         case '/Redeem':
-        rightPaneContent = <Redeem {...this.props} redeemLogin={this.redeemLogin} redeemLogout={this.redeemLogout} />
+        let message = {}
+        if(this.props.location.message) {
+          message = {
+            body: this.props.location.message,
+            title: this.props.location.title,
+            buttonLabel: this.props.location.buttonLabel,
+            buttonAction: this.props.location.buttonAction
+          }
+        } else message = undefined
+
+        rightPaneContent = <Redeem {...this.props} redeemLogin={this.redeemLogin} redeemLogout={this.redeemLogout} message={message} />
         break
 
         // case '/PDF':
