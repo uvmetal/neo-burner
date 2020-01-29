@@ -9,6 +9,7 @@ import Home from '../../App/Home'
 import About from '../../App/About'
 
 import Admin from '../../App/Admin/Admin'
+import SignUpAdmin from '../../App/Admin/SignUp'
 import AdminAccounts from '../../App/Admin/Accounts'
 
 import AdminEventList from '../../App/Events/List'
@@ -234,12 +235,59 @@ class AppMain extends Component {
     })
   }
 
-  async loginAdmin() {
+  async signupAdmin(email, password, fullName) {
+    let self = this
+    console.log('signupAdmin', email, password, fullName)
+
 
   }
 
-  async logoutAdmin() {
+  async loginAdmin(email, password, rememberMe) {
+    let self = this
+    console.log('loginAdmin', email, password, rememberMe)
 
+    // call sails and get a session
+    user = this.props.user
+
+    web.put('/api/v1/entrance/login', {emailAddress: email, password: password, rememberMe: rememberMe}).then(function(response) {
+      // if session is valid
+      console.log('loginAdmin success', response)
+      // user.redeemAccount = {...response.data}
+      // console.log('user.redeemAccount: ', user.redeemAccount)
+
+      user.loggedIn = true
+      user.admin = true
+      // else false and return
+
+      // Look up account by recovering address from WIF, bip seed, or private key.
+
+      // Find correct event by looking through database for an account linked to an events
+
+      // Check if this account has already been redeemed. If it has been redeemed, flash a message and end the session.
+
+      // update user with the data from sails
+      self.props.updateUser(user)
+      // this.props.history.push(this.props.location.referrer)
+
+      self.props.history.push('/Admin')
+    }).catch(function(error) {
+      console.log('loginAdmin error', error)
+      let message = 'No account found for this data. Please ensure you input is correct and try again.'
+      self.props.history.push({pathname: '/Admin', message: message, title: 'Admin Login Failure', buttonLabel: 'Try Again', buttonAction: () => self.props.history.push('/Admin')})
+      // self.props.history.push('/Redeem')
+    })
+  }
+
+  async logoutAdmin() {
+    console.log('logoutAdmin' )
+
+    web.get('/api/v1/account/logout').then(function(response) {
+      console.log('logoutAdmin')
+      user.loggedIn = false
+      user.admin = false
+      this.props.updateUser(user)
+      this.props.history.push('/Home')
+    })
   }
 
   async redeemLogin(data, type) {
@@ -305,6 +353,14 @@ class AppMain extends Component {
 
         case '/About':
         rightPaneContent = <About />
+        break
+
+        case '/SignUp':
+        rightPaneContent = <SignUpAdmin {...this.props} />
+        break
+
+        case '/Admin':
+        rightPaneContent = <Admin {...this.props} login={this.loginAdmin} logout={this.logoutAdmin} />
         break
 
         case '/Accounts':
