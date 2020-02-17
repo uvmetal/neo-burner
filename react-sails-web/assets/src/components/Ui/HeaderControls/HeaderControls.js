@@ -68,7 +68,7 @@ class HeaderControls extends Component {
   }
 
   events () {
-    this.props.history.push('/AdminEvents')
+    this.props.history.push('/ListEvents')
   }
 
   redeem () {

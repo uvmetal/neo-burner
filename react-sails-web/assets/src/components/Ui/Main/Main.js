@@ -12,7 +12,7 @@ import Admin from '../../App/Admin/Admin'
 import SignUpAdmin from '../../App/Admin/SignUp'
 import AdminAccounts from '../../App/Admin/Accounts'
 
-import AdminEventList from '../../App/Events/List'
+import ListEvents from '../../App/Events/List'
 import ViewEvent from '../../App/Events/View'
 import EditEvent from '../../App/Events/Edit'
 import AddEvent from '../../App/Events/Add'
@@ -280,13 +280,15 @@ class AppMain extends Component {
 
   async logoutAdmin() {
     console.log('logoutAdmin' )
+    let self = this
+    user = this.props.user
 
     web.get('/api/v1/account/logout').then(function(response) {
       console.log('logoutAdmin')
       user.loggedIn = false
       user.admin = false
-      this.props.updateUser(user)
-      this.props.history.push('/Home')
+      self.props.updateUser(user)
+      self.props.history.push('/Home')
     })
   }
 
@@ -363,6 +365,22 @@ class AppMain extends Component {
         rightPaneContent = <Admin {...this.props} login={this.loginAdmin} logout={this.logoutAdmin} />
         break
 
+        case '/ListEvents':
+        rightPaneContent = <ListEvents {...this.props} events={this.state.events} />
+        break
+
+        case '/AddEvent':
+        rightPaneContent = <AddEvent {...this.props} events={this.state.events} setAccounts={this.setAccounts} setEvents={this.setEvents} />
+        break
+
+        case '/ViewEvent':
+        rightPaneContent = <ViewEvent {...this.props} events={this.state.events} />
+        break
+
+        case '/EditEvent':
+        rightPaneContent = <EditEvent {...this.props} events={this.state.events} />
+        break
+
         case '/Accounts':
         rightPaneContent = <Accounts {...this.props}
           setAccounts={this.setAccounts}
@@ -397,6 +415,8 @@ class AppMain extends Component {
 
         rightPaneContent = <Redeem {...this.props} redeemLogin={this.redeemLogin} redeemLogout={this.redeemLogout} message={message} />
         break
+
+
 
         // case '/PDF':
         // rightPaneContent = <PDF accounts={this.state.accounts} config={this.props.config} pdf={this.state.pdfPath+'/'+this.state.pdfFile}  {...this.props}/>

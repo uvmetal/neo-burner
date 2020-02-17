@@ -7,7 +7,7 @@ import { version } from '../../../neo-paper/neo-paper.js'
 
 import util from 'util'
 
-import burnerLogo from '../../../images/neo-burner-burning-logo-alt-3.png'
+// import burnerLogo from '../../../images/neo-burner-burning-logo-alt-3.png'
 
 class List extends Component {
   constructor(props) {
@@ -57,7 +57,7 @@ class List extends Component {
     console.log('viewing event: '+data.name)
 
     this.props.history.push({
-      pathname: '/AdminViewEvent',
+      pathname: '/ViewEvent',
       state: { data: data }
     })
   }
@@ -66,7 +66,7 @@ class List extends Component {
     console.log('editing event: '+data.name)
 
     this.props.history.push({
-      pathname: '/AdminEditEvent',
+      pathname: '/EditEvent',
       state: { data: data, index: index, events: events }
     })
   }
@@ -92,7 +92,7 @@ class List extends Component {
           <Container className="p-5">
             <Form id="accountsFormLeft">
               <FormGroup id="fourteenFont">
-                <Button size="sm" color="warning" onClick={() => this.props.history.push({pathname: '/AdminAddEvent', state: {data: this.state.events, events: this.state.events}})} >{'Add Event'}</Button>{' '}<br/><br/>
+                <Button size="sm" color="warning" onClick={() => this.props.history.push({pathname: '/AddEvent', state: {data: this.state.events, events: this.state.events}})} >{'Add Event'}</Button>{' '}<br/><br/>
                 {this.listEvents(this.state.events)}
               </FormGroup>
             </Form>

@@ -64,16 +64,24 @@ class SignUp extends Component {
 
       // Check if this account has already been redeemed. If it has been redeemed, flash a message and end the session.
 
+      let user = {
+        admin: false,
+        email: self.state.email,
+        name: self.state.fullName,
+        loggedIn: true
+      }
+
       // update user with the data from sails
       self.props.updateUser(user)
       // this.props.history.push(this.props.location.referrer)
 
-      self.props.history.push('/Admin')
-    }).catch(function(error) {
-      console.log('signUp error', error)
-      let message = 'No account found for this data. Please ensure you input is correct and try again.'
-      self.props.history.push({pathname: '/Admin', message: message, title: 'Admin Login Failure', buttonLabel: 'Try Again', buttonAction: () => self.props.history.push('/Admin')})
+      self.props.history.push('/Home')
+    }).catch(function(error, response) {
+      console.log('signUp error', error, response)
+      // let message = 'No account found for this data. Please ensure you input is correct and try again.'
+      // self.props.history.push({pathname: '/Admin', message: message, title: 'Admin Login Failure', buttonLabel: 'Try Again', buttonAction: () => self.props.history.push('/Admin')})
       // self.props.history.push('/Redeem')
+      self.setState({ showModal: true, modalTitle: 'Sign Up Failed.', modalBody: 'The email address is already in use. Please choose another.' })
     })
   }
 
