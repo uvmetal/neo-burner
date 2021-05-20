@@ -37,7 +37,7 @@
     "fs-extra": "^8.1.0",
     "fstream-ignore": "^1.0.5",
     "global": "^4.4.0",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "html-webpack-plugin": "4.0.0-beta.5",
     "jest": "24.7.1",
     "jest-environment-jsdom-fourteen": "0.1.0",
