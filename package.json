@@ -130,7 +130,7 @@
     "@cityofzion/neon-js": "^4.6.0",
     "bootstrap": "^4.3.1",
     "concurrently": "^4.1.1",
-    "electron": "^5.0.6",
+    "electron": "^18.3.7",
     "electron-builder": "^20.44.4",
     "react-router": "^5.0.1",
     "reactstrap": "^8.0.1",
